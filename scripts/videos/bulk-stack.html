@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Bulk stack</title>
+<link rel="stylesheet" href="scene.css" />
+<script src="scene.js"></script>
+<script src="logo.js"></script>
+<style>
+  #title { left: 70px; top: 64px; }
+  .sheet { position: absolute; width: 190px; height: 250px; border-radius: 8px; }
+  .sheet .scrib { position: absolute; left: 36px; right: 18px; height: 3px; border-radius: 3px; background: rgba(31,58,107,.35); }
+  #scanner { left: 380px; top: 250px; width: 120px; height: 260px; border-radius: 16px; display: grid; place-items: center; z-index: 40; background: #101418 !important; }
+  #scanline { position: absolute; left: 14px; right: 14px; height: 2px; background: #2dd4bf; box-shadow: 0 0 18px #2dd4bf; }
+  #queue { left: 560px; top: 130px; width: 650px; padding: 22px 24px; }
+  .qrow { display: grid; grid-template-columns: 1fr 120px 150px; align-items: center; padding: 11px 0; border-top: 1px solid rgba(255,255,255,.07); font-size: 15px; }
+  #counter { font-family: Fraunces, serif; font-size: 44px; font-weight: 600; line-height: 1; }
+  #prog { height: 6px; border-radius: 6px; background: rgba(255,255,255,.08); overflow: hidden; margin-top: 14px; }
+  #progf { height: 100%; background: linear-gradient(90deg, #2dd4bf, #7c8cff); }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="title" class="abs">
+    <div class="label">Bulk stack · 50–100 scripts</div>
+    <div style="font-size:30px;font-weight:700;margin-top:8px">A whole class, scanned in one go.</div>
+  </div>
+  <div id="stack"></div>
+  <div id="scanner" class="abs card"><div id="scanline"></div>
+    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#5eead4" stroke-width="1.6" stroke-linecap="round"><path d="M4 8V6a2 2 0 012-2h2M16 4h2a2 2 0 012 2v2M20 16v2a2 2 0 01-2 2h-2M8 20H6a2 2 0 01-2-2v-2M8 10h8M8 14h5"/></svg>
+  </div>
+  <div id="queue" class="abs card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end">
+      <div><div class="label">Class 8A · Science · Mid Term</div><div class="muted" style="font-size:14px;margin-top:6px">Scripts processed</div></div>
+      <div id="counter">0<span class="muted" style="font-size:22px">/64</span></div>
+    </div>
+    <div id="prog"><div id="progf"></div></div>
+    <div id="rows" style="margin-top:12px"></div>
+    <div id="done" style="margin-top:14px"></div>
+  </div>
+  <div class="caption"><span class="num" id="capn">1</span><span id="capt"></span></div>
+  <div class="brand">Paatam<span>.ai</span></div>
+</div>
+<script>
+  window.SCENE = { duration: 8, fps: 30 };
+  const TOTAL = 64, SHEETS = 10;
+  // Fictional names — no real student data.
+  const students = ["Karthik Varma", "Sahithi Rao", "Imran Shaik", "Meghana Naidu", "Pranav Kumar", "Divya Sri", "Harsha Vardhan"];
+  const marks = ["31/40", "36/40", "24/40", "38/40", "29/40", "33/40", "27/40"];
+
+  let html = "";
+  for (let i = 0; i < SHEETS; i++) {
+    html += `<div class="sheet paper" id="sh${i}">` + [60, 96, 132, 168, 204].map((y, k) => `<div class="scrib" style="top:${y}px;right:${18 + ((i + k) % 3) * 22}px"></div>`).join("") + "</div>";
+  }
+  $("stack").innerHTML = html;
+  $("rows").innerHTML = students.map((s, i) => `<div class="qrow" id="q${i}"><span style="font-weight:600">${s}</span><span class="muted" id="qm${i}">—</span><span id="qs${i}"></span></div>`).join("");
+
+  window.render = (t) => {
+    loopFade(t, SCENE.duration);
+    const feed = lin(t, 0.8, 5.6); // sheets fly into the scanner
+    for (let i = 0; i < SHEETS; i++) {
+      const el = $("sh" + i);
+      const order = SHEETS - 1 - i; // top sheet first
+      const k = clamp(feed * SHEETS - order);
+      const base = { x: 90 + i * 2.2, y: 270 - i * 5, r: -6 + i * 1.3 };
+      const x = lerp(base.x, 360, p(k, 0, 1));
+      const y = lerp(base.y, 255, p(k, 0, 1));
+      Object.assign(el.style, {
+        left: x + "px", top: y + "px", zIndex: i,
+        transform: `rotate(${lerp(base.r, 0, k)}deg) scale(${lerp(1, 0.45, k)})`,
+        opacity: 1 - lin(k, 0.55, 0.95),
+      });
+    }
+    $("scanline").style.top = 20 + ((t * 180) % 220) + "px";
+    $("scanline").style.opacity = t > 0.8 && t < 5.8 ? 1 : 0.15;
+
+    const n = Math.round(TOTAL * lin(t, 1.0, 5.8));
+    $("counter").innerHTML = `${n}<span class="muted" style="font-size:22px">/${TOTAL}</span>`;
+    $("progf").style.width = (100 * n) / TOTAL + "%";
+    const qp = p(t, 0.3, 0.9);
+    set("queue", { opacity: qp, transform: `translateY(${lerp(16, 0, qp)}px)` });
+
+    students.forEach((_, i) => {
+      const s = 1.2 + i * 0.55;
+      const row = $("q" + i);
+      row.style.opacity = p(t, s, s + 0.3);
+      const st = $("qs" + i), qm = $("qm" + i);
+      if (t < s + 0.5) { st.innerHTML = '<span style="color:#aab4ff;font-size:13px;font-weight:700">Reading…</span>'; qm.textContent = "—"; }
+      else if (t < s + 1.1) { st.innerHTML = '<span style="color:#5eead4;font-size:13px;font-weight:700">Grading…</span>'; qm.textContent = "—"; }
+      else { st.innerHTML = '<span class="chip warn">Needs review</span>'; qm.textContent = "AI " + marks[i]; }
+    });
+    $("done").innerHTML = t > 6.0
+      ? `<span class="chip ai" style="opacity:${p(t, 6.0, 6.4)}">${TOTAL} scripts drafted · each one waits for teacher sign-off</span>`
+      : "";
+
+    const cap = t < 1 ? [1, "Drop in a stack of 50–100 answer sheets"] : t < 6 ? [2, "Each script is read and graded as a draft"] : [3, "Every script waits for the teacher’s review"];
+    $("capn").textContent = cap[0];
+    $("capt").textContent = cap[1];
+  };
+</script>
+</body>
+</html>

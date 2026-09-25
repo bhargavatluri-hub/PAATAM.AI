@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Learning lifecycle</title>
+<link rel="stylesheet" href="scene.css" />
+<script src="scene.js"></script>
+<script src="logo.js"></script>
+<style>
+  #title { left: 70px; top: 56px; }
+  .node { position: absolute; top: 190px; width: 200px; margin-left: -100px; text-align: center; }
+  .dot { width: 76px; height: 76px; margin: 0 auto; border-radius: 999px; display: grid; place-items: center; border: 2px solid rgba(255,255,255,.14); background: #0e1216; color: rgba(232,237,240,.55); }
+  .dot svg { width: 30px; height: 30px; }
+  .role { margin-top: 12px; font-weight: 700; font-size: 17px; }
+  .sub { font-size: 13px; color: rgba(232,237,240,.55); margin-top: 2px; }
+  #rail { left: 150px; top: 227px; width: 980px; height: 3px; background: rgba(255,255,255,.08); border-radius: 3px; }
+  #railf { height: 100%; width: 0; background: linear-gradient(90deg, #2dd4bf, #f0a53a); border-radius: 3px; }
+  #token { width: 18px; height: 18px; border-radius: 999px; background: #fff; box-shadow: 0 0 0 5px rgba(240,165,58,.35), 0 0 24px #f0a53a; top: 219.5px; margin-left: -9px; }
+  .card { position: absolute; top: 330px; width: 214px; margin-left: -107px; padding: 14px; font-size: 13.5px; line-height: 1.45; }
+  .mini { height: 6px; border-radius: 6px; background: rgba(255,255,255,.08); overflow: hidden; margin-top: 6px; }
+  .mini i { display: block; height: 100%; border-radius: 6px; }
+  #loop { left: 150px; top: 540px; width: 980px; height: 60px; }
+  #looplabel { left: 0; right: 0; top: 590px; text-align: center; font-size: 15px; font-weight: 600; color: #f7c46c; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="title" class="abs">
+    <div class="label">The learning lifecycle</div>
+    <div style="font-size:30px;font-weight:700;margin-top:8px">From one answer sheet to <span style="color:#5eead4">a whole school’s insight.</span></div>
+  </div>
+
+  <div id="rail" class="abs"><div id="railf"></div></div>
+  <div id="nodes"></div>
+  <div id="token" class="abs"></div>
+  <div id="cards"></div>
+
+  <svg id="loop" class="abs" viewBox="0 0 980 60" fill="none">
+    <path id="looppath" d="M980 0 C 980 50, 900 50, 490 50 C 80 50, 0 50, 0 0" stroke="#f0a53a" stroke-width="2.5" stroke-dasharray="6 7" stroke-linecap="round"/>
+    <path id="loophead" d="M-7 12 L0 0 L7 12" stroke="#f0a53a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <div id="looplabel" class="abs">↺ Insights shape the next lesson — and the next assessment</div>
+
+  <div class="caption"><span class="num" id="capn">1</span><span id="capt"></span></div>
+  <div class="brand">Paatam<span>.ai</span></div>
+</div>
+<script>
+  window.SCENE = { duration: 12, fps: 30 };
+  const icon = {
+    student: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-4.5L21 9l-9 4.5L3 9z"/><path d="M7 11v4.5c0 1.4 2.2 3 5 3s5-1.6 5-3V11"/></svg>',
+    teacher: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7.5" r="3"/><path d="M3.5 19.5c0-3.3 2.5-5.5 5.5-5.5s5.5 2.2 5.5 5.5"/><path d="M14 4.5h6.5v7H16"/></svg>',
+    coordinator: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5"/></svg>',
+    head: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 20h16M7 16v-4M11 16V8M15 16v-6M19 16V5"/></svg>',
+    parent: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 01-11.6 7.1L4 20l1-4A8 8 0 1120 12z"/></svg>',
+  };
+  const nodes = [
+    { x: 150, key: "student", role: "Student", sub: "Writes the exam" },
+    { x: 395, key: "teacher", role: "Teacher", sub: "Reviews & approves" },
+    { x: 640, key: "coordinator", role: "Coordinator", sub: "Compares sections" },
+    { x: 885, key: "head", role: "Head of School", sub: "Sees the whole school" },
+    { x: 1130, key: "parent", role: "Parent", sub: "Stays informed" },
+  ];
+  const cards = [
+    `<div class="paper" style="height:64px;border-radius:8px;padding:6px 10px 0 34px;font-size:15px;line-height:20px;color:#1f3a6b">2/3 + 1/4 = 3/7<br/>6/10 , 9/15</div><div style="margin-top:10px;display:flex;justify-content:space-between"><span class="muted">Scanned</span><b style="color:#5eead4">64 scripts</b></div>`,
+    `<div style="display:flex;justify-content:space-between;align-items:center"><span class="muted">Ananya · Fractions</span><b style="font-family:Fraunces,serif;font-size:22px">6/10</b></div><div class="muted" style="margin-top:4px">Gap: unlike denominators</div><span class="chip ok" style="margin-top:10px">✓ Teacher approved</span>`,
+    `<div class="muted">CBSE · Maths · Classes 6–8</div><div style="display:flex;justify-content:space-between;margin-top:8px"><span>Class 7B</span><span>72%</span></div><div class="mini"><i style="width:72%;background:#5eead4"></i></div><div style="display:flex;justify-content:space-between;margin-top:8px;color:#ff9f7a;font-weight:600"><span>Class 7C</span><span>58% ↓</span></div><div class="mini"><i style="width:58%;background:#ff9f7a"></i></div>`,
+    `<div style="display:flex;gap:8px"><div style="flex:1;text-align:center;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:6px 0"><b style="font-family:Fraunces,serif;font-size:20px">74%</b><div class="muted" style="font-size:11px">School avg</div></div><div style="flex:1;text-align:center;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:6px 0"><b style="font-family:Fraunces,serif;font-size:20px;color:#f7c46c">41</b><div class="muted" style="font-size:11px">Need help</div></div></div><div style="margin-top:8px;color:#ff9f7a;font-weight:600">Weak topic: Fractions · Class 7</div>`,
+    `<div style="background:#1f2c34;border-radius:12px 12px 12px 4px;padding:8px 10px"><div style="font-size:10px;font-weight:700;letter-spacing:.12em;color:#5eead4">EXAM RESULT</div>Fractions: 6/10 — practise common denominators.</div><div style="display:flex;gap:6px;margin-top:8px"><span class="chip ai" style="font-size:11px;padding:3px 8px">Weekly</span><span class="chip ai" style="font-size:11px;padding:3px 8px">Monthly</span></div><div class="muted" style="margin-top:8px;font-size:12px">✓ Sent after teacher approval</div>`,
+  ];
+  $("nodes").innerHTML = nodes.map((n, i) => `<div class="node" id="n${i}" style="left:${n.x}px"><div class="dot" id="d${i}">${icon[n.key]}</div><div class="role">${n.role}</div><div class="sub">${n.sub}</div></div>`).join("");
+  $("cards").innerHTML = cards.map((c, i) => `<div class="card abs" id="c${i}" style="left:${nodes[i].x}px">${c}</div>`).join("");
+  document.querySelectorAll(".card").forEach((c) => c.classList.add("card"));
+  document.querySelectorAll("#cards > div").forEach((c) => { c.style.background = "linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.025))"; c.style.border = "1px solid rgba(255,255,255,.09)"; c.style.borderRadius = "16px"; });
+
+  const T0 = 0.9, STEP = 1.75;
+  const captions = [
+    "Students write their exams on paper, as they do today",
+    "Teachers review AI-drafted marks and approve",
+    "Coordinators compare classes and sections by curriculum",
+    "The Head of School sees the whole school’s learning",
+    "Parents get teacher-approved updates on WhatsApp",
+  ];
+
+  window.render = (t) => {
+    const D = SCENE.duration;
+    loopFade(t, D);
+    set("title", { opacity: p(t, 0.1, 0.7) });
+    // token travels between nodes, pausing briefly at each
+    let x = nodes[0].x, reached = -1;
+    for (let i = 0; i < nodes.length; i++) {
+      const arrive = T0 + i * STEP;
+      if (t >= arrive) reached = i;
+      if (i < nodes.length - 1) {
+        const k = p(t, arrive + 0.55, arrive + STEP);
+        if (t >= arrive + 0.55) x = lerp(nodes[i].x, nodes[i + 1].x, k);
+      }
+    }
+    const tokenOn = t > T0 - 0.4 && t < T0 + 4 * STEP + 1.1;
+    set("token", { left: x + "px", opacity: tokenOn ? p(t, T0 - 0.4, T0) : 0 });
+    $("railf").style.width = ((x - nodes[0].x) / (nodes[4].x - nodes[0].x)) * 100 + "%";
+
+    nodes.forEach((n, i) => {
+      const on = i <= reached;
+      const d = $("d" + i);
+      const glow = p(t, T0 + i * STEP, T0 + i * STEP + 0.4);
+      d.style.borderColor = on ? (i === reached ? "#f0a53a" : "rgba(94,234,212,.6)") : "rgba(255,255,255,.14)";
+      d.style.color = on ? (i === reached ? "#07090b" : "#5eead4") : "rgba(232,237,240,.55)";
+      d.style.background = on && i === reached ? "#f0a53a" : on ? "#0d2624" : "#0e1216";
+      d.style.transform = `scale(${i === reached ? lerp(1, 1.08, glow) : 1})`;
+      set("n" + i, { opacity: p(t, 0.2 + i * 0.1, 0.7 + i * 0.1) });
+      const c = p(t, T0 + i * STEP + 0.15, T0 + i * STEP + 0.65);
+      set("c" + i, { opacity: c, transform: `translateY(${lerp(14, 0, c)}px)` });
+    });
+
+    // return loop
+    const lp = p(t, 9.3, 10.5);
+    const path = $("looppath");
+    const len = path.getTotalLength();
+    path.style.strokeDasharray = `6 7`;
+    path.style.opacity = lp > 0 ? 1 : 0;
+    path.setAttribute("stroke-dashoffset", 0);
+    path.style.clipPath = `inset(0 0 0 ${100 - lp * 100}%)`;
+    const head = path.getPointAtLength(len * lp);
+    $("loophead").setAttribute("transform", `translate(${head.x},${head.y}) rotate(${lp > 0.97 ? 0 : -90})`);
+    $("loophead").style.opacity = lp > 0.02 ? 1 : 0;
+    set("looplabel", { opacity: p(t, 10.2, 10.8) });
+
+    const idx = Math.max(0, reached);
+    const loopPhase = t >= 9.9;
+    $("capn").textContent = loopPhase ? "↺" : idx + 1;
+    $("capt").textContent = loopPhase ? "Every assessment makes the next lesson better" : captions[idx];
+  };
+</script>
+</body>
+</html>

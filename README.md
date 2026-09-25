@@ -98,3 +98,24 @@ src/
 2. **Contact:** set `CONTACT_WEBHOOK_URL`, and optionally `NEXT_PUBLIC_CONTACT_EMAIL`.
 3. **Domain:** set `NEXT_PUBLIC_SITE_URL` so canonical and social URLs are correct.
 4. **Photography (optional):** the site uses no stock imagery. If you add real classroom photos, use images you have rights to and consent for, and never identifiable student work.
+
+## Deploying on Vercel
+
+`vercel.json` pins the framework to **Next.js** (with `npm ci` / `npm run build`), so the project deploys correctly even if Vercel's project settings were saved with a different framework preset (for example, when the project was imported before the code existed). Set the environment variables above under **Project → Settings → Environment Variables**, then redeploy.
+
+## Version 2 (`/v2`)
+
+A dark "night" redesign lives at **`/v2`**, alongside the original homepage at `/`, which is unchanged. It's marked `noindex` until you decide which version to launch.
+
+- **Product modules:** an interactive, accessible showcase of the grading desk (Overview, Classes, Student Analytics, Knowledge Base, Exam Generator, Coordinator, Head of School, Student Portal, Parent WhatsApp) in `src/components/v2/ModuleShowcase.tsx` and `ModuleScreens.tsx`. All data shown is fictional.
+- **Learning lifecycle:** Student → Teacher → Coordinator → Head of School → Parent, as a video plus an auto-advancing, pausable carousel (`LifecycleCarousel.tsx`); auto-advance is off for reduced-motion users.
+- **Product videos:** `public/videos/*.mp4` (H.264), `*.webm` (VP9 fallback) and `*.jpg` posters. Videos autoplay muted only when motion is allowed, pause off-screen, and always have a pause/play control.
+- **Regenerating videos:** the videos are rendered from deterministic HTML scenes in `scripts/videos/`:
+
+  ```bash
+  npm i --no-save playwright ffmpeg-static
+  npx playwright install chromium
+  node scripts/videos/render.mjs            # or: node scripts/videos/render.mjs bulk-stack
+  ```
+
+To make v2 the homepage later, move `src/app/v2/page.tsx` to `src/app/page.tsx` (and drop its `noindex`).

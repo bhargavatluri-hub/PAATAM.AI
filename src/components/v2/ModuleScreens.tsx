@@ -373,30 +373,341 @@ export function StudentPortalScreen() {
   );
 }
 
+/* ------------------------------ Student analytics ---------------------------- */
+
+const exams = [
+  { name: "UT 1", score: 58 },
+  { name: "UT 2", score: 64 },
+  { name: "Quarterly", score: 61 },
+  { name: "UT 3", score: 55 },
+  { name: "Half-yearly", score: 67 },
+  { name: "UT 4", score: 72 },
+];
+
+function TrendChart() {
+  const w = 420, h = 150, padX = 28, padY = 18;
+  const x = (i: number) => padX + (i * (w - padX * 2)) / (exams.length - 1);
+  // y-domain 45–80% mapped to the plot area (one axis).
+  const y = (v: number) => padY + ((80 - v) / 35) * (h - 30 - padY);
+  const path = exams.map((e, i) => `${i ? "L" : "M"}${x(i)},${y(e.score)}`).join(" ");
+  return (
+    <svg viewBox={`0 0 ${w} ${h}`} className="w-full" role="img" aria-label="Mathematics score trend across six exams: 58, 64, 61, 55, 67 and 72 percent.">
+      {[50, 60, 70].map((g) => (
+        <g key={g}>
+          <line x1={padX} x2={w - padX} y1={y(g)} y2={y(g)} stroke="rgb(255 255 255 / 0.07)" />
+          <text x={4} y={y(g) + 3} fontSize="9" fill="rgb(255 255 255 / 0.45)">{g}%</text>
+        </g>
+      ))}
+      <path d={path} fill="none" stroke="#5eead4" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
+      {exams.map((e, i) => (
+        <g key={e.name}>
+          <circle cx={x(i)} cy={y(e.score)} r="4.5" fill="#5eead4" stroke="#0c0f12" strokeWidth="2">
+            <title>{`${e.name}: ${e.score}%`}</title>
+          </circle>
+          <text x={x(i)} y={h - 4} fontSize="9" textAnchor="middle" fill="rgb(255 255 255 / 0.5)">{e.name}</text>
+        </g>
+      ))}
+      <text x={x(exams.length - 1)} y={y(72) - 10} fontSize="11" fontWeight="700" textAnchor="middle" fill="#fff">72%</text>
+    </svg>
+  );
+}
+
+export function StudentAnalyticsScreen() {
+  return (
+    <div className="grid grid-cols-1 gap-3 lg:grid-cols-[1.3fr_1fr]">
+      <Panel title="Ananya Reddy · Class 7B · Mathematics" action={<Pill tone="mint">↑ 14 pts since UT 3</Pill>}>
+        <TrendChart />
+        <p className="mt-2 text-[0.72rem] text-white/45">Teacher-approved results only · shared with class teacher and coordinator</p>
+      </Panel>
+      <div className="min-w-0 space-y-3">
+        <Panel title="Subjects this term">
+          <ul className="space-y-2.5 text-[0.8rem]">
+            {[
+              ["Mathematics", 72, "↑ +8"],
+              ["Science", 81, "↑ +3"],
+              ["English", 77, "→ 0"],
+              ["Social Studies", 63, "↓ −6"],
+            ].map(([sub, v, d]) => (
+              <li key={sub as string}>
+                <div className="mb-1 flex justify-between">
+                  <span className="text-white/85">{sub}</span>
+                  <span className="text-white/60">
+                    {v}% <span className={String(d).startsWith("↓") ? "font-semibold text-[#ff9f7a]" : "text-mint"}>{d}</span>
+                  </span>
+                </div>
+                <Bar value={v as number} tone={String(d).startsWith("↓") ? "gap" : "mint"} />
+              </li>
+            ))}
+          </ul>
+        </Panel>
+        <Panel title="Concepts to watch">
+          <ul className="space-y-2 text-[0.8rem]">
+            <li className="flex items-start justify-between gap-2">
+              <span className="text-white/80">Adding unlike denominators</span>
+              <Pill tone="gap">Needs attention · 2 exams</Pill>
+            </li>
+            <li className="flex items-start justify-between gap-2">
+              <span className="text-white/80">Equivalent fractions</span>
+              <Pill tone="ok">Secure</Pill>
+            </li>
+          </ul>
+        </Panel>
+      </div>
+    </div>
+  );
+}
+
+/* --------------------------------- Coordinator -------------------------------- */
+
+const sections = [
+  { name: "6A", avg: 78, delta: 4, pending: 0 },
+  { name: "6B", avg: 74, delta: 2, pending: 3 },
+  { name: "7A", avg: 71, delta: -1, pending: 0 },
+  { name: "7B", avg: 72, delta: 5, pending: 6 },
+  { name: "7C", avg: 58, delta: -7, pending: 2 },
+  { name: "8A", avg: 76, delta: 1, pending: 0 },
+];
+
+export function CoordinatorScreen() {
+  return (
+    <div className="space-y-3">
+      <div className="flex flex-wrap items-center gap-2 rounded-xl border border-white/[0.08] bg-white/[0.025] p-3">
+        <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-periwinkle/15 text-[0.7rem] font-bold text-periwinkle">RS</span>
+        <div className="mr-auto leading-tight">
+          <p className="text-[0.85rem] font-semibold text-white">Ms. R. Sharada · Mathematics coordinator</p>
+          <p className="text-[0.72rem] text-white/45">Mapped classes and sections, by curriculum</p>
+        </div>
+        <span className="rounded-full border border-mint/40 bg-mint/10 px-3 py-1 text-[0.72rem] font-semibold text-mint">CBSE · Classes 6–8 · 9 sections</span>
+        <span className="rounded-full border border-white/10 px-3 py-1 text-[0.72rem] font-semibold text-white/55">State Board · Classes 9–10 · 4 sections</span>
+      </div>
+      <div className="grid grid-cols-1 gap-3 lg:grid-cols-[1.35fr_1fr]">
+        <Panel title="Half-yearly · section performance" action={<span className="text-[0.72rem] text-white/45">vs last exam</span>}>
+          <table className="w-full text-left text-[0.8rem]">
+            <thead className="text-[0.66rem] uppercase tracking-[0.12em] text-white/45">
+              <tr>
+                <th className="pb-2 font-bold">Section</th>
+                <th className="pb-2 font-bold">Average</th>
+                <th className="pb-2 text-right font-bold">Change</th>
+                <th className="pb-2 text-right font-bold">Status</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/[0.06]">
+              {sections.map((sec) => {
+                const low = sec.avg < 65;
+                return (
+                  <tr key={sec.name}>
+                    <td className="py-2 font-semibold text-white">Class {sec.name}</td>
+                    <td className="w-[38%] py-2 pr-3">
+                      <div className="flex items-center gap-2">
+                        <div className="flex-1"><Bar value={sec.avg} tone={low ? "gap" : "mint"} /></div>
+                        <span className="w-8 text-white/70">{sec.avg}%</span>
+                      </div>
+                    </td>
+                    <td className={`py-2 text-right ${sec.delta < 0 ? "text-[#ff9f7a]" : "text-mint"}`}>
+                      {sec.delta > 0 ? "↑ +" : sec.delta < 0 ? "↓ −" : "→ "}
+                      {Math.abs(sec.delta)}
+                    </td>
+                    <td className="py-2 text-right">
+                      {low ? <Pill tone="gap">Below target</Pill> : sec.pending ? <Pill tone="review">{sec.pending} to review</Pill> : <Pill tone="ok">On track</Pill>}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </Panel>
+        <div className="min-w-0 space-y-3">
+          <Panel title="Common gaps across your sections">
+            <ul className="space-y-2.5 text-[0.8rem]">
+              {[
+                ["Adding unlike denominators", "5 of 9 sections"],
+                ["Word problems on ratios", "3 of 9 sections"],
+              ].map(([t, d]) => (
+                <li key={t} className="flex items-center justify-between gap-2">
+                  <span className="text-white/80">{t}</span>
+                  <span className="text-[0.72rem] font-semibold text-[#ff9f7a]">{d}</span>
+                </li>
+              ))}
+            </ul>
+          </Panel>
+          <Panel title="Needs your attention">
+            <p className="text-[0.8rem] leading-relaxed text-white/75">
+              <span className="font-semibold text-[#ff9f7a]">Class 7C</span> dropped 7 points since the quarterly exam.
+              12 students scored below 50% on fractions.
+            </p>
+          </Panel>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------- Head of school -------------------------------- */
+
+const grades = [
+  { g: "5", v: 79 },
+  { g: "6", v: 76 },
+  { g: "7", v: 68 },
+  { g: "8", v: 74 },
+  { g: "9", v: 71 },
+  { g: "10", v: 77 },
+];
+
+const heat = {
+  topics: ["Fractions", "Algebra", "Geometry", "Data handling"],
+  classes: ["6", "7", "8", "9"],
+  // % of students secure per topic × class (fictional)
+  values: [
+    [81, 46, 78, 84],
+    [72, 64, 58, 69],
+    [77, 71, 74, 62],
+    [85, 80, 79, 76],
+  ],
+};
+
+function heatStyle(v: number) {
+  // Single-hue sequential ramp (mint): higher mastery = stronger fill.
+  const alpha = 0.08 + ((v - 40) / 50) * 0.5;
+  return { backgroundColor: `rgb(94 234 212 / ${Math.max(0.06, Math.min(0.6, alpha)).toFixed(2)})` };
+}
+
+export function HeadOfSchoolScreen() {
+  return (
+    <div className="space-y-3">
+      <div className="grid grid-cols-2 gap-3 xl:grid-cols-4">
+        <Stat label="School average" value="74%" note="Half-yearly · all classes" icon="chart" accent="text-mint" />
+        <Stat label="Scripts evaluated" value="2,140" note="This term, teacher-approved" icon="evaluate" accent="text-periwinkle" />
+        <Stat label="Sections below target" value="3" note="Of 24 sections" icon="alert" accent="text-[#ff9f7a]" />
+        <Stat label="Need assistance" value="41" note="Students flagged by teachers" icon="student" accent="text-[#f7c46c]" />
+      </div>
+      <div className="grid grid-cols-1 gap-3 lg:grid-cols-[1fr_1.2fr]">
+        <Panel title="Average by class">
+          <div className="flex h-36 items-end gap-2" role="img" aria-label="Average by class: Class 5 79%, 6 76%, 7 68%, 8 74%, 9 71%, 10 77%.">
+            {grades.map((g) => (
+              <div key={g.g} className="flex flex-1 flex-col items-center gap-1.5" title={`Class ${g.g}: ${g.v}%`}>
+                <span className="text-[0.68rem] font-semibold text-white/70">{g.v}%</span>
+                <div
+                  className={`w-full max-w-9 rounded-t ${g.v < 70 ? "bg-[#ff9f7a]" : "bg-mint"}`}
+                  style={{ height: `${(g.v - 40) * 2.2}px` }}
+                />
+                <span className="text-[0.68rem] text-white/50">{g.g}</span>
+              </div>
+            ))}
+          </div>
+          <p className="mt-2 text-[0.7rem] text-white/45">Coral = below the 70% school target</p>
+        </Panel>
+        <Panel title="Topic mastery · % of students secure">
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[300px] border-separate border-spacing-[3px] text-center text-[0.75rem]">
+              <thead>
+                <tr>
+                  <th className="text-left text-[0.66rem] font-bold uppercase tracking-[0.12em] text-white/45">Topic</th>
+                  {heat.classes.map((c) => (
+                    <th key={c} className="text-[0.66rem] font-bold text-white/45">Class {c}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {heat.topics.map((t, r) => (
+                  <tr key={t}>
+                    <td className="pr-2 text-left text-white/80">{t}</td>
+                    {heat.values[r].map((v, c) => (
+                      <td
+                        key={c}
+                        title={`${t}, Class ${heat.classes[c]}: ${v}% secure`}
+                        className={`rounded-md py-2 font-semibold ${v < 60 ? "text-[#ffb89e] ring-1 ring-inset ring-[#ff9f7a]/60" : "text-white"}`}
+                        style={heatStyle(v)}
+                      >
+                        {v}
+                        {v < 60 && <span aria-label="needs attention">!</span>}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-2 text-[0.7rem] text-white/45">“!” marks topics under 60% — not being understood well</p>
+        </Panel>
+      </div>
+      <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
+        <Panel title="Lowest-scoring sections">
+          <ul className="divide-y divide-white/[0.06] text-[0.8rem]">
+            {[
+              ["Class 7C · Mathematics", "58%", "↓ 7"],
+              ["Class 9B · Physics", "61%", "↓ 3"],
+              ["Class 8D · English", "63%", "↓ 2"],
+            ].map(([n, v, d]) => (
+              <li key={n} className="flex items-center justify-between py-2">
+                <span className="text-white/85">{n}</span>
+                <span className="text-white/70">
+                  {v} <span className="font-semibold text-[#ff9f7a]">{d}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </Panel>
+        <Panel title="Students who need assistance">
+          <ul className="divide-y divide-white/[0.06] text-[0.8rem]">
+            {[
+              ["Pranav Kumar · 7C", "Fractions · 3 exams below 40%"],
+              ["Divya Sri · 9B", "Motion & force · declining trend"],
+              ["Harsha Vardhan · 8D", "Reading comprehension"],
+            ].map(([n, why]) => (
+              <li key={n} className="flex items-center justify-between gap-3 py-2">
+                <span className="font-semibold text-white">{n}</span>
+                <span className="text-right text-[0.72rem] text-white/55">{why}</span>
+              </li>
+            ))}
+          </ul>
+        </Panel>
+      </div>
+    </div>
+  );
+}
+
 /* ------------------------------- Parent WhatsApp ----------------------------- */
 
 export function ParentWhatsAppScreen() {
   return (
-    <div className="grid grid-cols-1 gap-3 lg:grid-cols-[1fr_0.9fr]">
-      <Panel title="Parent updates">
-        <ul className="divide-y divide-white/[0.06]">
-          {[
-            ["Ananya Reddy", "Class 7B · Fractions", "sent"],
-            ["Karthik Varma", "Class 9A · Physics", "sent"],
-            ["Meghana Naidu", "Class 7B · Fractions", "waiting"],
-            ["Imran Shaik", "Class 10A · English", "waiting"],
-          ].map(([n, m, s]) => (
-            <li key={n} className="flex items-center justify-between gap-3 py-2.5">
-              <div className="min-w-0">
-                <p className="truncate text-[0.85rem] font-semibold text-white">{n}</p>
-                <p className="text-[0.72rem] text-white/45">{m}</p>
-              </div>
-              {s === "sent" ? <Pill tone="ok">✓ Approved · sent</Pill> : <Pill tone="review">Awaiting approval</Pill>}
-            </li>
-          ))}
-        </ul>
-        <p className="mt-3 text-[0.75rem] text-white/50">Messages are drafted automatically and only sent after the teacher approves.</p>
-      </Panel>
+    <div className="grid grid-cols-1 gap-3 lg:grid-cols-[1fr_0.95fr]">
+      <div className="min-w-0 space-y-3">
+        <Panel title="Update schedule">
+          <ul className="grid gap-2 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+            {[
+              ["After each exam", "Marks + feedback"],
+              ["Weekly", "Progress summary"],
+              ["Monthly", "Report & trends"],
+            ].map(([t, d]) => (
+              <li key={t} className="rounded-lg border border-mint/25 bg-mint/[0.05] p-3">
+                <p className="text-[0.82rem] font-semibold text-white">{t}</p>
+                <p className="text-[0.72rem] text-white/50">{d}</p>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-3 flex items-center gap-2 text-[0.75rem] text-white/60">
+            <Icon name="teacher" size={15} className="text-accent" /> Every message is sent only after teacher approval.
+          </p>
+        </Panel>
+        <Panel title="Outbox">
+          <ul className="divide-y divide-white/[0.06]">
+            {[
+              ["Ananya Reddy", "Exam result · Fractions UT", "sent"],
+              ["Karthik Varma", "Weekly summary", "sent"],
+              ["Meghana Naidu", "Monthly report · September", "waiting"],
+              ["Imran Shaik", "Exam result · English", "waiting"],
+            ].map(([n, m, st]) => (
+              <li key={n} className="flex items-center justify-between gap-3 py-2.5">
+                <div className="min-w-0">
+                  <p className="truncate text-[0.85rem] font-semibold text-white">{n}</p>
+                  <p className="text-[0.72rem] text-white/45">{m}</p>
+                </div>
+                {st === "sent" ? <Pill tone="ok">✓ Approved · sent</Pill> : <Pill tone="review">Awaiting approval</Pill>}
+              </li>
+            ))}
+          </ul>
+        </Panel>
+      </div>
       <div className="min-w-0 overflow-hidden rounded-xl border border-white/[0.08] bg-[#0b141a]">
         <div className="flex items-center gap-3 bg-primary-strong px-4 py-3">
           <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-[0.7rem] font-bold text-white">KL</span>
@@ -405,18 +716,18 @@ export function ParentWhatsAppScreen() {
             <p className="text-[0.68rem] text-white/60">WhatsApp · to Ananya’s parent</p>
           </div>
         </div>
-        <div className="space-y-2 p-4">
-          <div className="max-w-[92%] rounded-xl rounded-tl-sm bg-[#1f2c34] px-3.5 py-2.5 text-[0.8rem] leading-relaxed text-white/90">
-            <p>Namaste! Ananya scored 6/10 in the fractions unit test.</p>
-            <p className="mt-1.5">
-              <span className="font-semibold text-mint">Doing well:</span> equivalent fractions.
-            </p>
-            <p className="mt-1.5">
-              <span className="font-semibold text-[#f7c46c]">Practise at home:</span> adding fractions with different
-              denominators — ask her to explain 1/2 + 1/3.
-            </p>
-            <p className="mt-1.5 text-right text-[0.65rem] text-white/45">✓ Approved by class teacher</p>
-          </div>
+        <div className="space-y-2.5 p-4 text-[0.78rem] leading-relaxed text-white/90">
+          {[
+            ["Exam result", "Fractions unit test: 6/10. Strong on equivalent fractions; practise adding fractions with different denominators."],
+            ["Weekly summary", "This week Ananya completed 2 assessments. Maths is improving — up 8 points."],
+            ["Monthly report", "September: average 72% (↑ from 64%). Focus for October: fractions and word problems."],
+          ].map(([tag, msg]) => (
+            <div key={tag} className="max-w-[94%] rounded-xl rounded-tl-sm bg-[#1f2c34] px-3.5 py-2.5">
+              <p className="mb-1 text-[0.66rem] font-bold uppercase tracking-[0.12em] text-mint">{tag}</p>
+              <p>{msg}</p>
+              <p className="mt-1 text-right text-[0.62rem] text-white/45">✓ Approved by class teacher</p>
+            </div>
+          ))}
         </div>
       </div>
     </div>

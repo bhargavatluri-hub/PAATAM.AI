@@ -26,6 +26,7 @@ const scenes = {
   "script-to-insight": 8.9,
   "agent-pipeline": 7.9,
   "bulk-stack": 6.9,
+  "learning-lifecycle": 11.0,
 };
 
 const SCALE = 1.5; // 1280×720 CSS px → 1920×1080 output

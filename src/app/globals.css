@@ -173,3 +173,12 @@ body:has(.theme-night) {
     transform: none;
   }
 }
+
+@keyframes lifecycleProgress {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}

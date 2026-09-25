@@ -6,6 +6,7 @@ import { ContactForm } from "../ContactForm";
 import { buttonClasses } from "../ui/Button";
 import { Icon, type IconName } from "../ui/Icon";
 import { Logo } from "../ui/Logo";
+import { LifecycleCarousel } from "./LifecycleCarousel";
 import { ModuleShowcase } from "./ModuleShowcase";
 import { ProductVideo } from "./ProductVideo";
 import { v2Nav } from "./nav";
@@ -55,7 +56,8 @@ export function V2Hero() {
         </h1>
         <p className="mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-white/65 md:text-xl">
           Paatam reads handwritten tests, homework and exams, drafts marks and feedback with six specialised AI agents,
-          and puts every result in front of the teacher for approval.
+          and puts every result in front of the teacher for approval — then keeps coordinators, the principal and
+          parents in the loop.
         </p>
         <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
           <a href="#contact" data-interest="demo" className={buttonClasses("inverted", "lg")}>
@@ -83,8 +85,8 @@ export function V2Hero() {
 const facts: { icon: IconName; title: string; body: string }[] = [
   { icon: "evaluate", title: "Tests, homework & exams", body: "Handwritten answer sheets, as your school uses them today." },
   { icon: "layers", title: "Six specialised agents", body: "Vision, OCR, verification, grading, QA — then the teacher." },
-  { icon: "stack", title: "Bulk stacks of 50–100", body: "Scan a whole section’s scripts in one go." },
   { icon: "teacher", title: "Teacher sign-off, always", body: "Nothing is final or shared until a teacher approves." },
+  { icon: "parent", title: "Every role connected", body: "Coordinators, the principal and parents each see what they need." },
 ];
 
 export function V2Facts() {
@@ -103,6 +105,36 @@ export function V2Facts() {
           </li>
         ))}
       </ul>
+    </section>
+  );
+}
+
+/* --------------------------------- Lifecycle -------------------------------- */
+
+export function V2Lifecycle() {
+  return (
+    <section id="lifecycle" aria-labelledby="v2-lifecycle-title" className="relative overflow-hidden py-20 md:py-28">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-40 top-40 h-[480px] w-[480px] rounded-full bg-[radial-gradient(closest-side,rgb(94_234_212/0.10),transparent)]"
+      />
+      <div className="container-page relative">
+        <Heading
+          id="v2-lifecycle-title"
+          eyebrow="The learning lifecycle"
+          title="From one answer sheet to a whole school’s insight."
+          intro="Paatam connects everyone who shapes a student’s learning — the student, the teacher, the coordinator, the Head of School and the parent — in one continuous loop."
+        />
+        <div className="mx-auto mt-12 max-w-5xl" data-reveal>
+          <ProductVideo
+            name="learning-lifecycle"
+            label="Animation: an assessment moves from the student to the teacher, who approves it, then to the coordinator, the Head of School dashboard and the parent on WhatsApp; insights loop back into the next lesson."
+          />
+        </div>
+        <div className="mt-16 rounded-3xl border border-white/[0.08] bg-white/[0.02] p-5 sm:p-8 lg:p-10" data-reveal>
+          <LifecycleCarousel />
+        </div>
+      </div>
     </section>
   );
 }
@@ -259,29 +291,57 @@ export function V2Teachers() {
 
 /* --------------------------------- Schools ---------------------------------- */
 
+const roles: { icon: IconName; title: string; body: string }[] = [
+  {
+    icon: "layers",
+    title: "Coordinators",
+    body: "Mapped to multiple classes and sections for each curriculum. Compare section performance, track trends and spot gaps shared across sections.",
+  },
+  {
+    icon: "chart",
+    title: "Head of School",
+    body: "A clear dashboard of school and class performance, topics not being understood, sections scoring low and students who need assistance.",
+  },
+  {
+    icon: "sparkPath",
+    title: "Student analytics",
+    body: "Every student’s performance across previous exams, subjects and concepts — easy for teachers and coordinators to follow.",
+  },
+  {
+    icon: "message",
+    title: "Parents on WhatsApp",
+    body: "Scores and feedback after every exam, plus weekly and monthly updates — each sent only after teacher approval.",
+  },
+];
+
 export function V2Schools() {
   return (
     <section id="schools" aria-labelledby="v2-schools-title" className="py-20 md:py-28">
-      <div className="container-page grid gap-10 lg:grid-cols-[1fr_1fr] lg:gap-16">
+      <div className="container-page">
         <Heading
           id="v2-schools-title"
           eyebrow="For schools"
-          title="Built for Indian classrooms. Starting in Andhra Pradesh."
-          intro="For principals and academic coordinators who want clearer academic visibility, support for their teachers and better parent communication — without changing how students write their exams."
+          title="Built for the whole school — from the classroom to the principal’s office."
+          intro="Built for Indian classrooms and starting in Andhra Pradesh, for schools serving Classes 5–10. Students keep writing by hand; everyone else gets the view they need."
         />
-        <div className="grid gap-4 sm:grid-cols-2" data-reveal>
-          {[
-            ["Classes 5–10", "Designed first for schools serving students in Classes 5–10."],
-            ["Your marking scheme", "Answer keys and rubrics from your own knowledge base."],
-            ["Paper stays paper", "Students keep writing by hand. Paatam starts from the scan."],
-            ["Pilot with us", "We’re inviting schools to shape Paatam with their teachers."],
-          ].map(([t, b]) => (
-            <div key={t} className="night-card rounded-2xl p-5">
-              <h3 className="font-display text-xl font-semibold text-white">{t}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-white/60">{b}</p>
-            </div>
+        <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {roles.map((r, i) => (
+            <li key={r.title} className="night-card rounded-2xl p-6" data-reveal style={revealDelay(i * 70)}>
+              <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-mint/10 text-mint">
+                <Icon name={r.icon} size={22} />
+              </span>
+              <h3 className="mt-5 font-display text-xl font-semibold text-white">{r.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-white/60">{r.body}</p>
+            </li>
           ))}
-        </div>
+        </ul>
+        <p className="mt-8 text-white/60" data-reveal>
+          <span className="font-semibold text-white">Pilot with us.</span> We’re inviting schools to shape Paatam with
+          their teachers, coordinators and leadership.{" "}
+          <a href="#contact" data-interest="pilot" className="font-semibold text-accent underline-offset-4 hover:underline">
+            Partner with Paatam →
+          </a>
+        </p>
       </div>
     </section>
   );

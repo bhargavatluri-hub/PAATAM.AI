@@ -7,6 +7,7 @@ import {
   V2Facts,
   V2Footer,
   V2Hero,
+  V2Lifecycle,
   V2Pipeline,
   V2Platform,
   V2Schools,
@@ -17,7 +18,7 @@ import {
 export const metadata: Metadata = {
   title: "The AI grading desk for Indian schools",
   description:
-    "Paatam reads handwritten tests, homework and exams, drafts marks and feedback with six specialised AI agents, and puts every result in front of the teacher for approval.",
+    "Paatam reads handwritten tests, homework and exams, drafts marks and feedback with six AI agents, and connects teachers, coordinators, principals and parents — with the teacher approving every result.",
   alternates: { canonical: "/v2" },
   robots: { index: false, follow: true },
 };
@@ -29,6 +30,7 @@ export default function HomeV2() {
       <main id="main">
         <V2Hero />
         <V2Facts />
+        <V2Lifecycle />
         <V2Platform />
         <V2Pipeline />
         <V2Bulk />

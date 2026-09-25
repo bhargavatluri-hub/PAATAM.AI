@@ -1,10 +1,13 @@
 "use client";
 
-import { useRef, useState, type KeyboardEvent, type ReactNode } from "react";
+import { Fragment, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 import { LogoMark } from "../ui/Logo";
 import { Icon, type IconName } from "../ui/Icon";
 import {
   ClassesScreen,
+  CoordinatorScreen,
+  HeadOfSchoolScreen,
+  StudentAnalyticsScreen,
   ExamGeneratorScreen,
   KnowledgeBaseScreen,
   OverviewScreen,
@@ -16,7 +19,7 @@ type Module = {
   id: string;
   label: string;
   icon: IconName;
-  group: "desk" | "portals";
+  group: "desk" | "leadership" | "portals";
   title: string;
   subtitle: string;
   summary: string;
@@ -48,6 +51,17 @@ const modules: Module[] = [
     screen: <ClassesScreen />,
   },
   {
+    id: "student-analytics",
+    label: "Student Analytics",
+    icon: "sparkPath",
+    group: "desk",
+    title: "Student Analytics",
+    subtitle: "Every student’s journey across past exams",
+    summary: "Each student’s performance is tracked across exams, subjects and concepts, so teachers and coordinators can spot progress — or a slide — early.",
+    points: ["Score trends across exams", "Subject and concept history", "Shared with teacher and coordinator"],
+    screen: <StudentAnalyticsScreen />,
+  },
+  {
     id: "knowledge-base",
     label: "Knowledge Base",
     icon: "book",
@@ -70,6 +84,28 @@ const modules: Module[] = [
     screen: <ExamGeneratorScreen />,
   },
   {
+    id: "coordinator",
+    label: "Coordinator",
+    icon: "layers",
+    group: "leadership",
+    title: "Coordinator view",
+    subtitle: "Every mapped class and section, by curriculum",
+    summary: "Coordinators are mapped to multiple classes and sections, separately for each curriculum. They compare section performance and see gaps shared across sections.",
+    points: ["Mapped by curriculum, class and section", "Section-by-section comparison", "Common gaps and pending reviews"],
+    screen: <CoordinatorScreen />,
+  },
+  {
+    id: "head-of-school",
+    label: "Head of School",
+    icon: "chart",
+    group: "leadership",
+    title: "Head of School dashboard",
+    subtitle: "The whole school’s learning, at a glance",
+    summary: "Principals see school-wide and class-wise performance, which topics aren’t being understood, which sections are scoring low, and which students need assistance.",
+    points: ["School and class performance", "Topic mastery heatmap", "Low sections and students to support"],
+    screen: <HeadOfSchoolScreen />,
+  },
+  {
     id: "student-portal",
     label: "Student Portal",
     icon: "student",
@@ -86,9 +122,9 @@ const modules: Module[] = [
     icon: "message",
     group: "portals",
     title: "Parent WhatsApp",
-    subtitle: "Teacher-approved updates, where parents already are",
-    summary: "Short, understandable progress updates are drafted for every parent and sent on WhatsApp only after the teacher approves.",
-    points: ["Drafted automatically", "Sent only after approval", "Practical tips for home"],
+    subtitle: "Exam, weekly and monthly updates — after teacher approval",
+    summary: "Parents receive scores and feedback on WhatsApp after every exam, plus weekly summaries and monthly reports. Each one is sent only after the teacher approves it.",
+    points: ["After every exam", "Weekly and monthly reports", "Sent only after teacher approval"],
     screen: <ParentWhatsAppScreen />,
   },
 ];
@@ -151,11 +187,16 @@ export function ModuleShowcase() {
             onKeyDown={onKeyDown}
             className="flex gap-1 overflow-x-auto p-2 [scrollbar-width:none] lg:flex-1 lg:flex-col lg:overflow-visible lg:p-3"
           >
-            {modules.filter((m) => m.group === "desk").map((m) => tab(m, modules.indexOf(m)))}
-            <p aria-hidden="true" className="hidden px-3 pb-1 pt-4 text-[0.62rem] font-bold uppercase tracking-[0.16em] text-white/50 lg:block">
-              Portals &amp; extras
-            </p>
-            {modules.filter((m) => m.group === "portals").map((m) => tab(m, modules.indexOf(m)))}
+            {(["desk", "leadership", "portals"] as const).map((group) => (
+              <Fragment key={group}>
+                {group !== "desk" && (
+                  <p aria-hidden="true" className="hidden px-3 pb-1 pt-4 text-[0.62rem] font-bold uppercase tracking-[0.16em] text-white/50 lg:block">
+                    {group === "leadership" ? "School leadership" : "Portals & extras"}
+                  </p>
+                )}
+                {modules.filter((m) => m.group === group).map((m) => tab(m, modules.indexOf(m)))}
+              </Fragment>
+            ))}
           </div>
           <p className="hidden items-center gap-2 border-t border-white/[0.07] px-5 py-4 text-xs text-white/50 lg:flex">
             <span className="h-2 w-2 rounded-full bg-[#4ade80] shadow-[0_0_10px_#4ade80]" aria-hidden="true" />

@@ -107,7 +107,8 @@ src/
 
 A dark "night" redesign lives at **`/v2`**, alongside the original homepage at `/`, which is unchanged. It's marked `noindex` until you decide which version to launch.
 
-- **Product modules:** an interactive, accessible showcase of the grading desk (Overview, Classes, Knowledge Base, Exam Generator, Student Portal, Parent WhatsApp) in `src/components/v2/ModuleShowcase.tsx` and `ModuleScreens.tsx`. All data shown is fictional.
+- **Product modules:** an interactive, accessible showcase of the grading desk (Overview, Classes, Student Analytics, Knowledge Base, Exam Generator, Coordinator, Head of School, Student Portal, Parent WhatsApp) in `src/components/v2/ModuleShowcase.tsx` and `ModuleScreens.tsx`. All data shown is fictional.
+- **Learning lifecycle:** Student → Teacher → Coordinator → Head of School → Parent, as a video plus an auto-advancing, pausable carousel (`LifecycleCarousel.tsx`); auto-advance is off for reduced-motion users.
 - **Product videos:** `public/videos/*.mp4` (H.264), `*.webm` (VP9 fallback) and `*.jpg` posters. Videos autoplay muted only when motion is allowed, pause off-screen, and always have a pause/play control.
 - **Regenerating videos:** the videos are rendered from deterministic HTML scenes in `scripts/videos/`:
 

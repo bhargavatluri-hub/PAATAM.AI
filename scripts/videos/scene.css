@@ -54,7 +54,7 @@ body { font-family: "Figtree", system-ui, sans-serif; color: #e8edf0; -webkit-fo
   font-size: 17px; font-weight: 600; color: #fff;
 }
 .caption .num { width: 30px; height: 30px; border-radius: 999px; background: #f0a53a; color: #07090b; display: grid; place-items: center; font-size: 14px; font-weight: 700; }
-.brand { position: absolute; right: 56px; bottom: 40px; font-family: "Fraunces", serif; font-weight: 600; font-size: 20px; color: rgba(255,255,255,.85); }
-.brand span { color: #f0a53a; }
+.brand { position: absolute; right: 52px; bottom: 30px; height: 40px; opacity: .92; }
+.brand svg { display: block; height: 40px; width: auto; }
 .cursor { position: absolute; width: 26px; height: 26px; pointer-events: none; z-index: 50; filter: drop-shadow(0 4px 8px rgba(0,0,0,.6)); }
 .ring { position: absolute; width: 44px; height: 44px; border-radius: 999px; border: 2px solid #f0a53a; z-index: 49; }

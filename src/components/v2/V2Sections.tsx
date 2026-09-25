@@ -5,7 +5,7 @@ import { siteConfig } from "@/config/site";
 import { ContactForm } from "../ContactForm";
 import { buttonClasses } from "../ui/Button";
 import { Icon, type IconName } from "../ui/Icon";
-import { Logo } from "../ui/Logo";
+import { Emblem } from "../ui/Logo";
 import { LifecycleCarousel } from "./LifecycleCarousel";
 import { ModuleShowcase } from "./ModuleShowcase";
 import { ProductVideo } from "./ProductVideo";
@@ -393,9 +393,9 @@ export function V2Footer() {
   return (
     <footer className="border-t border-white/[0.07] bg-black text-white/55">
       <div className="container-page flex flex-col gap-8 py-12 md:flex-row md:items-start md:justify-between">
-        <div className="max-w-sm">
-          <Logo inverted />
-          <p className="mt-4 text-sm leading-relaxed">
+        <div className="flex max-w-md items-center gap-6">
+          <Emblem className="h-28 w-28 shrink-0 text-white/90" label="Paatam logo" />
+          <p className="text-sm leading-relaxed">
             The AI grading desk for Indian schools — turning handwritten assessments into learning intelligence, with
             teachers always in control.
           </p>

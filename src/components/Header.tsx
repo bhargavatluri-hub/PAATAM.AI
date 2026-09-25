@@ -74,7 +74,7 @@ export function Header() {
     >
       <div className="container-page flex h-16 items-center justify-between gap-6 md:h-[4.5rem]">
         <a href="#top" className="rounded-md" aria-label="Paatam.ai — back to top">
-          <Logo />
+          <Logo className="h-10 md:h-12" />
         </a>
 
         <nav aria-label="Primary" className="hidden lg:block">

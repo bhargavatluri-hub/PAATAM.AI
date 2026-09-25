@@ -37,6 +37,13 @@
   --color-redpen: #b3261e;
   --color-ruling: #c9dbe8;
 
+  /* v2 "night" theme (used by /v2 only) */
+  --color-night: #07090b;
+  --color-night-2: #0c0f12;
+  --color-night-3: #12161b;
+  --color-mint: #5eead4;
+  --color-periwinkle: #aab4ff;
+
   --font-sans: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
   --font-hand: var(--font-kalam), "Comic Sans MS", cursive;
@@ -111,6 +118,25 @@
   }
 }
 
+/* v2 night theme: keep overscroll areas dark and default text light. */
+body:has(.theme-night) {
+  background-color: var(--color-night);
+}
+@layer components {
+  .night-card {
+    background: linear-gradient(180deg, rgb(255 255 255 / 0.05), rgb(255 255 255 / 0.02));
+    border: 1px solid rgb(255 255 255 / 0.09);
+    box-shadow: 0 30px 80px -40px rgb(0 0 0 / 0.9), inset 0 1px 0 rgb(255 255 255 / 0.05);
+  }
+  .night-grid {
+    background-image:
+      linear-gradient(rgb(255 255 255 / 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(ellipse at 50% 0%, #000 20%, transparent 70%);
+  }
+}
+
 /* Scroll-reveal: content is visible by default; only animated when JS and motion are allowed. */
 @media (prefers-reduced-motion: no-preference) {
   .js [data-reveal] {
@@ -134,5 +160,16 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }

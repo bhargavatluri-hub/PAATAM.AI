@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Agent pipeline</title>
+<link rel="stylesheet" href="scene.css" />
+<script src="scene.js"></script>
+<style>
+  #title { left: 70px; top: 64px; }
+  #list { left: 70px; top: 130px; width: 640px; }
+  .agent { position: relative; display: grid; grid-template-columns: 44px 1fr auto; gap: 16px; align-items: center; height: 72px; padding: 0 18px; margin-bottom: 10px; border-radius: 14px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.03); overflow: hidden; }
+  .agent .n { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; font-weight: 700; font-size: 15px; background: rgba(255,255,255,.06); color: rgba(232,237,240,.7); }
+  .agent .t { font-weight: 700; font-size: 17px; }
+  .agent .d { font-size: 13.5px; margin-top: 3px; color: rgba(232,237,240,.6); }
+  .agent .bar { position: absolute; left: 0; bottom: 0; height: 3px; background: linear-gradient(90deg, #2dd4bf, #7c8cff); }
+  .state { font-size: 13px; font-weight: 700; }
+  #result { left: 760px; top: 130px; width: 450px; padding: 24px 26px; }
+  .line { display: flex; justify-content: space-between; align-items: center; padding: 13px 0; border-top: 1px solid rgba(255,255,255,.07); font-size: 16px; }
+  #sheet { left: 1040px; top: 70px; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="title" class="abs">
+    <div class="label">Agent pipeline</div>
+    <div style="font-size:30px;font-weight:700;margin-top:8px">Six specialised agents. <span style="color:#f0a53a">One teacher decides.</span></div>
+  </div>
+  <div id="list" class="abs"></div>
+
+  <div id="result" class="abs card">
+    <div class="label">Script · Ananya Reddy · Class 7B</div>
+    <div style="display:flex;align-items:baseline;justify-content:space-between;margin-top:10px">
+      <div style="font-size:20px;font-weight:700">Mathematics · Fractions</div>
+      <div id="total" style="font-family:Fraunces,serif;font-size:40px;font-weight:600">–</div>
+    </div>
+    <div style="margin-top:14px" id="lines"></div>
+    <div id="status" style="margin-top:18px"></div>
+  </div>
+
+  <div id="ring" class="ring"></div>
+  <div id="cursor" class="cursor"></div>
+  <div class="caption"><span class="num" id="capn">1</span><span id="capt"></span></div>
+  <div class="brand">Paatam<span>.ai</span></div>
+</div>
+<script>
+  window.SCENE = { duration: 9, fps: 30 };
+  $("cursor").innerHTML = CURSOR_SVG;
+  const agents = [
+    ["Vision Agent", "Handwritten script scan ingested"],
+    ["OCR + Structure Agent", "3 answer blocks transcribed"],
+    ["Answer Verification Agent", "Checked against rubric & answer key"],
+    ["Subject Grading Agent", "Graded with the Unit Test knowledge base"],
+    ["QA Agent", "Consistency checks · 1 answer flagged for attention"],
+    ["Teacher Review", "Awaiting teacher approval"],
+  ];
+  const START = 0.6, STEP = 0.95, RUN = 0.75;
+  $("list").innerHTML = agents.map(([t, d], i) => `
+    <div class="agent" id="a${i}">
+      <div class="n" id="n${i}">${i + 1}</div>
+      <div><div class="t">${t}</div><div class="d" id="d${i}">${d}</div></div>
+      <div class="state" id="s${i}"></div>
+      <div class="bar" id="b${i}"></div>
+    </div>`).join("");
+  const lines = [["Q1 · Equivalent fractions", "3/3"], ["Q2 · Adding unlike denominators", "0/4"], ["Q3 · Equivalent fractions", "3/3"]];
+  $("lines").innerHTML = lines.map(([l, m], i) => `<div class="line" id="l${i}"><span>${l}</span><span class="chip ai" id="m${i}">AI ${m}</span></div>`).join("");
+
+  window.render = (t) => {
+    const D = SCENE.duration;
+    loopFade(t, D);
+    const approveAt = 7.35;
+    const approved = t >= approveAt;
+    let active = 0;
+
+    agents.forEach((_, i) => {
+      const s = START + i * STEP;
+      const a = $("a" + i), n = $("n" + i), st = $("s" + i), bar = $("b" + i);
+      const appear = p(t, 0.1 + i * 0.08, 0.5 + i * 0.08);
+      a.style.opacity = appear;
+      a.style.transform = `translateX(${lerp(-24, 0, appear)}px)`;
+      const isTeacher = i === agents.length - 1;
+      const running = t >= s && t < s + RUN;
+      const done = isTeacher ? approved : t >= s + RUN;
+      if (t >= s) active = i;
+      bar.style.width = isTeacher ? "0" : `${100 * lin(t, s, s + RUN)}%`;
+      bar.style.opacity = done ? 0 : 1;
+      if (isTeacher && t >= s) {
+        a.style.borderColor = approved ? "rgba(126,226,168,.55)" : "rgba(247,196,108,.6)";
+        a.style.background = approved ? "rgba(34,197,94,.10)" : "rgba(240,165,58,.10)";
+        n.style.background = approved ? "#1c7148" : "#f0a53a";
+        n.style.color = approved ? "#fff" : "#07090b";
+        st.innerHTML = approved ? '<span class="chip ok">✓ Approved</span>' : '<span class="chip warn">Your review</span>';
+        $("d" + i).textContent = approved ? "Approved by Ms. K. Lakshmi" : "Awaiting teacher approval";
+      } else if (done) {
+        a.style.borderColor = "rgba(45,212,191,.35)";
+        a.style.background = "rgba(45,212,191,.06)";
+        n.style.background = "#0e5a5f"; n.style.color = "#fff";
+        st.innerHTML = '<span style="color:#5eead4">✓ Done</span>';
+      } else if (running) {
+        a.style.borderColor = "rgba(124,140,255,.5)";
+        a.style.background = "rgba(124,140,255,.07)";
+        n.style.background = "rgba(124,140,255,.2)"; n.style.color = "#c7ceff";
+        st.innerHTML = '<span style="color:#aab4ff">Running…</span>';
+      } else {
+        a.style.borderColor = "rgba(255,255,255,.08)";
+        a.style.background = "rgba(255,255,255,.03)";
+        n.style.background = "rgba(255,255,255,.06)"; n.style.color = "rgba(232,237,240,.7)";
+        st.innerHTML = '<span class="muted">Queued</span>';
+      }
+    });
+
+    // Result card builds as grading completes
+    const rp = p(t, 0.4, 1.0);
+    set("result", { opacity: rp, transform: `translateY(${lerp(16, 0, rp)}px)` });
+    lines.forEach((_, i) => {
+      const o = p(t, START + 3 * STEP + 0.1 + i * 0.18, START + 3 * STEP + 0.5 + i * 0.18);
+      $("l" + i).style.opacity = o;
+      const m = $("m" + i);
+      m.className = "chip " + (approved ? "ok" : "ai");
+      m.textContent = (approved ? "✓ " : "AI ") + lines[i][1];
+    });
+    const qa = t >= START + 4 * STEP + RUN;
+    $("l1").style.boxShadow = qa && !approved ? "inset 3px 0 0 #f7c46c" : "none";
+    $("l1").style.paddingLeft = qa && !approved ? "12px" : "0";
+    const graded = t >= START + 3 * STEP + 0.7;
+    $("total").innerHTML = graded ? `6<span class="muted" style="font-size:20px">/10</span>` : "–";
+    $("status").innerHTML = approved
+      ? '<span class="chip ok">✓ Final · shared with student &amp; parent</span>'
+      : graded ? '<span class="chip ai">Draft · needs teacher review</span>' : '<span class="chip" style="color:rgba(232,237,240,.6);border:1px solid rgba(255,255,255,.12)">Processing…</span>';
+
+    // Cursor approves at the Teacher Review row
+    const target = { x: 640, y: 130 + 5 * 82 + 36 };
+    const cm = p(t, 6.5, 7.2);
+    set("cursor", { left: lerp(1000, target.x, cm) + "px", top: lerp(680, target.y, cm) + "px", opacity: t > 6.4 && t < 8.3 ? 1 : 0 });
+    const rk = lin(t, approveAt, approveAt + 0.5);
+    set("ring", { left: target.x - 22 + "px", top: target.y - 22 + "px", opacity: rk > 0 && rk < 1 ? 1 - rk : 0, transform: `scale(${lerp(0.4, 1.6, rk)})` });
+
+    $("capn").textContent = Math.min(active + 1, 6);
+    $("capt").textContent = approved ? "Final only after the teacher approves" : agents[active][0] + " — " + (active === 5 ? "the teacher has the final word" : agents[active][1].toLowerCase());
+  };
+</script>
+</body>
+</html>

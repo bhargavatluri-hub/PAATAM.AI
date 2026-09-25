@@ -98,3 +98,7 @@ src/
 2. **Contact:** set `CONTACT_WEBHOOK_URL`, and optionally `NEXT_PUBLIC_CONTACT_EMAIL`.
 3. **Domain:** set `NEXT_PUBLIC_SITE_URL` so canonical and social URLs are correct.
 4. **Photography (optional):** the site uses no stock imagery. If you add real classroom photos, use images you have rights to and consent for, and never identifiable student work.
+
+## Deploying on Vercel
+
+`vercel.json` pins the framework to **Next.js** (with `npm ci` / `npm run build`), so the project deploys correctly even if Vercel's project settings were saved with a different framework preset (for example, when the project was imported before the code existed). Set the environment variables above under **Project → Settings → Environment Variables**, then redeploy.

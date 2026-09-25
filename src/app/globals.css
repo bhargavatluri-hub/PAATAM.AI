@@ -1,0 +1,138 @@
+@import "tailwindcss";
+
+/*
+ * Paatam design tokens
+ * --------------------
+ * Palette: a deep "slate-teal" for trust and clarity, a marigold accent for
+ * warmth, and a warm paper neutral that echoes the answer sheets the product
+ * starts from. Product states are semantic and used consistently:
+ *   ai       — an AI suggestion that still needs a teacher's review
+ *   approved — a result a teacher has reviewed and approved
+ *   gap      — a learning gap / area to strengthen
+ */
+@theme {
+  --color-ink: #12242b;
+  --color-ink-soft: #33454c;
+  --color-muted: #55656b;
+  --color-paper: #faf7f1;
+  --color-paper-deep: #f3eee4;
+  --color-surface: #ffffff;
+  --color-line: #e6dfd2;
+  --color-line-strong: #d3cabb;
+
+  --color-primary: #0e5a5f;
+  --color-primary-strong: #0a4246;
+  --color-primary-soft: #e2efed;
+
+  --color-accent: #f0a53a;
+  --color-accent-strong: #9a5d0c;
+  --color-accent-soft: #fcefd8;
+
+  --color-ai: #4553a0;
+  --color-ai-soft: #eceefa;
+  --color-approved: #1c7148;
+  --color-approved-soft: #e3f2e9;
+  --color-gap: #a84a22;
+  --color-gap-soft: #fbece3;
+  --color-redpen: #b3261e;
+  --color-ruling: #c9dbe8;
+
+  --font-sans: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-hand: var(--font-kalam), "Comic Sans MS", cursive;
+  --font-telugu: var(--font-noto-telugu), var(--font-figtree), sans-serif;
+
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+
+  --shadow-card: 0 1px 2px rgb(18 36 43 / 0.05), 0 8px 24px -12px rgb(18 36 43 / 0.18);
+  --shadow-lift: 0 2px 4px rgb(18 36 43 / 0.06), 0 24px 48px -24px rgb(18 36 43 / 0.35);
+}
+
+@layer base {
+  html {
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: var(--color-accent-soft);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+@layer components {
+  .container-page {
+    width: 100%;
+    max-width: 76rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .container-page {
+      padding-inline: 2rem;
+    }
+  }
+
+  /* Ruled answer-sheet paper, used by the handwritten visuals. */
+  .ruled-paper {
+    background-color: #fffdf8;
+    background-image:
+      linear-gradient(to right, transparent 2.75rem, rgb(179 38 30 / 0.35) 2.75rem, rgb(179 38 30 / 0.35) calc(2.75rem + 1px), transparent calc(2.75rem + 1px)),
+      repeating-linear-gradient(to bottom, transparent 0, transparent calc(2rem - 1px), var(--color-ruling) calc(2rem - 1px), var(--color-ruling) 2rem);
+    background-position: 0 1.25rem;
+  }
+
+  /* Dashed outline marks anything the AI has only suggested. */
+  .ai-suggested {
+    border: 1.5px dashed color-mix(in srgb, var(--color-ai) 55%, transparent);
+    background-color: var(--color-ai-soft);
+  }
+}
+
+/* Scroll-reveal: content is visible by default; only animated when JS and motion are allowed. */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal] {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity 600ms cubic-bezier(0.2, 0.7, 0.2, 1),
+      transform 600ms cubic-bezier(0.2, 0.7, 0.2, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  .js [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

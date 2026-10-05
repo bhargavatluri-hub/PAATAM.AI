@@ -111,6 +111,13 @@
     background-position: 0 1.25rem;
   }
 
+  /* Page-header backdrop: faint ruled lines, without the margin line that would cross the text. */
+  .ruled-lines {
+    background-color: #fffdf8;
+    background-image: repeating-linear-gradient(to bottom, transparent 0, transparent calc(2rem - 1px), var(--color-ruling) calc(2rem - 1px), var(--color-ruling) 2rem);
+    background-position: 0 1.25rem;
+  }
+
   /* Dashed outline marks anything the AI has only suggested. */
   .ai-suggested {
     border: 1.5px dashed color-mix(in srgb, var(--color-ai) 55%, transparent);

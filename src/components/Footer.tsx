@@ -23,7 +23,7 @@ export function Footer() {
           <ul className="mt-4 space-y-2.5">
             {navItems.map((item) => (
               <li key={item.href}>
-                <Link href={`/${item.href}`} className="hover:text-white">
+                <Link href={item.href} className="hover:text-white">
                   {item.label}
                 </Link>
               </li>
@@ -40,12 +40,12 @@ export function Footer() {
           <h2 className="text-sm font-semibold uppercase tracking-[0.14em] text-white">Contact</h2>
           <ul className="mt-4 space-y-2.5">
             <li>
-              <Link href="/#contact" className="hover:text-white">
+              <Link href="/contact?interest=demo" className="hover:text-white">
                 Request a school demo
               </Link>
             </li>
             <li>
-              <Link href="/#contact" className="hover:text-white">
+              <Link href="/contact?interest=pilot" className="hover:text-white">
                 Partner on a pilot
               </Link>
             </li>

@@ -89,7 +89,7 @@ export function ForSchools() {
               </li>
             ))}
           </ol>
-          <ButtonLink href="#contact" data-interest="pilot" className="mt-8 w-full">
+          <ButtonLink href="/contact?interest=pilot" className="mt-8 w-full">
             Partner With Paatam
             <Icon name="arrowRight" size={18} />
           </ButtonLink>

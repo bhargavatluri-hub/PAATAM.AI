@@ -72,14 +72,18 @@ The form collects only what's needed to follow up and asks visitors not to share
 src/
   app/
     layout.tsx            Fonts, global metadata (SEO, Open Graph, Twitter)
-    page.tsx              Home page: section order + JSON-LD (Organization, FAQPage)
+    page.tsx              Home: hero, problem, links to every page, FAQ + JSON-LD (Organization, FAQPage)
+    product/              Platform overview with the narrated demo video and product tour
+    how-it-works/, for-schools/, for-teachers/, about/, contact/, demo/
+                          One page each, built from the components in sections/
     api/contact/route.ts  Enquiry endpoint
     privacy/, terms/      Placeholder legal pages (see below)
     opengraph-image.tsx   Generated 1200×630 social image
     icon.svg, robots.ts, sitemap.ts, not-found.tsx
   components/
-    Header.tsx, Footer.tsx, ContactForm.tsx, LegalPage.tsx
-    sections/             One component per page section
+    Header.tsx, Footer.tsx, SiteShell.tsx, ContactForm.tsx, LegalPage.tsx
+    PageHero.tsx, CtaBand.tsx, ExploreGrid.tsx, DemoVideo.tsx   Shared page building blocks
+    sections/             One component per section, composed into pages
     ui/                   Button, Section, Icon, Logo, StatusChip, RevealObserver
     visuals/AnswerSheet.tsx  Illustrative handwritten answer sheet (HTML, no images)
   config/site.ts          Site name, copy constants, nav, env-driven contact details

@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { navItems } from "@/config/site";
 import { ButtonLink } from "./ui/Button";
@@ -7,6 +9,7 @@ import { Icon } from "./ui/Icon";
 import { Logo } from "./ui/Logo";
 
 export function Header() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const toggleRef = useRef<HTMLButtonElement>(null);
@@ -53,7 +56,7 @@ export function Header() {
       }
     };
     const onResize = () => {
-      if (window.matchMedia("(min-width: 1024px)").matches) close(false);
+      if (window.matchMedia("(min-width: 1280px)").matches) close(false);
     };
     document.addEventListener("keydown", onKeyDown);
     window.addEventListener("resize", onResize);
@@ -73,20 +76,23 @@ export function Header() {
       }`}
     >
       <div className="container-page flex h-16 items-center justify-between gap-6 md:h-[4.5rem]">
-        <a href="#top" className="rounded-md" aria-label="Paatam.ai — back to top">
+        <Link href="/" className="rounded-md" aria-label="Paatam.ai — home">
           <Logo className="h-10 md:h-12" />
-        </a>
+        </Link>
 
-        <nav aria-label="Primary" className="hidden lg:block">
+        <nav aria-label="Primary" className="hidden xl:block">
           <ul className="flex items-center gap-1">
             {navItems.map((item) => (
               <li key={item.href}>
-                <a
+                <Link
                   href={item.href}
-                  className="rounded-full px-3.5 py-2 text-[0.95rem] font-medium text-ink-soft transition-colors hover:bg-paper-deep hover:text-ink"
+                  aria-current={pathname === item.href ? "page" : undefined}
+                  className={`rounded-full px-3 py-2 text-[0.95rem] font-medium transition-colors hover:bg-paper-deep hover:text-ink ${
+                    pathname === item.href ? "bg-paper-deep text-ink" : "text-ink-soft"
+                  }`}
                 >
                   {item.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
@@ -94,14 +100,14 @@ export function Header() {
 
         <div className="flex items-center gap-2">
           <div className="hidden sm:block">
-            <ButtonLink href="#contact" data-interest="demo">
+            <ButtonLink href="/contact?interest=demo">
               Request a Demo
             </ButtonLink>
           </div>
           <button
             ref={toggleRef}
             type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-line-strong bg-surface text-ink lg:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-line-strong bg-surface text-ink xl:hidden"
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? "Close menu" : "Open menu"}
@@ -116,26 +122,28 @@ export function Header() {
         id="mobile-menu"
         ref={panelRef}
         hidden={!open}
-        className="border-t border-line bg-paper lg:hidden"
+        className="border-t border-line bg-paper xl:hidden"
       >
         <nav aria-label="Mobile" className="container-page flex max-h-[calc(100dvh-4rem)] flex-col overflow-y-auto py-4">
           <ul className="flex flex-col">
             {navItems.map((item) => (
               <li key={item.href}>
-                <a
+                <Link
                   href={item.href}
                   onClick={() => close(false)}
-                  className="flex items-center justify-between border-b border-line py-4 text-lg font-medium text-ink"
+                  aria-current={pathname === item.href ? "page" : undefined}
+                  className={`flex items-center justify-between border-b border-line py-4 text-lg font-medium ${
+                    pathname === item.href ? "text-primary" : "text-ink"
+                  }`}
                 >
                   {item.label}
                   <Icon name="arrowRight" size={18} className="text-muted" />
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
           <ButtonLink
-            href="#contact"
-            data-interest="pilot"
+            href="/contact?interest=pilot"
             size="lg"
             className="mt-6 w-full"
             onClick={() => close(false)}

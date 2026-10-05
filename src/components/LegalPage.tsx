@@ -39,7 +39,7 @@ export function LegalPage({ title, children }: { title: string; children: ReactN
         ) : (
           <p className="mt-10 text-muted">
             Questions? Use the{" "}
-            <Link href="/#contact" className="font-semibold text-primary underline-offset-4 hover:underline">
+            <Link href="/contact" className="font-semibold text-primary underline-offset-4 hover:underline">
               contact form
             </Link>
             .

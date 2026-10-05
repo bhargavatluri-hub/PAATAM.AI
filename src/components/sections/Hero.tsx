@@ -37,11 +37,11 @@ export function Hero() {
             teachers identify learning gaps, guide every student, and keep parents connected.
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-            <ButtonLink href="#contact" data-interest="demo" size="lg">
+            <ButtonLink href="/contact?interest=demo" size="lg">
               Request a School Demo
               <Icon name="arrowRight" size={18} />
             </ButtonLink>
-            <ButtonLink href="#how-it-works" variant="secondary" size="lg">
+            <ButtonLink href="/how-it-works" variant="secondary" size="lg">
               See How It Works
             </ButtonLink>
           </div>

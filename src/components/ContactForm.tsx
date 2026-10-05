@@ -36,7 +36,15 @@ export function ContactForm({ configured, contactEmail }: ContactFormProps) {
   const [state, setState] = useState<SubmitState>({ kind: "idle" });
   const [messageLength, setMessageLength] = useState(0);
 
-  // CTA links anywhere on the page carry data-interest="demo|pilot" to preselect the enquiry type.
+  // Links from other pages arrive as /contact?interest=demo|pilot.
+  useEffect(() => {
+    const value = new URLSearchParams(window.location.search).get("interest");
+    // Read after hydration (the page is static), so server and client render the same default first.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (value && interests.some((i) => i.value === value)) setInterest(value as Interest);
+  }, []);
+
+  // CTA links on the same page carry data-interest="demo|pilot" to preselect the enquiry type.
   useEffect(() => {
     const onClick = (event: MouseEvent) => {
       const link = (event.target as HTMLElement | null)?.closest<HTMLElement>("[data-interest]");

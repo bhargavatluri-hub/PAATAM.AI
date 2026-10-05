@@ -27,9 +27,11 @@ export const siteConfig = {
 } as const;
 
 export const navItems = [
-  { label: "Product", href: "#product" },
-  { label: "How It Works", href: "#how-it-works" },
-  { label: "For Schools", href: "#for-schools" },
-  { label: "Our Vision", href: "#vision" },
-  { label: "Contact", href: "#contact" },
+  { label: "Product", href: "/product" },
+  { label: "How It Works", href: "/how-it-works" },
+  { label: "For Schools", href: "/for-schools" },
+  { label: "For Teachers", href: "/for-teachers" },
+  { label: "About", href: "/about" },
+  { label: "Demo", href: "/demo" },
+  { label: "Contact", href: "/contact" },
 ] as const;

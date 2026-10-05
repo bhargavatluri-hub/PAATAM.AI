@@ -10,7 +10,7 @@ type PageHeroProps = {
 /** The opening band of every inner page: eyebrow, the page's only <h1>, and a short intro. */
 export function PageHero({ eyebrow, title, intro, children }: PageHeroProps) {
   return (
-    <section className="ruled-paper border-b border-line">
+    <section className="ruled-lines border-b border-line">
       <div className="container-page pb-14 pt-14 md:pb-20 md:pt-20">
         <p className="mb-4 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.14em] text-primary">
           <span aria-hidden="true" className="h-px w-6 bg-current" />

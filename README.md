@@ -33,7 +33,7 @@ All configuration is through environment variables. Nothing sensitive is hard-co
 
 | Variable                    | Scope  | Purpose                                                                                                                             |
 | --------------------------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------- |
-| `NEXT_PUBLIC_SITE_URL`      | public | Canonical origin for canonical links, sitemap, robots and social previews. Defaults to `http://localhost:3000`.                     |
+| `NEXT_PUBLIC_SITE_URL`      | public | Canonical origin for canonical links, sitemap, robots and social previews. Defaults to `https://www.paatam.in`.                       |
 | `NEXT_PUBLIC_CONTACT_EMAIL` | public | Enquiry email shown in the contact section, footer and legal pages. Hidden when empty.                                              |
 | `CONTACT_WEBHOOK_URL`       | server | Where enquiries are delivered. Each submission is POSTed as JSON. **Required for the form to send anything.**                       |
 | `CONTACT_WEBHOOK_SECRET`    | server | Optional. Sent as `Authorization: Bearer <secret>` to the webhook.                                                                  |

@@ -15,7 +15,7 @@ export function LegalPage({ title, children }: { title: string; children: ReactN
       <header className="border-b border-line">
         <div className="container-page flex h-16 items-center justify-between">
           <Link href="/" className="rounded-md" aria-label="Paatam.ai home">
-            <Logo />
+            <Logo className="h-10" />
           </Link>
           <Link href="/" className="text-sm font-semibold text-primary hover:underline">
             ← Back to home

@@ -22,7 +22,7 @@ const structuredData = {
       "@type": "Organization",
       name: siteConfig.name,
       url: siteConfig.url,
-      logo: `${siteConfig.url}/icon.svg`,
+      logo: `${siteConfig.url}/brand/paatam-logo.svg`,
       description: siteConfig.description,
       ...(siteConfig.contactEmail ? { email: siteConfig.contactEmail } : {}),
     },

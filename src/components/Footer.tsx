@@ -9,7 +9,7 @@ export function Footer() {
       <div className="container-page grid gap-12 py-16 md:grid-cols-[1.4fr_1fr_1fr]">
         <div className="max-w-sm">
           <Link href="/" className="inline-block rounded-md" aria-label="Paatam.ai home">
-            <Logo inverted />
+            <Logo inverted className="h-14" />
           </Link>
           <p className="mt-5 leading-relaxed">
             A teacher-first learning intelligence platform that turns handwritten assessments into actionable insights

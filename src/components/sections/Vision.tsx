@@ -1,4 +1,5 @@
 import { revealDelay } from "@/lib/reveal";
+import { Emblem } from "../ui/Logo";
 import { Section, SectionHeading } from "../ui/Section";
 
 const horizon = [
@@ -43,11 +44,14 @@ export function Vision() {
               families.
             </p>
           </div>
-          <blockquote className="mt-10 border-l-4 border-accent pl-5" data-reveal>
-            <p className="font-display text-2xl font-medium leading-snug text-ink md:text-3xl">
-              Every assessment is an opportunity to understand a student better.
-            </p>
-          </blockquote>
+          <div className="mt-10 flex items-center gap-6" data-reveal>
+            <Emblem className="h-24 w-24 shrink-0 text-ink md:h-28 md:w-28" label="Paatam logo" />
+            <blockquote className="border-l-4 border-accent pl-5">
+              <p className="font-display text-2xl font-medium leading-snug text-ink md:text-3xl">
+                Every assessment is an opportunity to understand a student better.
+              </p>
+            </blockquote>
+          </div>
         </div>
 
         <ol className="space-y-4 self-center">

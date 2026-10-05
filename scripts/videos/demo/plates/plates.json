@@ -1,0 +1,333 @@
+{
+  "dsf": 3,
+  "modules": {
+    "overview": {
+      "w": 1152,
+      "h": 738.71875,
+      "title": "Grading command centre",
+      "subtitle": "Multi-agent marking for handwritten tests, homework and exams",
+      "sidebar": {
+        "x": 1,
+        "y": 1,
+        "w": 232,
+        "h": 736.71875
+      },
+      "tab": {
+        "x": 13,
+        "y": 90,
+        "w": 207,
+        "h": 40
+      },
+      "panels": [
+        {
+          "title": "Subject performance",
+          "x": 253,
+          "y": 219.265625,
+          "w": 497.484375,
+          "h": 186.828125
+        },
+        {
+          "title": "Recent submissions",
+          "x": 253,
+          "y": 418.09375,
+          "w": 497.484375,
+          "h": 299.625
+        },
+        {
+          "title": "Agent pipeline",
+          "x": 762.484375,
+          "y": 219.265625,
+          "w": 368.515625,
+          "h": 498.453125
+        }
+      ],
+      "stats": {
+        "x": 253,
+        "y": 102,
+        "w": 878,
+        "h": 105.265625
+      }
+    },
+    "classes": {
+      "w": 1152,
+      "h": 577.75,
+      "title": "Classes",
+      "subtitle": "Every section, subject and student at a glance",
+      "sidebar": {
+        "x": 1,
+        "y": 1,
+        "w": 232,
+        "h": 575.75
+      },
+      "tab": {
+        "x": 13,
+        "y": 134,
+        "w": 207,
+        "h": 40
+      },
+      "panels": [
+        {
+          "title": "Your classes",
+          "x": 253,
+          "y": 102,
+          "w": 402.78125,
+          "h": 388.125
+        },
+        {
+          "title": "Class 7B · Fractions · concept mastery",
+          "x": 667.78125,
+          "y": 102,
+          "w": 463.203125,
+          "h": 388.125
+        }
+      ],
+      "stats": null
+    },
+    "student-analytics": {
+      "w": 1152,
+      "h": 577.75,
+      "title": "Student Analytics",
+      "subtitle": "Every student’s journey across past exams",
+      "sidebar": {
+        "x": 1,
+        "y": 1,
+        "w": 232,
+        "h": 575.75
+      },
+      "tab": {
+        "x": 13,
+        "y": 178,
+        "w": 207,
+        "h": 40
+      },
+      "panels": [
+        {
+          "title": "Ananya Reddy · Class 7B · Mathematics",
+          "x": 253,
+          "y": 102,
+          "w": 489.46875,
+          "h": 360.390625
+        },
+        {
+          "title": "Subjects this term",
+          "x": 754.46875,
+          "y": 102,
+          "w": 376.53125,
+          "h": 212.75
+        },
+        {
+          "title": "Concepts to watch",
+          "x": 754.46875,
+          "y": 326.75,
+          "w": 376.53125,
+          "h": 135.640625
+        }
+      ],
+      "stats": null
+    },
+    "knowledge-base": {
+      "w": 1152,
+      "h": 577.75,
+      "title": "Knowledge Base",
+      "subtitle": "Your answer keys and rubrics, used for every evaluation",
+      "sidebar": {
+        "x": 1,
+        "y": 1,
+        "w": 232,
+        "h": 575.75
+      },
+      "tab": {
+        "x": 13,
+        "y": 222,
+        "w": 207,
+        "h": 40
+      },
+      "panels": [
+        {
+          "title": "Answer keys & rubrics",
+          "x": 253,
+          "y": 102,
+          "w": 453.609375,
+          "h": 299.625
+        },
+        {
+          "title": "Rubric · Q2 · Add 2/3 + 1/4",
+          "x": 718.609375,
+          "y": 102,
+          "w": 412.390625,
+          "h": 299.625
+        }
+      ],
+      "stats": null
+    },
+    "exam-generator": {
+      "w": 1152,
+      "h": 577.75,
+      "title": "Exam Generator",
+      "subtitle": "Draft question papers from your syllabus",
+      "sidebar": {
+        "x": 1,
+        "y": 1,
+        "w": 232,
+        "h": 575.75
+      },
+      "tab": {
+        "x": 13,
+        "y": 266,
+        "w": 207,
+        "h": 40
+      },
+      "panels": [
+        {
+          "title": "Paper settings",
+          "x": 253,
+          "y": 102,
+          "w": 346.390625,
+          "h": 397.109375
+        },
+        {
+          "title": "Generated paper · draft",
+          "x": 611.390625,
+          "y": 102,
+          "w": 519.609375,
+          "h": 397.109375
+        }
+      ],
+      "stats": null
+    },
+    "head-of-school": {
+      "w": 1152,
+      "h": 701.6875,
+      "title": "Head of School dashboard",
+      "subtitle": "The whole school’s learning, at a glance",
+      "sidebar": {
+        "x": 1,
+        "y": 1,
+        "w": 232,
+        "h": 699.6875
+      },
+      "tab": {
+        "x": 13,
+        "y": 348.875,
+        "w": 207,
+        "h": 40
+      },
+      "panels": [
+        {
+          "title": "Average by class",
+          "x": 253,
+          "y": 234.484375,
+          "w": 393.625,
+          "h": 260.640625
+        },
+        {
+          "title": "Topic mastery · % of students secure",
+          "x": 658.625,
+          "y": 234.484375,
+          "w": 472.375,
+          "h": 260.640625
+        },
+        {
+          "title": "Lowest-scoring sections",
+          "x": 253,
+          "y": 507.125,
+          "w": 433,
+          "h": 173.5625
+        },
+        {
+          "title": "Students who need assistance",
+          "x": 698,
+          "y": 507.125,
+          "w": 433,
+          "h": 173.5625
+        }
+      ],
+      "stats": {
+        "x": 253,
+        "y": 102,
+        "w": 878,
+        "h": 120.484375
+      }
+    },
+    "student-portal": {
+      "w": 1152,
+      "h": 577.75,
+      "title": "Student Portal",
+      "subtitle": "Feedback students can understand and act on",
+      "sidebar": {
+        "x": 1,
+        "y": 1,
+        "w": 232,
+        "h": 575.75
+      },
+      "tab": {
+        "x": 13,
+        "y": 431.75,
+        "w": 207,
+        "h": 40
+      },
+      "panels": [
+        {
+          "title": "Hi Ananya 👋 · Unit Test · Fractions",
+          "x": 253,
+          "y": 102,
+          "w": 433,
+          "h": 359.625
+        },
+        {
+          "title": "Practise next",
+          "x": 698,
+          "y": 102,
+          "w": 433,
+          "h": 359.625
+        }
+      ],
+      "stats": null
+    },
+    "parent-whatsapp": {
+      "w": 1152,
+      "h": 593.578125,
+      "title": "Parent WhatsApp",
+      "subtitle": "Exam, weekly and monthly updates — after teacher approval",
+      "sidebar": {
+        "x": 1,
+        "y": 1,
+        "w": 232,
+        "h": 591.578125
+      },
+      "tab": {
+        "x": 13,
+        "y": 475.75,
+        "w": 207,
+        "h": 40
+      },
+      "panels": [
+        {
+          "title": "Update schedule",
+          "x": 253,
+          "y": 102,
+          "w": 444.09375,
+          "h": 158.953125
+        },
+        {
+          "title": "Outbox",
+          "x": 253,
+          "y": 272.953125,
+          "w": 444.09375,
+          "h": 299.625
+        }
+      ],
+      "stats": null
+    }
+  },
+  "hero": {
+    "w": 1920,
+    "h": 1080,
+    "h1": {
+      "x": 512,
+      "y": 214,
+      "w": 896,
+      "h": 146.875
+    }
+  }
+}

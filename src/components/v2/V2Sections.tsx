@@ -67,6 +67,9 @@ export function V2Hero() {
             Explore the platform
           </a>
         </div>
+        <Link href="/demo" className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-mint hover:text-white">
+          <Icon name="play" size={16} /> Watch the product demo (1:37)
+        </Link>
 
         <div className="relative mx-auto mt-14 max-w-5xl" data-reveal>
           <div aria-hidden="true" className="absolute -inset-px rounded-[1.1rem] bg-gradient-to-b from-white/20 via-white/5 to-transparent" />

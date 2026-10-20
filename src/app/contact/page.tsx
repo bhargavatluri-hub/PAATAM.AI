@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <SiteShell>
+    <SiteShell footerEnquiry={false}>
       <PageHero
         eyebrow="Contact"
         title="Talk to the Paatam team."

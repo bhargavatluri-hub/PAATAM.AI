@@ -1,4 +1,4 @@
-import { siteConfig } from "@/config/site";
+import { activeSocialLinks, business, siteConfig } from "@/config/site";
 import { CtaBand } from "@/components/CtaBand";
 import { ExploreGrid } from "@/components/ExploreGrid";
 import { SiteShell } from "@/components/SiteShell";
@@ -15,7 +15,22 @@ const structuredData = {
       url: siteConfig.url,
       logo: `${siteConfig.url}/brand/paatam-logo.svg`,
       description: siteConfig.description,
+      ...(business.legalName ? { legalName: business.legalName } : {}),
       ...(siteConfig.contactEmail ? { email: siteConfig.contactEmail } : {}),
+      ...(business.phone ? { telephone: business.phone } : {}),
+      ...(business.address.street
+        ? {
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: [business.address.street, business.address.locality].filter(Boolean).join(", "),
+              addressLocality: business.address.city,
+              addressRegion: business.address.state,
+              postalCode: business.address.postalCode,
+              addressCountry: "IN",
+            },
+          }
+        : {}),
+      ...(activeSocialLinks().length ? { sameAs: activeSocialLinks().map((s) => s.href) } : {}),
     },
     {
       "@type": "FAQPage",

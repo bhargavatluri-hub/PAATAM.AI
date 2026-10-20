@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { siteConfig } from "@/config/site";
+import { addressLines, business, siteConfig } from "@/config/site";
 import { Footer } from "./Footer";
 import { Logo } from "./ui/Logo";
 
@@ -44,6 +44,12 @@ export function LegalPage({ title, children }: { title: string; children: ReactN
             </Link>
             .
           </p>
+        )}
+        {addressLines().length > 0 && (
+          <address className="mt-6 not-italic text-muted">
+            <span className="block font-semibold text-ink">{business.legalName || siteConfig.name}</span>
+            {addressLines().join(", ")}
+          </address>
         )}
       </main>
       <Footer />

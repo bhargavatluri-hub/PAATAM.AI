@@ -4,12 +4,12 @@ import { Header } from "./Header";
 import { RevealObserver } from "./ui/RevealObserver";
 
 /** Header, main landmark and footer shared by every page of the light site. */
-export function SiteShell({ children }: { children: ReactNode }) {
+export function SiteShell({ children, footerEnquiry = true }: { children: ReactNode; footerEnquiry?: boolean }) {
   return (
     <>
       <Header />
       <main id="main">{children}</main>
-      <Footer />
+      <Footer showEnquiry={footerEnquiry} />
       <RevealObserver />
     </>
   );

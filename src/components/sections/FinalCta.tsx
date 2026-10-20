@@ -1,4 +1,5 @@
 import { siteConfig } from "@/config/site";
+import { ContactDetails, SocialLinks } from "../ContactDetails";
 import { ContactForm } from "../ContactForm";
 import { buttonClasses } from "../ui/Button";
 import { Icon } from "../ui/Icon";
@@ -46,15 +47,10 @@ export function FinalCta() {
               <Icon name="student" size={20} className="mt-0.5 shrink-0 text-accent" />
               For schools serving Classes 5–10, starting in Andhra Pradesh.
             </li>
-            {siteConfig.contactEmail && (
-              <li className="flex gap-3">
-                <Icon name="mail" size={20} className="mt-0.5 shrink-0 text-accent" />
-                <a href={`mailto:${siteConfig.contactEmail}`} className="font-semibold text-white underline-offset-4 hover:underline">
-                  {siteConfig.contactEmail}
-                </a>
-              </li>
-            )}
           </ul>
+
+          <ContactDetails className="mt-10 border-t border-white/15 pt-10" />
+          <SocialLinks className="mt-8" />
         </div>
 
         <ContactForm configured={configured} contactEmail={siteConfig.contactEmail} />

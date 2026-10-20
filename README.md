@@ -33,7 +33,7 @@ All configuration is through environment variables. Nothing sensitive is hard-co
 
 | Variable                    | Scope  | Purpose                                                                                                                             |
 | --------------------------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------- |
-| `NEXT_PUBLIC_SITE_URL`      | public | Canonical origin for canonical links, sitemap, robots and social previews. Defaults to `https://www.paatam.in`.                       |
+| `NEXT_PUBLIC_SITE_URL`      | public | Canonical origin for canonical links, sitemap, robots and social previews. Defaults to `https://www.paatam.ai`.                       |
 | `NEXT_PUBLIC_CONTACT_EMAIL` | public | Optional. Overrides the primary enquiry email; otherwise the first of `business.emails` in `src/config/site.ts` is used.            |
 | `RESEND_API_KEY`            | server | Emails each enquiry to the team and sends the visitor an acknowledgement, via [Resend](https://resend.com). See below.               |
 | `ENQUIRY_FROM`              | server | Optional sender for enquiry emails. Defaults to `Paatam.ai <enquiries@paatam.in>`; its domain must be verified in Resend.            |

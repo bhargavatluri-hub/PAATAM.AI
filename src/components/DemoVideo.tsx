@@ -13,9 +13,11 @@ export function DemoVideo({ className = "" }: DemoVideoProps) {
           playsInline
           preload="metadata"
           poster="/videos/paatam-demo.jpg"
-          aria-label="Paatam.ai product demo with teacher voice-over"
+          aria-label="Paatam.ai product demo, narrated by a teacher in Indian English"
         >
+          {/* H.264 for Safari and most browsers; VP9 fallback for browsers without H.264. */}
           <source src="/videos/paatam-demo.mp4" type="video/mp4" />
+          <source src="/videos/paatam-demo.webm" type="video/webm" />
           <track kind="captions" src="/videos/paatam-demo.vtt" srcLang="en" label="English" />
           Your browser can’t play this video.{" "}
           <a href="/videos/paatam-demo.mp4" className="underline">

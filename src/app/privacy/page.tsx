@@ -1,24 +1,133 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { LegalPage } from "@/components/LegalPage";
+import { addressLines, business, contactEmails, siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "Privacy information for the Paatam.ai website.",
+  description: "How Paatam.ai collects, uses and protects personal data shared through this website.",
   alternates: { canonical: "/privacy" },
-  robots: { index: false, follow: true },
 };
 
 export default function PrivacyPage() {
+  const company = business.legalName || siteConfig.name;
+  const [grievanceEmail] = contactEmails();
+
   return (
-    <LegalPage title="Privacy Policy">
-      <p>In the meantime, here is what this website does with information you share.</p>
+    <LegalPage title="Privacy Policy" updated="20 October 2026">
       <p>
-        The enquiry form asks for your name, a work email or phone number, your school’s name, your role, your city,
-        and an optional message. We use these details only to respond to your enquiry.
+        This policy explains how {company} (“Paatam”, “we”, “us”) handles personal data shared through this website,
+        in line with India’s Digital Personal Data Protection Act, 2023 (the “DPDP Act”) and the rules made under it.
+      </p>
+
+      <h2>Who we are</h2>
+      <p>
+        {company} is the data fiduciary for personal data collected through this website. Our registered office is at{" "}
+        {addressLines().join(", ")}.
+      </p>
+
+      <h2>What we collect</h2>
+      <ul>
+        <li>
+          <strong>Enquiry form:</strong> your name, work email, phone number (optional), school name, role, city or
+          town, the kind of enquiry, and any message you write.
+        </li>
+        <li>
+          <strong>Emails and calls:</strong> what you share when you write to us, call us or message us on WhatsApp.
+        </li>
+        <li>
+          <strong>Technical data:</strong> our hosting provider records standard server logs, such as IP address,
+          browser type and pages requested. We use these only to keep the website secure and working, for example to
+          block spam.
+        </li>
+      </ul>
+      <p>
+        This website does not use advertising or analytics cookies, and it does not track you across other websites.
       </p>
       <p>
-        The form is for school enquiries only. Please don’t submit student names, assessment documents or other
-        student records through this website.
+        <strong>Please don’t share student information through this website.</strong> The enquiry form is for schools
+        and educators only. It is not meant for children, and we do not knowingly collect children’s personal data
+        through it.
+      </p>
+
+      <h2>Why we use it</h2>
+      <ul>
+        <li>To reply to your enquiry, arrange a demo or discuss a pilot with your school.</li>
+        <li>To send you an email confirming that we received your enquiry.</li>
+        <li>To keep a record of our conversations with your school.</li>
+        <li>To protect the website against misuse, and to meet our legal obligations.</li>
+      </ul>
+      <p>
+        When you submit the form you consent to this use. We do not sell your personal data or use it for unrelated
+        marketing. If we would like to send you product updates, we will ask for your consent separately.
+      </p>
+
+      <h2>Who we share it with</h2>
+      <p>We share personal data only with service providers who process it on our behalf, under contract:</p>
+      <ul>
+        <li>
+          <strong>Vercel Inc.</strong> hosts this website.
+        </li>
+        <li>
+          <strong>Resend</strong> delivers enquiry and confirmation emails.
+        </li>
+        <li>Our business email provider stores the emails we exchange with you.</li>
+      </ul>
+      <p>
+        Some of these providers may process data outside India. Where they do, we rely on transfers permitted under the
+        DPDP Act. We may also disclose data where the law requires it.
+      </p>
+
+      <h2>How long we keep it</h2>
+      <p>
+        We keep enquiry details for as long as we are in conversation with your school, and for up to 24 months after
+        our last contact, unless the law requires us to keep them longer. After that we delete them.
+      </p>
+
+      <h2>How we protect it</h2>
+      <p>
+        Data is sent over encrypted connections (HTTPS), and access is limited to the people at Paatam who need it to
+        respond to you. No method of transmission or storage is completely secure, but we take reasonable safeguards
+        and will notify you and the Data Protection Board of India of a personal data breach as the law requires.
+      </p>
+
+      <h2>Your rights</h2>
+      <p>Under the DPDP Act, you can:</p>
+      <ul>
+        <li>ask for a summary of the personal data we hold about you and how we use it;</li>
+        <li>ask us to correct, complete, update or erase it;</li>
+        <li>withdraw your consent at any time (this does not affect anything we did before you withdrew it);</li>
+        <li>nominate another person to exercise these rights on your behalf; and</li>
+        <li>raise a grievance with us, and, if you are not satisfied with our response, with the Data Protection Board of India.</li>
+      </ul>
+      <p>
+        To use any of these rights, email us{grievanceEmail ? <> at <a href={`mailto:${grievanceEmail}`}>{grievanceEmail}</a></> : <> through the <Link href="/contact">contact page</Link></>}.
+        We will respond within the time set by law.
+      </p>
+
+      <h2>Grievance Officer</h2>
+      <p>
+        Grievance Officer, {company}
+        <br />
+        {addressLines().join(", ")}
+        {grievanceEmail && (
+          <>
+            <br />
+            Email: <a href={`mailto:${grievanceEmail}`}>{grievanceEmail}</a>
+          </>
+        )}
+      </p>
+
+      <h2>The Paatam platform</h2>
+      <p>
+        This policy covers this website only. When a school uses the Paatam platform, student and staff data is
+        processed under a separate agreement with that school, which explains how the data is handled.
+      </p>
+
+      <h2>Changes to this policy</h2>
+      <p>
+        We may update this policy from time to time. The “last updated” date above shows when it last changed. For
+        significant changes, we will post a clear notice on this website.
       </p>
     </LegalPage>
   );

@@ -1,12 +1,13 @@
 import { siteConfig } from "@/config/site";
+import { deliveryConfigured } from "@/lib/enquiry-email";
 import { ContactDetails, SocialLinks } from "../ContactDetails";
 import { ContactForm } from "../ContactForm";
 import { buttonClasses } from "../ui/Button";
 import { Icon } from "../ui/Icon";
 
 export function FinalCta() {
-  // Read on the server; the webhook URL itself never reaches the browser.
-  const configured = Boolean(process.env.CONTACT_WEBHOOK_URL?.trim());
+  // Read on the server; delivery secrets never reach the browser.
+  const configured = deliveryConfigured();
 
   return (
     <section id="contact" aria-labelledby="contact-title" className="bg-primary-strong py-20 md:py-28">

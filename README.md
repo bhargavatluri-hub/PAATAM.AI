@@ -34,22 +34,34 @@ All configuration is through environment variables. Nothing sensitive is hard-co
 | Variable                    | Scope  | Purpose                                                                                                                             |
 | --------------------------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------- |
 | `NEXT_PUBLIC_SITE_URL`      | public | Canonical origin for canonical links, sitemap, robots and social previews. Defaults to `https://www.paatam.in`.                       |
-| `NEXT_PUBLIC_CONTACT_EMAIL` | public | Enquiry email shown in the contact section, footer and legal pages. Hidden when empty.                                              |
-| `CONTACT_WEBHOOK_URL`       | server | Where enquiries are delivered. Each submission is POSTed as JSON. **Required for the form to send anything.**                       |
+| `NEXT_PUBLIC_CONTACT_EMAIL` | public | Optional. Overrides the primary enquiry email; otherwise the first of `business.emails` in `src/config/site.ts` is used.            |
+| `RESEND_API_KEY`            | server | Emails each enquiry to the team and sends the visitor an acknowledgement, via [Resend](https://resend.com). See below.               |
+| `ENQUIRY_FROM`              | server | Optional sender for enquiry emails. Defaults to `Paatam.ai <enquiries@paatam.in>`; its domain must be verified in Resend.            |
+| `ENQUIRY_TO`                | server | Optional comma-separated team inboxes. Defaults to `business.emails` in `src/config/site.ts`.                                       |
+| `CONTACT_WEBHOOK_URL`       | server | Optional. Each enquiry is also POSTed here as JSON (e.g. a Google Sheet or CRM). The form needs this or `RESEND_API_KEY` to send. |
 | `CONTACT_WEBHOOK_SECRET`    | server | Optional. Sent as `Authorization: Bearer <secret>` to the webhook.                                                                  |
 
 The home page is statically prerendered, so changes to these variables take effect on the next build or deploy.
 
 ### Contact form delivery
 
-`POST /api/contact` (`src/app/api/contact/route.ts`) validates each enquiry with the same rules as the browser (`src/lib/contact.ts`), then forwards it to `CONTACT_WEBHOOK_URL`:
+`POST /api/contact` (`src/app/api/contact/route.ts`) validates each enquiry with the same rules as the browser (`src/lib/contact.ts`), then:
+
+1. **Emails the team** (`src/lib/enquiry-email.ts`), with reply-to set to the visitor, when `RESEND_API_KEY` is set.
+2. **POSTs it to `CONTACT_WEBHOOK_URL`**, when set.
+3. Once the team has it by either route, **emails the visitor an acknowledgement** (best effort; replies go to the team).
+
+Setting up email: create a Resend account, add and verify the sending domain (`paatam.in`) by adding the DNS records Resend shows, create an API key with sending access, set `RESEND_API_KEY` in Vercel and redeploy.
+
+The webhook payload looks like this:
 
 ```json
 {
   "source": "paatam.ai website",
   "submittedAt": "2026-01-01T10:00:00.000Z",
   "name": "…",
-  "contact": "email or phone",
+  "email": "…",
+  "phone": "… (optional, may be empty)",
   "school": "…",
   "role": "Principal / Head of school",
   "city": "…",
@@ -60,7 +72,7 @@ The home page is statically prerendered, so changes to these variables take effe
 
 Any endpoint that accepts a JSON POST works, for example a CRM intake URL, an automation-tool webhook (Zapier, Make, n8n), a Google Apps Script web app, or your own backend.
 
-- **Not configured:** the form shows a notice, and on submit it tells the visitor the enquiry was *not* sent. It never shows a false success.
+- **Not configured** (neither `RESEND_API_KEY` nor `CONTACT_WEBHOOK_URL`): the form shows a notice, and on submit it tells the visitor the enquiry was *not* sent. It never shows a false success.
 - **Delivery fails:** the visitor sees an error and can retry.
 - **Spam:** a hidden honeypot field plus best-effort in-memory rate limiting (5 requests per 10 minutes per IP, per server instance). Add platform-level protection (WAF or bot protection) in production.
 
@@ -77,7 +89,7 @@ src/
     how-it-works/, for-schools/, for-teachers/, about/, contact/, demo/
                           One page each, built from the components in sections/
     api/contact/route.ts  Enquiry endpoint
-    privacy/, terms/      Placeholder legal pages (see below)
+    privacy/, terms/      Draft Privacy Policy and Terms of Service (see below)
     opengraph-image.tsx   Generated 1200×630 social image
     icon.svg, robots.ts, sitemap.ts, not-found.tsx
   components/
@@ -86,8 +98,9 @@ src/
     sections/             One component per section, composed into pages
     ui/                   Button, Section, Icon, Logo, StatusChip, RevealObserver
     visuals/AnswerSheet.tsx  Illustrative handwritten answer sheet (HTML, no images)
-  config/site.ts          Site name, copy constants, nav, env-driven contact details
+  config/site.ts          Site name, nav, business details (address, phone, emails) and social links
   lib/contact.ts          Shared form schema + validation
+  lib/enquiry-email.ts    Team notification and acknowledgement emails (Resend)
 ```
 
 ## Content and claims policy
@@ -98,8 +111,8 @@ src/
 
 ## Still to do before launch
 
-1. **Legal:** `/privacy` and `/terms` are placeholders that say the full policies are being prepared. Replace them with reviewed policy text. Both pages are `noindex` until then.
-2. **Contact:** set `CONTACT_WEBHOOK_URL`, and optionally `NEXT_PUBLIC_CONTACT_EMAIL`.
+1. **Legal:** `/privacy` and `/terms` contain draft policies written for the DPDP Act, 2023. Have them reviewed by a lawyer before launch.
+2. **Contact:** set `RESEND_API_KEY` (and/or `CONTACT_WEBHOOK_URL`). Business details and social links live in `src/config/site.ts`.
 3. **Domain:** set `NEXT_PUBLIC_SITE_URL` so canonical and social URLs are correct.
 4. **Photography (optional):** the site uses no stock imagery. If you add real classroom photos, use images you have rights to and consent for, and never identifiable student work.
 

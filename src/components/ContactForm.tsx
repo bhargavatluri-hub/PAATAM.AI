@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import {
   interests,
@@ -21,12 +22,12 @@ type SubmitState =
   | { kind: "error"; message: string };
 
 type ContactFormProps = {
-  /** Whether a delivery destination (CONTACT_WEBHOOK_URL) is configured on the server. */
+  /** Whether enquiry delivery (Resend email or a webhook) is configured on the server. */
   configured: boolean;
   contactEmail?: string;
 };
 
-const FIELD_ORDER: (keyof ContactPayload)[] = ["name", "contact", "school", "role", "city", "message"];
+const FIELD_ORDER: (keyof ContactPayload)[] = ["name", "email", "phone", "school", "role", "city", "message"];
 
 export function ContactForm({ configured, contactEmail }: ContactFormProps) {
   const formRef = useRef<HTMLFormElement>(null);
@@ -136,7 +137,7 @@ export function ContactForm({ configured, contactEmail }: ContactFormProps) {
         </span>
         <h3 className="mt-5 font-display text-2xl font-semibold text-ink">Thank you — we’ve received your enquiry.</h3>
         <p className="mt-3 leading-relaxed text-muted">
-          Someone from the Paatam team will get back to you using the contact details you shared.
+          We’ve sent a confirmation to your email, and someone from the Paatam team will get back to you soon.
         </p>
         <Button variant="secondary" className="mt-6" onClick={() => setState({ kind: "idle" })}>
           Send another enquiry
@@ -200,8 +201,11 @@ export function ContactForm({ configured, contactEmail }: ContactFormProps) {
         <Field id={fieldId("name")} label="Your name" error={errors.name}>
           <input id={fieldId("name")} name="name" type="text" autoComplete="name" maxLength={100} {...a11y("name", errors)} className={inputClass(errors.name)} />
         </Field>
-        <Field id={fieldId("contact")} label="Work email or phone" error={errors.contact}>
-          <input id={fieldId("contact")} name="contact" type="text" autoComplete="email" maxLength={120} {...a11y("contact", errors)} className={inputClass(errors.contact)} />
+        <Field id={fieldId("email")} label="Work email" error={errors.email}>
+          <input id={fieldId("email")} name="email" type="email" inputMode="email" autoComplete="email" maxLength={120} {...a11y("email", errors)} className={inputClass(errors.email)} />
+        </Field>
+        <Field id={fieldId("phone")} label="Phone" optional error={errors.phone}>
+          <input id={fieldId("phone")} name="phone" type="tel" inputMode="tel" autoComplete="tel" maxLength={20} {...a11y("phone", errors)} className={inputClass(errors.phone)} />
         </Field>
         <Field id={fieldId("school")} label="School name" error={errors.school}>
           <input id={fieldId("school")} name="school" type="text" autoComplete="organization" maxLength={150} {...a11y("school", errors)} className={inputClass(errors.school)} />
@@ -218,7 +222,7 @@ export function ContactForm({ configured, contactEmail }: ContactFormProps) {
             ))}
           </select>
         </Field>
-        <Field id={fieldId("city")} label="City or town" error={errors.city} className="sm:col-span-2">
+        <Field id={fieldId("city")} label="City or town" error={errors.city}>
           <input id={fieldId("city")} name="city" type="text" autoComplete="address-level2" maxLength={80} {...a11y("city", errors)} className={inputClass(errors.city)} />
         </Field>
         <Field
@@ -264,7 +268,11 @@ export function ContactForm({ configured, contactEmail }: ContactFormProps) {
 
       <div className="mt-6 flex flex-col-reverse gap-4 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-xs leading-relaxed text-muted">
-          This form is for school enquiries only. Please don’t share student information here.
+          By sending, you agree to our{" "}
+          <Link href="/privacy" className="font-semibold text-primary underline-offset-2 hover:underline">
+            Privacy Policy
+          </Link>
+          . This form is for school enquiries only. Please don’t share student information here.
         </p>
         <Button type="submit" size="lg" disabled={submitting} className="shrink-0">
           {submitting ? (

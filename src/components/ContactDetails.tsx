@@ -1,4 +1,4 @@
-import { activeSocialLinks, addressLines, business, contactEmails, siteConfig } from "@/config/site";
+import { activeSocialLinks, addressLines, business, contactEmails, formatIndianNumber, siteConfig } from "@/config/site";
 import { Icon, type IconName } from "./ui/Icon";
 import { SocialIcon } from "./ui/SocialIcon";
 
@@ -102,10 +102,4 @@ export function SocialLinks({ className = "" }: { className?: string }) {
       ))}
     </ul>
   );
-}
-
-/** "918870902456" → "+91 88709 02456"; other formats are shown as given. */
-function formatIndianNumber(digits: string) {
-  const d = digits.replace(/\D/g, "");
-  return d.length === 12 && d.startsWith("91") ? `+91 ${d.slice(2, 7)} ${d.slice(7)}` : digits;
 }

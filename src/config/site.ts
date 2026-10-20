@@ -81,6 +81,12 @@ export function contactEmails() {
   return [...new Set([siteConfig.contactEmail, ...business.emails].filter((e): e is string => Boolean(e)))];
 }
 
+/** "918870902456" → "+91 88709 02456"; other formats are shown as given. */
+export function formatIndianNumber(digits: string) {
+  const d = digits.replace(/\D/g, "");
+  return d.length === 12 && d.startsWith("91") ? `+91 ${d.slice(2, 7)} ${d.slice(7)}` : digits;
+}
+
 /** Address lines in display order, without empty parts. */
 export function addressLines() {
   const { street, locality, city, state, postalCode, country } = business.address;

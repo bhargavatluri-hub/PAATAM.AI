@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { activeSocialLinks, business, navItems, siteConfig } from "@/config/site";
+import { deliveryConfigured } from "@/lib/enquiry-email";
 import { ContactDetails, SocialLinks } from "./ContactDetails";
 import { ContactForm } from "./ContactForm";
 import { Logo } from "./ui/Logo";
@@ -11,8 +12,8 @@ type FooterProps = {
 
 export function Footer({ showEnquiry = true }: FooterProps) {
   const year = new Date().getFullYear();
-  // Read on the server; the webhook URL itself never reaches the browser.
-  const configured = Boolean(process.env.CONTACT_WEBHOOK_URL?.trim());
+  // Read on the server; delivery secrets never reach the browser.
+  const configured = deliveryConfigured();
   const hasSocial = activeSocialLinks().length > 0;
 
   return (

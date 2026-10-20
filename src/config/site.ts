@@ -1,9 +1,9 @@
 /**
  * Central site configuration.
  *
- * Contact details are never invented. The enquiry email is read from an
- * environment variable; the address, phone and social profiles live in
- * `business` and `socialLinks` below. When a value is missing the UI simply
+ * Contact details are never invented. The address, phone, emails and social
+ * profiles live in `business` and `socialLinks` below (the primary email can be
+ * overridden with an environment variable). When a value is missing the UI simply
  * omits it rather than showing a fabricated address, phone number or email.
  */
 
@@ -13,20 +13,6 @@ function optional(value: string | undefined): string | undefined {
   const trimmed = value?.trim();
   return trimmed ? trimmed : undefined;
 }
-
-export const siteConfig = {
-  name: "Paatam.ai",
-  shortName: "Paatam",
-  tagline: "Turning Assessments into Learning Intelligence.",
-  title: "Paatam.ai | Turning Assessments into Learning Intelligence",
-  description:
-    "Paatam helps schools transform handwritten student assessments into actionable learning insights, with AI-assisted evaluation and teachers always in control.",
-  /** Canonical origin. Override with NEXT_PUBLIC_SITE_URL (e.g. for staging). */
-  url: optional(process.env.NEXT_PUBLIC_SITE_URL) ?? "https://www.paatam.in",
-  /** Public enquiry email. Omitted from the UI when unset. */
-  contactEmail: optional(process.env.NEXT_PUBLIC_CONTACT_EMAIL),
-  locale: "en_IN",
-} as const;
 
 /**
  * Public business details shown in the footer, on /contact and in search-engine
@@ -38,27 +24,44 @@ type Business = {
   address: { street: string; locality: string; city: string; state: string; postalCode: string; country: string };
   phone: string;
   whatsapp: string;
+  emails: string[];
   hours: string;
 };
 
 export const business: Business = {
-  /** Registered company name, e.g. "Paatam Technologies Private Limited". */
-  legalName: "",
+  /** Registered company name. */
+  legalName: "ABC Learning Technologies Private Limited",
   address: {
-    street: "",
-    locality: "",
-    city: "",
-    state: "",
-    postalCode: "",
+    street: "RTIH, 5th Floor, VMRDA – The DECK",
+    locality: "Siripuram",
+    city: "Visakhapatnam",
+    state: "Andhra Pradesh",
+    postalCode: "530003",
     country: "India",
   },
   /** Phone with country code, e.g. "+91 98765 43210". */
-  phone: "",
+  phone: "+91 95826 32863",
   /** WhatsApp number with country code, digits only, e.g. "919876543210". */
-  whatsapp: "",
+  whatsapp: "918870902456",
+  /** Public enquiry emails, shown in this order. NEXT_PUBLIC_CONTACT_EMAIL, when set, is listed first. */
+  emails: ["bhargav@paatam.in", "nikitha@paatam.in"],
   /** e.g. "Mon–Sat, 9:30 am – 6:30 pm IST". */
   hours: "",
 };
+
+export const siteConfig = {
+  name: "Paatam.ai",
+  shortName: "Paatam",
+  tagline: "Turning Assessments into Learning Intelligence.",
+  title: "Paatam.ai | Turning Assessments into Learning Intelligence",
+  description:
+    "Paatam helps schools transform handwritten student assessments into actionable learning insights, with AI-assisted evaluation and teachers always in control.",
+  /** Canonical origin. Override with NEXT_PUBLIC_SITE_URL (e.g. for staging). */
+  url: optional(process.env.NEXT_PUBLIC_SITE_URL) ?? "https://www.paatam.in",
+  /** Primary enquiry email: NEXT_PUBLIC_CONTACT_EMAIL, else the first of `business.emails`. */
+  contactEmail: optional(process.env.NEXT_PUBLIC_CONTACT_EMAIL) ?? business.emails[0],
+  locale: "en_IN",
+} as const;
 
 /** Full profile URLs. Networks left empty are hidden. */
 export const socialLinks: { network: SocialNetwork; label: string; href: string }[] = [
@@ -71,6 +74,11 @@ export const socialLinks: { network: SocialNetwork; label: string; href: string 
 
 export function activeSocialLinks() {
   return socialLinks.filter((s) => s.href.trim());
+}
+
+/** Every public enquiry email, primary first, without duplicates. */
+export function contactEmails() {
+  return [...new Set([siteConfig.contactEmail, ...business.emails].filter((e): e is string => Boolean(e)))];
 }
 
 /** Address lines in display order, without empty parts. */

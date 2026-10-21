@@ -150,13 +150,13 @@
     const full = (id) => ({ x: 0, y: 0, w: M[id].w, h: M[id].h });
     MODS = [
       { id: "overview", label: "Grading command centre", shots: [
-          { r: () => M.overview.stats, k: "Grading command centre", c: "Every scanned script and every <em>pending sign-off</em> — at a glance." },
-          { r: () => pane("overview", "Agent pipeline"), k: "Six specialised agents", c: "Vision, OCR, verification, grading and QA — <em>then the teacher.</em>" },
-          { r: () => pane("overview", "Recent submissions"), k: "Review queue", c: "Suggested marks wait for <em>your approval</em> before anything is final." } ] },
+          { r: () => M.overview.stats, k: "Grading command centre", hold: 3.5, c: "Every scanned script and every <em>pending sign-off</em> — at a glance." },
+          { r: () => pane("overview", "Agent pipeline"), k: "Six specialised agents", hold: 3.5, c: "Vision, OCR, verification, grading and QA — <em>then the teacher.</em>" },
+          { r: () => pane("overview", "Recent submissions"), k: "Review queue", hold: 3.5, c: "Suggested marks wait for <em>your approval</em> before anything is final." } ] },
       { id: "classes", label: "Classes", shots: [
           { r: () => pane("classes", "Class 7B"), k: "Classes", c: "See the concepts <em>a whole section</em> is struggling with." } ] },
       { id: "student-analytics", label: "Student Analytics", shots: [
-          { r: () => pane("student-analytics", "Ananya"), k: "Student analytics", c: "Every student’s journey <em>across past exams.</em>" } ] },
+          { r: () => pane("student-analytics", "Ananya"), k: "Student analytics", hold: 2.9, c: "Every student’s journey <em>across past exams.</em>" } ] },
       { id: "knowledge-base", label: "Knowledge Base", shots: [
           { r: () => pane("knowledge-base", "Rubric"), k: "Knowledge base", c: "Your answer keys and rubrics <em>guide every mark.</em>" } ] },
       { id: "exam-generator", label: "Exam Generator", shots: [
@@ -192,8 +192,10 @@
         const r = sh.r();
         KEY.push({ ...KEY[KEY.length - 1], t: u });
         KEY.push({ t: u + MOVE, ...fit(r, 0.94) });
-        CAPS.push({ a: u + 0.2, b: u + MOVE + HOLD, k: `${String(mi + 1).padStart(2, "0")} · ${sh.k}`, c: sh.c, spot: r });
-        u += MOVE + HOLD;
+        // A shot can hold longer than HOLD so its voice-over line fits.
+        const hold = sh.hold ?? HOLD;
+        CAPS.push({ a: u + 0.2, b: u + MOVE + hold, k: `${String(mi + 1).padStart(2, "0")} · ${sh.k}`, c: sh.c, spot: r });
+        u += MOVE + hold;
       }
       KEY.push({ ...KEY[KEY.length - 1], t: u });
       KEY.push({ t: u + MOVE, ...f });
@@ -205,7 +207,7 @@
     seg("sIntro", 6);
     seg("sHero", 5.5);
     seg("sScan", 10);
-    seg("sTitle", 4.2);
+    seg("sTitle", 4.8);
     seg("sDash", DASH.dur);
     seg("sLife", 12);
     seg("sOutro", 7.5);

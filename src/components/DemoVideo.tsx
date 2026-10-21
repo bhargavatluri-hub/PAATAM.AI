@@ -2,7 +2,7 @@ type DemoVideoProps = {
   className?: string;
 };
 
-/** The narrated product demo (1:37) with native controls, captions and a download fallback. */
+/** The narrated product demo (1:43) with native controls, captions and a download fallback. */
 export function DemoVideo({ className = "" }: DemoVideoProps) {
   return (
     <figure className={className}>
@@ -13,7 +13,7 @@ export function DemoVideo({ className = "" }: DemoVideoProps) {
           playsInline
           preload="metadata"
           poster="/videos/paatam-demo.jpg"
-          aria-label="Paatam.ai product demo, narrated by a teacher in Indian English"
+          aria-label="Paatam.ai product demo with voice-over"
         >
           {/* H.264 for Safari and most browsers; VP9 fallback for browsers without H.264. */}
           <source src="/videos/paatam-demo.mp4" type="video/mp4" />
@@ -27,8 +27,7 @@ export function DemoVideo({ className = "" }: DemoVideoProps) {
         </video>
       </div>
       <figcaption className="mt-3 text-sm text-muted">
-        Product demo · 1:37 · Product screens are illustrative, with fictional students, teachers and marks. Voice-over
-        is AI-generated.
+        Product demo · 1:43 · Product screens are illustrative, with fictional students, teachers and marks.
       </figcaption>
     </figure>
   );

@@ -8,7 +8,7 @@ import { Product } from "@/components/sections/Product";
 export const metadata: Metadata = {
   title: "Product",
   description:
-    "Paatam's AI grading desk: scan handwritten answer sheets, review AI-drafted marks and feedback, and turn every assessment into learning insight. Watch the 1:37 demo.",
+    "Paatam's AI grading desk: scan handwritten answer sheets, review AI-drafted marks and feedback, and turn every assessment into learning insight. Watch the 1:43 demo.",
   alternates: { canonical: "/product" },
 };
 

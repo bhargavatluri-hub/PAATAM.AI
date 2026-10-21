@@ -4,7 +4,7 @@ import { Icon, type IconName } from "./ui/Icon";
 import { Section, SectionHeading } from "./ui/Section";
 
 const pages: { href: string; icon: IconName; title: string; body: string }[] = [
-  { href: "/product", icon: "grid", title: "Product", body: "The grading desk, its modules, and a 1:37 demo of the platform." },
+  { href: "/product", icon: "grid", title: "Product", body: "The grading desk, its modules, and a 1:43 demo of the platform." },
   { href: "/how-it-works", icon: "layers", title: "How it works", body: "From a handwritten answer sheet to teacher-approved insight." },
   { href: "/for-teachers", icon: "teacher", title: "For teachers", body: "AI prepares the drafts. You make every decision that matters." },
   { href: "/for-schools", icon: "student", title: "For schools", body: "Insight for coordinators and principals, built for Indian classrooms." },

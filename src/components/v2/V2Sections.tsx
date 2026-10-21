@@ -326,7 +326,7 @@ export function V2Schools() {
           id="v2-schools-title"
           eyebrow="For schools"
           title="Built for the whole school — from the classroom to the principal’s office."
-          intro="Built for Indian classrooms and starting in Andhra Pradesh, for schools serving Classes 5–12. Students keep writing by hand; everyone else gets the view they need."
+          intro="Built for Indian classrooms and starting in Andhra Pradesh, for schools serving Classes 6–12. Students keep writing by hand; everyone else gets the view they need."
         />
         <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {roles.map((r, i) => (

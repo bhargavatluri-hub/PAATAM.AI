@@ -15,7 +15,7 @@ export const faqs = [
   },
   {
     q: "Which classes does Paatam support?",
-    a: "We’re starting with schools serving students in Classes 5–12. Subjects and assessment formats are something we’ll discuss with each school, based on how it assesses today.",
+    a: "We’re starting with schools serving students in Classes 6–12. Subjects and assessment formats are something we’ll discuss with each school, based on how it assesses today.",
   },
   {
     q: "Which languages can students write in?",

@@ -150,9 +150,9 @@
     const full = (id) => ({ x: 0, y: 0, w: M[id].w, h: M[id].h });
     MODS = [
       { id: "overview", label: "Grading command centre", shots: [
-          { r: () => M.overview.stats, k: "Grading command centre", hold: 3.5, c: "Every scanned script and every <em>pending sign-off</em> — at a glance." },
-          { r: () => pane("overview", "Agent pipeline"), k: "Six specialised agents", hold: 3.5, c: "Vision, OCR, verification, grading and QA — <em>then the teacher.</em>" },
-          { r: () => pane("overview", "Recent submissions"), k: "Review queue", hold: 3.5, c: "Suggested marks wait for <em>your approval</em> before anything is final." } ] },
+          { r: () => M.overview.stats, k: "Grading command centre", hold: 3.0, c: "Every scanned script and every <em>pending sign-off</em> — at a glance." },
+          { r: () => pane("overview", "Agent pipeline"), k: "Six specialised agents", hold: 5.1, c: "Vision, OCR, verification, grading and QA — <em>then the teacher.</em>" },
+          { r: () => pane("overview", "Recent submissions"), k: "Review queue", hold: 2.4, c: "Suggested marks wait for <em>your approval</em> before anything is final." } ] },
       { id: "classes", label: "Classes", shots: [
           { r: () => pane("classes", "Class 7B"), k: "Classes", c: "See the concepts <em>a whole section</em> is struggling with." } ] },
       { id: "student-analytics", label: "Student Analytics", shots: [

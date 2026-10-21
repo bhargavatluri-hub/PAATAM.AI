@@ -103,8 +103,8 @@
   <!-- 7. Outro -->
   <div class="seg" id="sOutro">
     <div class="abs" style="left:0;right:0;top:250px;display:flex;justify-content:center"><img id="outroLogo" src="../../../public/brand/paatam-logo-white.svg" style="height:150px" alt="" /></div>
-    <div class="abs center-line serif" id="outroLine" style="top:500px;font-size:64px;line-height:1.1">Marks in minutes. <span class="grad">Judgement stays human.</span></div>
-    <div class="abs center-line" id="outroSub" style="top:620px;font-size:26px;color:rgba(232,237,240,.7)">Teacher-first AI for Classes 5–10 · Starting in Andhra Pradesh</div>
+    <div class="abs center-line serif" id="outroLine" style="top:500px;font-size:64px;line-height:1.1"><span id="outroA" style="display:inline-block">Marks in minutes.</span> <span class="grad" id="outroB" style="display:inline-block">Judgement stays human.</span></div>
+    <div class="abs center-line" id="outroSub" style="top:620px;font-size:26px;color:rgba(232,237,240,.7)">Teacher-first AI for Classes 5–12 · Starting in Andhra Pradesh</div>
     <div class="abs center-line" id="outroCta" style="top:720px"><span class="cta">Request a school demo →</span></div>
   </div>
 
@@ -324,9 +324,11 @@
     // Outro
     { const l = t - T.sOutro.a;
       set("outroLogo", { opacity: p(l, 0.3, 1.2), transform: `scale(${lerp(0.92, 1, p(l, 0.3, 1.8))})` });
-      set("outroLine", { opacity: p(l, 1.0, 1.8), transform: `translateY(${lerp(20, 0, p(l, 1.0, 1.9))}px)` });
-      set("outroSub", { opacity: p(l, 1.6, 2.4) });
-      set("outroCta", { opacity: p(l, 2.2, 3.0), transform: `scale(${lerp(0.94, 1, p(l, 2.2, 3.2))})` }); }
+      // The two halves of the line arrive with the voice-over, either side of its pause.
+      set("outroA", { opacity: p(l, 1.0, 1.8), transform: `translateY(${lerp(20, 0, p(l, 1.0, 1.9))}px)` });
+      set("outroB", { opacity: p(l, 2.4, 3.2), transform: `translateY(${lerp(20, 0, p(l, 2.4, 3.3))}px)` });
+      set("outroSub", { opacity: p(l, 3.3, 4.1) });
+      set("outroCta", { opacity: p(l, 3.9, 4.7), transform: `scale(${lerp(0.94, 1, p(l, 3.9, 4.9))})` }); }
   };
 </script>
 </body>

@@ -31,7 +31,7 @@ if (flag === "--preview") {
   const frames = Math.round(duration * fps);
   for (let i = 0; i < frames; i++) {
     await page.evaluate((t) => window.render(t), i / fps);
-    await page.screenshot({ path: path.join(tmp, `${String(i).padStart(5, "0")}.jpg`), type: "jpeg", quality: 95 });
+    await page.screenshot({ path: path.join(tmp, `${String(i).padStart(5, "0")}.jpg`), type: "jpeg", quality: 100 });
     if (i % 300 === 0) console.log(`frame ${i}/${frames}`);
   }
   await new Promise((resolve, reject) => {

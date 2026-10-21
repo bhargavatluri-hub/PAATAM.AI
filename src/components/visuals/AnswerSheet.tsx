@@ -41,7 +41,7 @@ export function AnswerSheet({ showReadRegions = false, activeQuestion, className
       <div className="relative pb-6 pl-14 pr-5 pt-4 font-hand text-[1.05rem] leading-8 text-[#1f3a6b]">
         <div className="flex flex-wrap items-baseline justify-between gap-x-4 text-[0.95rem]">
           <span>
-            Name: <span className="font-bold">Ananya Reddy</span>
+            Name: <span className="font-bold">Sushmitha Atluri</span>
           </span>
           <span>Class: 7 &nbsp; Sec: B</span>
         </div>

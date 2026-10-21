@@ -319,7 +319,7 @@ export function ExamGeneratorScreen() {
 export function StudentPortalScreen() {
   return (
     <div className="grid grid-cols-1 gap-3 lg:grid-cols-[1fr_1fr]">
-      <Panel title="Hi Ananya 👋 · Unit Test · Fractions" action={<Pill tone="ok">✓ Teacher approved</Pill>}>
+      <Panel title="Hi Sushmitha 👋 · Unit Test · Fractions" action={<Pill tone="ok">✓ Teacher approved</Pill>}>
         <div className="flex items-end justify-between">
           <p className="font-display text-4xl font-semibold text-white">
             6<span className="text-lg text-white/45">/10</span>
@@ -415,7 +415,7 @@ function TrendChart() {
 export function StudentAnalyticsScreen() {
   return (
     <div className="grid grid-cols-1 gap-3 lg:grid-cols-[1.3fr_1fr]">
-      <Panel title="Ananya Reddy · Class 7B · Mathematics" action={<Pill tone="mint">↑ 14 pts since UT 3</Pill>}>
+      <Panel title="Sushmitha Atluri · Class 7B · Mathematics" action={<Pill tone="mint">↑ 14 pts since UT 3</Pill>}>
         <TrendChart />
         <p className="mt-2 text-[0.72rem] text-white/45">Teacher-approved results only · shared with class teacher and coordinator</p>
       </Panel>
@@ -692,7 +692,7 @@ export function ParentWhatsAppScreen() {
         <Panel title="Outbox">
           <ul className="divide-y divide-white/[0.06]">
             {[
-              ["Ananya Reddy", "Exam result · Fractions UT", "sent"],
+              ["Sushmitha Atluri", "Exam result · Fractions UT", "sent"],
               ["Karthik Varma", "Weekly summary", "sent"],
               ["Meghana Naidu", "Monthly report · September", "waiting"],
               ["Imran Shaik", "Exam result · English", "waiting"],
@@ -713,13 +713,13 @@ export function ParentWhatsAppScreen() {
           <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-[0.7rem] font-bold text-white">KL</span>
           <div className="leading-tight">
             <p className="text-[0.82rem] font-semibold text-white">Ms. K. Lakshmi · Class 7B</p>
-            <p className="text-[0.68rem] text-white/60">WhatsApp · to Ananya’s parent</p>
+            <p className="text-[0.68rem] text-white/60">WhatsApp · to Sushmitha’s parent</p>
           </div>
         </div>
         <div className="space-y-2.5 p-4 text-[0.78rem] leading-relaxed text-white/90">
           {[
             ["Exam result", "Fractions unit test: 6/10. Strong on equivalent fractions; practise adding fractions with different denominators."],
-            ["Weekly summary", "This week Ananya completed 2 assessments. Maths is improving — up 8 points."],
+            ["Weekly summary", "This week Sushmitha completed 2 assessments. Maths is improving — up 8 points."],
             ["Monthly report", "September: average 72% (↑ from 64%). Focus for October: fractions and word problems."],
           ].map(([tag, msg]) => (
             <div key={tag} className="max-w-[94%] rounded-xl rounded-tl-sm bg-[#1f2c34] px-3.5 py-2.5">

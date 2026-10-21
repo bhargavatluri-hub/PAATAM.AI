@@ -110,7 +110,7 @@ function ParentMessage() {
         </div>
         <div className="space-y-2 p-4">
           <div className="max-w-[92%] rounded-xl rounded-tl-sm bg-surface px-3.5 py-3 text-[0.9rem] leading-relaxed text-ink shadow-sm">
-            <p>Namaste! A quick update on Ananya&rsquo;s Mathematics unit test on fractions.</p>
+            <p>Namaste! A quick update on Sushmitha&rsquo;s Mathematics unit test on fractions.</p>
             <p className="mt-2">
               <span className="font-semibold">Doing well:</span> equivalent fractions — she explained her
               reasoning clearly.

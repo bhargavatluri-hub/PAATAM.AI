@@ -48,7 +48,7 @@ export function Hero() {
           <ul className="mt-10 flex flex-wrap gap-x-6 gap-y-3 text-sm text-ink-soft">
             {([
               { icon: "teacher", text: "Teachers approve every result" },
-              { icon: "student", text: "Designed for Classes 5–10" },
+              { icon: "student", text: "Designed for Classes 5–12" },
               { icon: "mapPin", text: "Starting in Andhra Pradesh" },
             ] as const).map((item) => (
               <li key={item.text} className="inline-flex items-center gap-2">
@@ -105,7 +105,7 @@ function InsightCard() {
 
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="font-semibold text-ink">Ananya Reddy</p>
+          <p className="font-semibold text-ink">Sushmitha Atluri</p>
           <p className="text-sm text-muted">Class 7 · Mathematics · Fractions</p>
         </div>
         <div className="text-right">

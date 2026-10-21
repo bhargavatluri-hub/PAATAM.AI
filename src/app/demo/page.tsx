@@ -28,7 +28,7 @@ export default function DemoPage() {
   return (
     <SiteShell>
       <PageHero
-        eyebrow="Product demo · 1:37"
+        eyebrow="Product demo · 1:43"
         title={
           <>
             The AI grading desk for Indian schools, <span className="text-primary">in under two minutes.</span>

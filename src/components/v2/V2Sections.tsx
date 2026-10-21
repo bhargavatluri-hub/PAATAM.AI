@@ -68,7 +68,7 @@ export function V2Hero() {
           </a>
         </div>
         <Link href="/demo" className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-mint hover:text-white">
-          <Icon name="play" size={16} /> Watch the product demo (1:37)
+          <Icon name="play" size={16} /> Watch the product demo (1:43)
         </Link>
 
         <div className="relative mx-auto mt-14 max-w-5xl" data-reveal>

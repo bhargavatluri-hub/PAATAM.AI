@@ -45,7 +45,7 @@ export function IndianClassrooms() {
                 </span>
                 <p className="text-xs font-bold uppercase tracking-[0.14em] text-accent-strong">Where we begin</p>
                 <p className="mt-1 font-display text-2xl font-semibold text-ink">Andhra Pradesh</p>
-                <p className="mt-1 text-muted">Our starting point: schools serving students in Classes 5–10.</p>
+                <p className="mt-1 text-muted">Our starting point: schools serving students in Classes 5–12.</p>
               </li>
               <li className="relative">
                 <span aria-hidden="true" className="absolute -left-8 top-0.5 inline-flex h-5 w-5 items-center justify-center rounded-full border-2 border-primary bg-surface" />

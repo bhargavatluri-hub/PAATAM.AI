@@ -48,7 +48,7 @@ export function Hero() {
           <ul className="mt-10 flex flex-wrap gap-x-6 gap-y-3 text-sm text-ink-soft">
             {([
               { icon: "teacher", text: "Teachers approve every result" },
-              { icon: "student", text: "Designed for Classes 5–12" },
+              { icon: "student", text: "Designed for Classes 6–12" },
               { icon: "mapPin", text: "Starting in Andhra Pradesh" },
             ] as const).map((item) => (
               <li key={item.text} className="inline-flex items-center gap-2">

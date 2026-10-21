@@ -44,7 +44,7 @@ export function FinalCta() {
             </li>
             <li className="flex gap-3">
               <Icon name="student" size={20} className="mt-0.5 shrink-0 text-accent" />
-              For schools serving Classes 5–12, starting in Andhra Pradesh.
+              For schools serving Classes 6–12, starting in Andhra Pradesh.
             </li>
             {siteConfig.contactEmail && (
               <li className="flex gap-3">

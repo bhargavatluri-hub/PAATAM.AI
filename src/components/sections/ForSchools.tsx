@@ -72,7 +72,7 @@ export function ForSchools() {
             We’re looking for schools to build Paatam with us.
           </h3>
           <p className="mt-3 leading-relaxed text-ink-soft">
-            We’re inviting schools serving Classes 5–12, starting in Andhra Pradesh, to pilot Paatam and help shape
+            We’re inviting schools serving Classes 6–12, starting in Andhra Pradesh, to pilot Paatam and help shape
             it around real classrooms.
           </p>
           <ol className="mt-6 space-y-4">

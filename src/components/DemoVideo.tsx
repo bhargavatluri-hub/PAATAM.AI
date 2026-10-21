@@ -2,7 +2,7 @@ type DemoVideoProps = {
   className?: string;
 };
 
-/** The narrated product demo (1:43) with native controls, captions and a download fallback. */
+/** The narrated product demo with native controls, captions and a download fallback. */
 export function DemoVideo({ className = "" }: DemoVideoProps) {
   return (
     <figure className={className}>
@@ -27,7 +27,7 @@ export function DemoVideo({ className = "" }: DemoVideoProps) {
         </video>
       </div>
       <figcaption className="mt-3 text-sm text-muted">
-        Product demo · 1:43 · Product screens are illustrative, with fictional students, teachers and marks.
+        Product screens are illustrative, with fictional students, teachers and marks.
       </figcaption>
     </figure>
   );

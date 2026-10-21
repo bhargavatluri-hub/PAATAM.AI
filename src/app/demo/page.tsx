@@ -8,11 +8,11 @@ import { Icon } from "@/components/ui/Icon";
 export const metadata: Metadata = {
   title: "Product demo",
   description:
-    "Watch Paatam in under two minutes: handwritten answer sheets in, AI-drafted marks and feedback, teacher approval, and insight for coordinators, principals and parents.",
+    "Watch Paatam in action: handwritten answer sheets in, AI-drafted marks and feedback, teacher approval, and insight for coordinators, principals and parents.",
   alternates: { canonical: "/demo" },
   openGraph: {
     title: "Paatam.ai — product demo",
-    description: "The AI grading desk for Indian schools, in under two minutes.",
+    description: "See the AI grading desk for Indian schools in action.",
     images: [{ url: "/videos/paatam-demo.jpg", width: 1280, height: 720 }],
     videos: [{ url: "/videos/paatam-demo.mp4", type: "video/mp4", width: 1920, height: 1080 }],
   },
@@ -28,10 +28,10 @@ export default function DemoPage() {
   return (
     <SiteShell>
       <PageHero
-        eyebrow="Product demo · 1:43"
+        eyebrow="Product demo"
         title={
           <>
-            The AI grading desk for Indian schools, <span className="text-primary">in under two minutes.</span>
+            The AI grading desk for Indian schools, <span className="text-primary">in action.</span>
           </>
         }
       >

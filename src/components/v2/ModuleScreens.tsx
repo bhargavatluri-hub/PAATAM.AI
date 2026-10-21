@@ -545,12 +545,13 @@ export function CoordinatorScreen() {
 /* ------------------------------- Head of school -------------------------------- */
 
 const grades = [
-  { g: "5", v: 79 },
   { g: "6", v: 76 },
   { g: "7", v: 68 },
   { g: "8", v: 74 },
   { g: "9", v: 71 },
   { g: "10", v: 77 },
+  { g: "11", v: 73 },
+  { g: "12", v: 79 },
 ];
 
 const heat = {
@@ -582,7 +583,7 @@ export function HeadOfSchoolScreen() {
       </div>
       <div className="grid grid-cols-1 gap-3 lg:grid-cols-[1fr_1.2fr]">
         <Panel title="Average by class">
-          <div className="flex h-36 items-end gap-2" role="img" aria-label="Average by class: Class 5 79%, 6 76%, 7 68%, 8 74%, 9 71%, 10 77%.">
+          <div className="flex h-36 items-end gap-2" role="img" aria-label="Average by class: Class 6 76%, 7 68%, 8 74%, 9 71%, 10 77%, 11 73%, 12 79%.">
             {grades.map((g) => (
               <div key={g.g} className="flex flex-1 flex-col items-center gap-1.5" title={`Class ${g.g}: ${g.v}%`}>
                 <span className="text-[0.68rem] font-semibold text-white/70">{g.v}%</span>

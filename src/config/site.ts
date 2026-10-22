@@ -26,6 +26,8 @@ type Business = {
   whatsapp: string;
   emails: string[];
   hours: string;
+  /** Named on /privacy, as the IT Act and the DPDP Act require. */
+  grievanceOfficer: { name: string; title: string; email: string };
 };
 
 export const business: Business = {
@@ -47,6 +49,7 @@ export const business: Business = {
   emails: ["bhargav@paatam.in", "nikitha@paatam.in"],
   /** e.g. "Mon–Sat, 9:30 am – 6:30 pm IST". */
   hours: "",
+  grievanceOfficer: { name: "Nikitha Atluri", title: "Co-Founder & Head of Learning", email: "nikitha@paatam.in" },
 };
 
 export const siteConfig = {

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { LegalPage } from "@/components/LegalPage";
-import { addressLines, business, contactEmails, siteConfig } from "@/config/site";
+import { addressLines, business, siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -11,13 +10,15 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   const company = business.legalName || siteConfig.name;
-  const [grievanceEmail] = contactEmails();
+  const officer = business.grievanceOfficer;
 
   return (
-    <LegalPage title="Privacy Policy" updated="20 October 2026">
+    <LegalPage title="Privacy Policy" updated="22 October 2026">
       <p>
         This policy explains how {company} (“Paatam”, “we”, “us”) handles personal data shared through this website,
-        in line with India’s Digital Personal Data Protection Act, 2023 (the “DPDP Act”) and the rules made under it.
+        in line with the Information Technology Act, 2000 and the Information Technology (Reasonable Security Practices
+        and Procedures and Sensitive Personal Data or Information) Rules, 2011, and with India’s Digital Personal Data
+        Protection Act, 2023 (the “DPDP Act”) and the rules made under it.
       </p>
 
       <h2>Who we are</h2>
@@ -101,21 +102,27 @@ export default function PrivacyPage() {
         <li>raise a grievance with us, and, if you are not satisfied with our response, with the Data Protection Board of India.</li>
       </ul>
       <p>
-        To use any of these rights, email us{grievanceEmail ? <> at <a href={`mailto:${grievanceEmail}`}>{grievanceEmail}</a></> : <> through the <Link href="/contact">contact page</Link></>}.
-        We will respond within the time set by law.
+        To use any of these rights, email our Grievance Officer at <a href={`mailto:${officer.email}`}>{officer.email}</a>.
+        We may need to confirm your identity before acting on a request.
       </p>
 
       <h2>Grievance Officer</h2>
       <p>
-        Grievance Officer, {company}
+        If you have a question or complaint about how we handle your personal data, please contact our Grievance
+        Officer:
+      </p>
+      <p>
+        <strong>{officer.name}</strong>
+        <br />
+        {officer.title}, {company}
         <br />
         {addressLines().join(", ")}
-        {grievanceEmail && (
-          <>
-            <br />
-            Email: <a href={`mailto:${grievanceEmail}`}>{grievanceEmail}</a>
-          </>
-        )}
+        <br />
+        Email: <a href={`mailto:${officer.email}`}>{officer.email}</a>
+      </p>
+      <p>
+        We will acknowledge your message within 7 days and aim to resolve it within 30 days. Please include
+        “Privacy” in the subject line so it reaches the right person quickly.
       </p>
 
       <h2>The Paatam platform</h2>

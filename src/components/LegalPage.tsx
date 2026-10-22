@@ -17,7 +17,7 @@ export function LegalPage({ title, children }: { title: string; children: ReactN
           <Link href="/" className="rounded-md" aria-label="Paatam.ai home">
             <Logo className="h-10" />
           </Link>
-          <Link href="/" className="text-sm font-semibold text-primary hover:underline">
+          <Link href="/" className="inline-block py-2.5 text-sm font-semibold text-primary hover:underline">
             ← Back to home
           </Link>
         </div>

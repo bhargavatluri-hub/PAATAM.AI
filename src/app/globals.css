@@ -87,6 +87,13 @@
     outline-offset: 2px;
     border-radius: 4px;
   }
+
+  /* Footer text links are tapped with a thumb: give each one a taller hit area.
+     In the base layer, so any utility on a link (block, flex…) still wins. */
+  footer a {
+    display: inline-block;
+    padding-block: 0.3rem;
+  }
 }
 
 @layer components {
@@ -109,6 +116,29 @@
       linear-gradient(to right, transparent 2.75rem, rgb(179 38 30 / 0.35) 2.75rem, rgb(179 38 30 / 0.35) calc(2.75rem + 1px), transparent calc(2.75rem + 1px)),
       repeating-linear-gradient(to bottom, transparent 0, transparent calc(2rem - 1px), var(--color-ruling) calc(2rem - 1px), var(--color-ruling) 2rem);
     background-position: 0 1.25rem;
+  }
+
+  /* Page-header paper. On phones the text starts left of where the red margin
+     would sit and the rulings cut through every line, so small screens get plain
+     paper; tablets get the rulings with the margin kept clear of the text; wide
+     screens (content well inside the margin) get the full notebook page. */
+  .ruled-hero {
+    background-color: #fffdf8;
+  }
+  @media (min-width: 48rem) {
+    .ruled-hero {
+      background-image:
+        linear-gradient(to right, transparent 1rem, rgb(179 38 30 / 0.35) 1rem, rgb(179 38 30 / 0.35) calc(1rem + 1px), transparent calc(1rem + 1px)),
+        repeating-linear-gradient(to bottom, transparent 0, transparent calc(2rem - 1px), var(--color-ruling) calc(2rem - 1px), var(--color-ruling) 2rem);
+      background-position: 0 1.25rem;
+    }
+  }
+  @media (min-width: 80rem) {
+    .ruled-hero {
+      background-image:
+        linear-gradient(to right, transparent 2.75rem, rgb(179 38 30 / 0.35) 2.75rem, rgb(179 38 30 / 0.35) calc(2.75rem + 1px), transparent calc(2.75rem + 1px)),
+        repeating-linear-gradient(to bottom, transparent 0, transparent calc(2rem - 1px), var(--color-ruling) calc(2rem - 1px), var(--color-ruling) 2rem);
+    }
   }
 
   /* Dashed outline marks anything the AI has only suggested. */

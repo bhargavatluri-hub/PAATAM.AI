@@ -367,12 +367,12 @@ export function ReviewDemo() {
             )}
           </p>
         </div>
-        <div className="flex gap-2">
-          <Button variant="ghost" onClick={reset} size="sm">
+        <div className="flex flex-col-reverse gap-2 sm:flex-row">
+          <Button variant="ghost" onClick={reset} size="sm" className="w-full sm:w-auto">
             <Icon name="undo" size={16} /> Reset demo
           </Button>
           {!finalised && (
-            <Button onClick={finalise} disabled={pending > 0 || editingInsight}>
+            <Button onClick={finalise} disabled={pending > 0 || editingInsight} className="w-full sm:w-auto">
               <Icon name="checkCircle" size={18} /> Approve assessment
             </Button>
           )}

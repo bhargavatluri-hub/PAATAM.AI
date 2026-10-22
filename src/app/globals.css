@@ -109,13 +109,20 @@
     }
   }
 
-  /* Ruled answer-sheet paper, used by the handwritten visuals. */
+  /* Ruled answer-sheet paper, used by the handwritten visuals. Phones get the rulings
+     only: at that width the answers need the full line, and the red margin ran through
+     the highlighted answer boxes. */
   .ruled-paper {
     background-color: #fffdf8;
-    background-image:
-      linear-gradient(to right, transparent 2.75rem, rgb(179 38 30 / 0.35) 2.75rem, rgb(179 38 30 / 0.35) calc(2.75rem + 1px), transparent calc(2.75rem + 1px)),
-      repeating-linear-gradient(to bottom, transparent 0, transparent calc(2rem - 1px), var(--color-ruling) calc(2rem - 1px), var(--color-ruling) 2rem);
+    background-image: repeating-linear-gradient(to bottom, transparent 0, transparent calc(2rem - 1px), var(--color-ruling) calc(2rem - 1px), var(--color-ruling) 2rem);
     background-position: 0 1.25rem;
+  }
+  @media (min-width: 40rem) {
+    .ruled-paper {
+      background-image:
+        linear-gradient(to right, transparent 2.75rem, rgb(179 38 30 / 0.35) 2.75rem, rgb(179 38 30 / 0.35) calc(2.75rem + 1px), transparent calc(2.75rem + 1px)),
+        repeating-linear-gradient(to bottom, transparent 0, transparent calc(2rem - 1px), var(--color-ruling) calc(2rem - 1px), var(--color-ruling) 2rem);
+    }
   }
 
   /* Page-header paper. On phones the text starts left of where the red margin

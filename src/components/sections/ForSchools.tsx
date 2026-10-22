@@ -16,8 +16,8 @@ const benefits: { icon: IconName; title: string; body: string }[] = [
   },
   {
     icon: "discover",
-    title: "Students who need attention",
-    body: "Surface recurring gaps early, so support reaches students before small gaps grow.",
+    title: "Early help for students who need it",
+    body: "See which students are falling behind, and in which topics, so teachers can step in before the next exam.",
   },
   {
     icon: "message",
@@ -31,8 +31,8 @@ const benefits: { icon: IconName; title: string; body: string }[] = [
   },
   {
     icon: "shield",
-    title: "Academic control stays with you",
-    body: "Your teachers make the final call on marks, feedback and communication.",
+    title: "Your school stays in control",
+    body: "Your own answer keys, rubrics and marking schemes decide how answers are evaluated, and your teachers approve every mark and every message.",
   },
 ];
 

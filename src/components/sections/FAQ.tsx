@@ -3,7 +3,7 @@ import { Section, SectionHeading } from "../ui/Section";
 export const faqs = [
   {
     q: "Does Paatam grade answer sheets on its own?",
-    a: "No. Paatam suggests marks, feedback and learning insights. A teacher reviews, edits and approves every result before it is final or shared with anyone.",
+    a: "No. Paatam evaluates each answer against your school’s marking scheme and rubric: the answer key, the marks for each step, and what earns partial credit. It then suggests marks, feedback and learning insights, and a teacher reviews, edits and approves every result before it is final or shared with anyone.",
   },
   {
     q: "Will Paatam replace teachers?",
@@ -39,7 +39,7 @@ export function FAQ() {
           id="faq-title"
           eyebrow="Questions"
           title="What schools usually ask us."
-          intro="Straight answers, including about what AI can’t do."
+          intro="Honest answers about what Paatam does, what stays with the teacher, and where AI still needs a human check."
         />
         <div className="divide-y divide-line border-y border-line" data-reveal>
           {faqs.map((item) => (

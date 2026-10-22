@@ -76,7 +76,7 @@ export function ConnectedLearning() {
 
       <div className="mt-16 grid items-center gap-12 rounded-2xl bg-paper-deep p-6 sm:p-10 lg:grid-cols-[1fr_0.8fr]">
         <div data-reveal>
-          <h3 className="font-display text-3xl font-semibold leading-tight text-ink">
+          <h3 className="font-display text-[1.75rem] font-semibold leading-[1.15] tracking-tight text-balance text-ink md:text-4xl">
             Updates parents can understand — sent only when the teacher says so.
           </h3>
           <p className="mt-4 text-lg leading-relaxed text-muted">

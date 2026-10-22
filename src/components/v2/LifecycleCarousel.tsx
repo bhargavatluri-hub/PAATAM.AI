@@ -34,7 +34,7 @@ const stages: Stage[] = [
       <Card>
         <div className="ruled-paper rounded-lg px-5 pb-3 pl-14 pt-3 font-hand text-[1.02rem] leading-8 text-[#1f3a6b]">
           <p>
-            Name: <b>Ananya Reddy</b> · Class 7B
+            Name: <b>Sushmitha Atluri</b> · Class 7B
           </p>
           <p>Q2. 2/3 + 1/4 = 3/7</p>
           <p>Q3. 6/10 , 9/15</p>

@@ -4,18 +4,18 @@ import { Icon, type IconName } from "./ui/Icon";
 import { Section, SectionHeading } from "./ui/Section";
 
 const pages: { href: string; icon: IconName; title: string; body: string }[] = [
-  { href: "/product", icon: "grid", title: "Product", body: "The grading desk, its modules, and a 1:43 demo of the platform." },
-  { href: "/how-it-works", icon: "layers", title: "How it works", body: "From a handwritten answer sheet to teacher-approved insight." },
-  { href: "/for-teachers", icon: "teacher", title: "For teachers", body: "AI prepares the drafts. You make every decision that matters." },
-  { href: "/for-schools", icon: "student", title: "For schools", body: "Insight for coordinators and principals, built for Indian classrooms." },
-  { href: "/about", icon: "book", title: "About", body: "Our vision, and how we approach AI responsibly in schools." },
-  { href: "/demo", icon: "play", title: "Watch the demo", body: "See Paatam end to end, narrated by a teacher, in under two minutes." },
+  { href: "/product", icon: "grid", title: "Product", body: "The AI grading desk and every module, from marking to parent updates." },
+  { href: "/how-it-works", icon: "layers", title: "How it works", body: "How a handwritten answer sheet becomes teacher-approved marks and insight." },
+  { href: "/for-teachers", icon: "teacher", title: "For teachers", body: "Paatam drafts the marks and feedback. You review and approve every one." },
+  { href: "/for-schools", icon: "student", title: "For schools", body: "A clear view of learning across every class, for coordinators and principals." },
+  { href: "/about", icon: "book", title: "About", body: "Why we built Paatam, and how we use AI responsibly in schools." },
+  { href: "/demo", icon: "play", title: "Watch the demo", body: "See Paatam in action, from scanning an answer sheet to the parent update." },
 ];
 
 export function ExploreGrid() {
   return (
     <Section labelledBy="explore-title" className="bg-paper-deep">
-      <SectionHeading id="explore-title" eyebrow="Explore Paatam" title="Everything a school needs, one page at a time." />
+      <SectionHeading id="explore-title" eyebrow="Explore Paatam" title="See how Paatam works for your school." />
       <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {pages.map((p, i) => (
           <li key={p.href} data-reveal style={revealDelay(i * 60)}>

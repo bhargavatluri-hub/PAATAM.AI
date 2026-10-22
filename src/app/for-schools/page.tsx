@@ -19,10 +19,10 @@ export default function ForSchoolsPage() {
         eyebrow="School leaders"
         title={
           <>
-            Clearer learning insight, <span className="text-primary">across every class.</span>
+            Clearer learning insights, <span className="text-primary">across every class.</span>
           </>
         }
-        intro="Built for Indian classrooms serving Classes 5–10. Teachers stay in control, and leaders see where learning needs support."
+        intro="Built for Indian classrooms serving Classes 6–12. Teachers stay in control, and leaders see where learning needs support."
       />
       <ForSchools />
       <IndianClassrooms />

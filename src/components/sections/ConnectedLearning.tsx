@@ -76,7 +76,7 @@ export function ConnectedLearning() {
 
       <div className="mt-16 grid items-center gap-12 rounded-2xl bg-paper-deep p-6 sm:p-10 lg:grid-cols-[1fr_0.8fr]">
         <div data-reveal>
-          <h3 className="font-display text-3xl font-semibold leading-tight text-ink">
+          <h3 className="font-display text-[1.75rem] font-semibold leading-[1.15] tracking-tight text-balance text-ink md:text-4xl">
             Updates parents can understand — sent only when the teacher says so.
           </h3>
           <p className="mt-4 text-lg leading-relaxed text-muted">
@@ -110,7 +110,7 @@ function ParentMessage() {
         </div>
         <div className="space-y-2 p-4">
           <div className="max-w-[92%] rounded-xl rounded-tl-sm bg-surface px-3.5 py-3 text-[0.9rem] leading-relaxed text-ink shadow-sm">
-            <p>Namaste! A quick update on Ananya&rsquo;s Mathematics unit test on fractions.</p>
+            <p>Namaste! A quick update on Sushmitha&rsquo;s Mathematics unit test on fractions.</p>
             <p className="mt-2">
               <span className="font-semibold">Doing well:</span> equivalent fractions — she explained her
               reasoning clearly.

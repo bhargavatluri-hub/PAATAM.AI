@@ -16,8 +16,8 @@ const benefits: { icon: IconName; title: string; body: string }[] = [
   },
   {
     icon: "discover",
-    title: "Students who need attention",
-    body: "Surface recurring gaps early, so support reaches students before small gaps grow.",
+    title: "Early help for students who need it",
+    body: "See which students are falling behind, and in which topics, so teachers can step in before the next exam.",
   },
   {
     icon: "message",
@@ -31,8 +31,8 @@ const benefits: { icon: IconName; title: string; body: string }[] = [
   },
   {
     icon: "shield",
-    title: "Academic control stays with you",
-    body: "Your teachers make the final call on marks, feedback and communication.",
+    title: "Your school stays in control",
+    body: "Your own answer keys, rubrics and marking schemes decide how answers are evaluated, and your teachers approve every mark and every message.",
   },
 ];
 
@@ -72,7 +72,7 @@ export function ForSchools() {
             We’re looking for schools to build Paatam with us.
           </h3>
           <p className="mt-3 leading-relaxed text-ink-soft">
-            We’re inviting schools serving Classes 5–10, starting in Andhra Pradesh, to pilot Paatam and help shape
+            We’re inviting schools serving Classes 6–12, starting in Andhra Pradesh, to pilot Paatam and help shape
             it around real classrooms.
           </p>
           <ol className="mt-6 space-y-4">

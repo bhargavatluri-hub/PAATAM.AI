@@ -58,44 +58,59 @@ export function Problem() {
 function MarksVersusInsight() {
   return (
     <div className="lg:sticky lg:top-28" data-reveal>
-      <p className="mb-3 text-sm font-semibold text-muted">The same unit test, two ways</p>
-      <div className="overflow-hidden rounded-xl border border-line bg-paper shadow-card">
-        <div className="border-b border-line p-6">
-          <p className="text-xs font-semibold uppercase tracking-wider text-muted">What a mark sheet shows</p>
-          <div className="mt-4 flex items-baseline justify-between">
-            <span className="font-medium text-ink">Mathematics — Fractions</span>
-            <span className="font-display text-4xl font-semibold text-ink">6/10</span>
+      <p className="mb-4 text-sm font-semibold text-muted">The same unit test, read two ways</p>
+
+      <div className="rounded-xl border border-dashed border-line-strong bg-paper-deep p-6">
+        <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted">
+          <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-line-strong text-[0.7rem] text-ink">1</span>
+          Without Paatam · a mark sheet
+        </p>
+        <div className="mt-4 flex items-baseline justify-between">
+          <span className="font-medium text-ink">Mathematics — Fractions</span>
+          <span className="font-display text-4xl font-semibold text-ink">6/10</span>
+        </div>
+        <p className="mt-3 text-sm text-muted">A number, with no reason and no next step.</p>
+      </div>
+
+      <div className="flex items-center gap-3 py-4" aria-hidden="true">
+        <span className="h-px flex-1 bg-line-strong" />
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-white">
+          <Icon name="arrowDown" size={14} /> With Paatam
+        </span>
+        <span className="h-px flex-1 bg-line-strong" />
+      </div>
+
+      <div className="rounded-xl border-2 border-primary/40 bg-surface p-6 shadow-card">
+        <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-primary">
+          <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[0.7rem] text-white">2</span>
+          With Paatam · learning insight
+        </p>
+        <dl className="mt-4 space-y-4 text-[0.95rem]">
+          <div className="flex gap-3">
+            <dt className="sr-only">Strength</dt>
+            <Icon name="checkCircle" size={20} className="mt-0.5 shrink-0 text-approved" />
+            <dd className="text-ink-soft">
+              <span className="font-semibold text-ink">Secure:</span> equivalent fractions and simplifying.
+            </dd>
           </div>
-        </div>
-        <div className="bg-surface p-6">
-          <p className="text-xs font-semibold uppercase tracking-wider text-primary">What learning intelligence shows</p>
-          <dl className="mt-4 space-y-4 text-[0.95rem]">
-            <div className="flex gap-3">
-              <dt className="sr-only">Strength</dt>
-              <Icon name="checkCircle" size={20} className="mt-0.5 shrink-0 text-approved" />
-              <dd className="text-ink-soft">
-                <span className="font-semibold text-ink">Secure:</span> equivalent fractions and simplifying.
-              </dd>
-            </div>
-            <div className="flex gap-3">
-              <dt className="sr-only">Learning gap</dt>
-              <Icon name="alert" size={20} className="mt-0.5 shrink-0 text-gap" />
-              <dd className="text-ink-soft">
-                <span className="font-semibold text-ink">Gap:</span> adds numerators and denominators directly
-                when denominators differ.
-              </dd>
-            </div>
-            <div className="flex gap-3">
-              <dt className="sr-only">Next step</dt>
-              <Icon name="arrowRight" size={20} className="mt-0.5 shrink-0 text-primary" />
-              <dd className="text-ink-soft">
-                <span className="font-semibold text-ink">Next step:</span> practise finding a common
-                denominator before adding.
-              </dd>
-            </div>
-          </dl>
-          <p className="mt-5 text-xs text-muted">Illustrative example with fictional data.</p>
-        </div>
+          <div className="flex gap-3">
+            <dt className="sr-only">Learning gap</dt>
+            <Icon name="alert" size={20} className="mt-0.5 shrink-0 text-gap" />
+            <dd className="text-ink-soft">
+              <span className="font-semibold text-ink">Gap:</span> adds numerators and denominators directly
+              when denominators differ.
+            </dd>
+          </div>
+          <div className="flex gap-3">
+            <dt className="sr-only">Next step</dt>
+            <Icon name="arrowRight" size={20} className="mt-0.5 shrink-0 text-primary" />
+            <dd className="text-ink-soft">
+              <span className="font-semibold text-ink">Next step:</span> practise finding a common
+              denominator before adding.
+            </dd>
+          </div>
+        </dl>
+        <p className="mt-5 text-xs text-muted">Illustrative example with fictional data.</p>
       </div>
     </div>
   );

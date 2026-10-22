@@ -319,7 +319,7 @@ export function ExamGeneratorScreen() {
 export function StudentPortalScreen() {
   return (
     <div className="grid grid-cols-1 gap-3 lg:grid-cols-[1fr_1fr]">
-      <Panel title="Hi Ananya 👋 · Unit Test · Fractions" action={<Pill tone="ok">✓ Teacher approved</Pill>}>
+      <Panel title="Hi Sushmitha 👋 · Unit Test · Fractions" action={<Pill tone="ok">✓ Teacher approved</Pill>}>
         <div className="flex items-end justify-between">
           <p className="font-display text-4xl font-semibold text-white">
             6<span className="text-lg text-white/45">/10</span>
@@ -415,7 +415,7 @@ function TrendChart() {
 export function StudentAnalyticsScreen() {
   return (
     <div className="grid grid-cols-1 gap-3 lg:grid-cols-[1.3fr_1fr]">
-      <Panel title="Ananya Reddy · Class 7B · Mathematics" action={<Pill tone="mint">↑ 14 pts since UT 3</Pill>}>
+      <Panel title="Sushmitha Atluri · Class 7B · Mathematics" action={<Pill tone="mint">↑ 14 pts since UT 3</Pill>}>
         <TrendChart />
         <p className="mt-2 text-[0.72rem] text-white/45">Teacher-approved results only · shared with class teacher and coordinator</p>
       </Panel>
@@ -545,12 +545,13 @@ export function CoordinatorScreen() {
 /* ------------------------------- Head of school -------------------------------- */
 
 const grades = [
-  { g: "5", v: 79 },
   { g: "6", v: 76 },
   { g: "7", v: 68 },
   { g: "8", v: 74 },
   { g: "9", v: 71 },
   { g: "10", v: 77 },
+  { g: "11", v: 73 },
+  { g: "12", v: 79 },
 ];
 
 const heat = {
@@ -582,7 +583,7 @@ export function HeadOfSchoolScreen() {
       </div>
       <div className="grid grid-cols-1 gap-3 lg:grid-cols-[1fr_1.2fr]">
         <Panel title="Average by class">
-          <div className="flex h-36 items-end gap-2" role="img" aria-label="Average by class: Class 5 79%, 6 76%, 7 68%, 8 74%, 9 71%, 10 77%.">
+          <div className="flex h-36 items-end gap-2" role="img" aria-label="Average by class: Class 6 76%, 7 68%, 8 74%, 9 71%, 10 77%, 11 73%, 12 79%.">
             {grades.map((g) => (
               <div key={g.g} className="flex flex-1 flex-col items-center gap-1.5" title={`Class ${g.g}: ${g.v}%`}>
                 <span className="text-[0.68rem] font-semibold text-white/70">{g.v}%</span>
@@ -692,7 +693,7 @@ export function ParentWhatsAppScreen() {
         <Panel title="Outbox">
           <ul className="divide-y divide-white/[0.06]">
             {[
-              ["Ananya Reddy", "Exam result · Fractions UT", "sent"],
+              ["Sushmitha Atluri", "Exam result · Fractions UT", "sent"],
               ["Karthik Varma", "Weekly summary", "sent"],
               ["Meghana Naidu", "Monthly report · September", "waiting"],
               ["Imran Shaik", "Exam result · English", "waiting"],
@@ -713,13 +714,13 @@ export function ParentWhatsAppScreen() {
           <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-[0.7rem] font-bold text-white">KL</span>
           <div className="leading-tight">
             <p className="text-[0.82rem] font-semibold text-white">Ms. K. Lakshmi · Class 7B</p>
-            <p className="text-[0.68rem] text-white/60">WhatsApp · to Ananya’s parent</p>
+            <p className="text-[0.68rem] text-white/60">WhatsApp · to Sushmitha’s parent</p>
           </div>
         </div>
         <div className="space-y-2.5 p-4 text-[0.78rem] leading-relaxed text-white/90">
           {[
             ["Exam result", "Fractions unit test: 6/10. Strong on equivalent fractions; practise adding fractions with different denominators."],
-            ["Weekly summary", "This week Ananya completed 2 assessments. Maths is improving — up 8 points."],
+            ["Weekly summary", "This week Sushmitha completed 2 assessments. Maths is improving — up 8 points."],
             ["Monthly report", "September: average 72% (↑ from 64%). Focus for October: fractions and word problems."],
           ].map(([tag, msg]) => (
             <div key={tag} className="max-w-[94%] rounded-xl rounded-tl-sm bg-[#1f2c34] px-3.5 py-2.5">

@@ -16,7 +16,7 @@ export function Product() {
       <SectionHeading
         id="product-title"
         eyebrow="The product"
-        title="See a teacher’s review, question by question."
+        title="Paatam reads, marks and explains. The teacher decides."
         intro="Automated evaluation is where Paatam starts. Learning intelligence is where it leads: a clear view of what each student understands, and what to do next."
       />
 

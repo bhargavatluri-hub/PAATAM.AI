@@ -140,7 +140,7 @@ export function ReviewDemo() {
         <div className="border-b border-line bg-paper-deep/60 p-4 sm:p-6 lg:border-b-0 lg:border-r">
           <div className="mb-4 flex items-center justify-between gap-3">
             <div>
-              <p className="font-semibold text-ink">Ananya Reddy</p>
+              <p className="font-semibold text-ink">Sushmitha Atluri</p>
               <p className="text-sm text-muted">Class 7 · Roll no. 14</p>
             </div>
             <span className="rounded-full border border-line bg-surface px-3 py-1 text-xs font-medium text-muted">
@@ -356,7 +356,7 @@ export function ReviewDemo() {
             {finalised ? (
               <>
                 <span className="font-semibold text-approved">Approved by Ms. K. Lakshmi.</span> Ready to share with
-                Ananya and her parents.
+                Sushmitha and her parents.
               </>
             ) : pending > 0 ? (
               <>
@@ -367,12 +367,12 @@ export function ReviewDemo() {
             )}
           </p>
         </div>
-        <div className="flex gap-2">
-          <Button variant="ghost" onClick={reset} size="sm">
+        <div className="flex flex-col-reverse gap-2 sm:flex-row">
+          <Button variant="ghost" onClick={reset} size="sm" className="w-full sm:w-auto">
             <Icon name="undo" size={16} /> Reset demo
           </Button>
           {!finalised && (
-            <Button onClick={finalise} disabled={pending > 0 || editingInsight}>
+            <Button onClick={finalise} disabled={pending > 0 || editingInsight} className="w-full sm:w-auto">
               <Icon name="checkCircle" size={18} /> Approve assessment
             </Button>
           )}

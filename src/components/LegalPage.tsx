@@ -16,7 +16,7 @@ export function LegalPage({ title, updated, children }: { title: string; updated
           <Link href="/" className="rounded-md" aria-label="Paatam.ai home">
             <Logo className="h-10" />
           </Link>
-          <Link href="/" className="text-sm font-semibold text-primary hover:underline">
+          <Link href="/" className="inline-block py-2.5 text-sm font-semibold text-primary hover:underline">
             ← Back to home
           </Link>
         </div>

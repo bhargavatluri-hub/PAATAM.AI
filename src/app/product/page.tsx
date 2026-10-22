@@ -8,7 +8,7 @@ import { Product } from "@/components/sections/Product";
 export const metadata: Metadata = {
   title: "Product",
   description:
-    "Paatam's AI grading desk: scan handwritten answer sheets, review AI-drafted marks and feedback, and turn every assessment into learning insight. Watch the 1:37 demo.",
+    "Paatam's AI grading desk: scan handwritten answer sheets, review AI-drafted marks and feedback, and turn every assessment into learning insight. Watch the product demo.",
   alternates: { canonical: "/product" },
 };
 
@@ -22,7 +22,7 @@ export default function ProductPage() {
             One grading desk, from answer sheet <span className="text-primary">to insight.</span>
           </>
         }
-        intro="Paatam reads handwritten tests, homework and exams, drafts marks and feedback, and puts every result in front of the teacher for approval. Watch the platform in under two minutes."
+        intro="Paatam reads handwritten tests, homework and exams, drafts marks and feedback, and puts every result in front of the teacher for approval. Watch the demo to see it in action."
       >
         <DemoVideo className="mt-12" />
       </PageHero>

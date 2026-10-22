@@ -105,7 +105,7 @@ src/
 
 ## Content and claims policy
 
-- **All product examples are fictional** (student "Ananya Reddy", teacher "Ms. K. Lakshmi") and labelled as illustrative. The product UI is an HTML mock-up, not a screenshot of a deployed product.
+- **All product examples are fictional** (student "Sushmitha Atluri", teacher "Ms. K. Lakshmi") and labelled as illustrative. The product UI is an HTML mock-up, not a screenshot of a deployed product.
 - **Teacher-first:** the copy consistently presents AI output as a suggestion that a teacher reviews and approves. Keep new copy consistent with that.
 - **Don't add** customer logos, testimonials, usage numbers, accuracy figures, language support, certifications or compliance claims unless they are verified.
 

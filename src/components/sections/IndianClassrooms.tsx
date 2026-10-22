@@ -8,8 +8,8 @@ const realities = [
     response: "Paatam starts from paper. Students keep writing answers as they do today.",
   },
   {
-    reality: "Teachers manage large volumes of student work.",
-    response: "Evaluations are prepared in advance, so teachers can focus their review where it matters.",
+    reality: "Teachers evaluate hundreds of answer sheets every term.",
+    response: "Paatam prepares a first evaluation of every script, so teachers spend their time checking and teaching, not totalling marks.",
   },
   {
     reality: "Classrooms are diverse.",
@@ -20,8 +20,8 @@ const realities = [
     response: "The workflow starts with a simple upload of scanned or photographed answer sheets.",
   },
   {
-    reality: "Families need information they can use.",
-    response: "Teacher-approved updates reach parents on channels they already use, such as WhatsApp.",
+    reality: "Parents want to be part of their child’s learning.",
+    response: "After each assessment, parents get a teacher-approved update with the exact marks, the topics their child has mastered, where they need support, and one practical way to help at home.",
   },
 ];
 

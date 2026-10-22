@@ -16,7 +16,7 @@ const horizon = [
   {
     label: "The long-term ambition",
     title: "Every student understood",
-    body: "Learning that is more visible, personalised and actionable in schools across India, including those that are often served last.",
+    body: "Learning that is visible, personalised and actionable for every student, in schools across India, from large city schools to small rural ones.",
   },
 ];
 

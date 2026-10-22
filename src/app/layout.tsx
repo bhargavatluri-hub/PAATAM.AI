@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Figtree, Fraunces, Kalam, Noto_Sans_Telugu } from "next/font/google";
+import { ScrollToTop } from "@/components/ScrollToTop";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 
@@ -89,6 +90,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           Skip to content
         </a>
         {children}
+        <ScrollToTop />
       </body>
     </html>
   );

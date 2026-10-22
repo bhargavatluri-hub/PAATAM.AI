@@ -32,7 +32,7 @@ const stages: Stage[] = [
     points: ["Handwritten answers", "Scanned or photographed", "Bulk stacks of 50–100"],
     visual: (
       <Card>
-        <div className="ruled-paper rounded-lg px-5 pb-3 pl-14 pt-3 font-hand text-[1.02rem] leading-8 text-[#1f3a6b]">
+        <div className="ruled-paper rounded-lg px-5 pb-3 pt-3 sm:pl-14 font-hand text-[1.02rem] leading-8 text-[#1f3a6b]">
           <p>
             Name: <b>Sushmitha Atluri</b> · Class 7B
           </p>

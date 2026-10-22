@@ -38,7 +38,7 @@ export function AnswerSheet({ showReadRegions = false, activeQuestion, className
       className={`ruled-paper relative overflow-hidden rounded-lg border border-line shadow-card ${className}`}
       aria-label="Illustrative handwritten answer sheet for a Class 7 fractions assessment"
     >
-      <div className="relative pb-6 pl-14 pr-5 pt-4 font-hand text-[1.05rem] leading-8 text-[#1f3a6b]">
+      <div className="relative pb-6 pl-6 pr-5 pt-4 sm:pl-14 font-hand text-[1.05rem] leading-8 text-[#1f3a6b]">
         <div className="flex flex-wrap items-baseline justify-between gap-x-4 text-[0.95rem]">
           <span>
             Name: <span className="font-bold">Sushmitha Atluri</span>
@@ -61,7 +61,12 @@ export function AnswerSheet({ showReadRegions = false, activeQuestion, className
             </p>
           </li>
           <li>
-            <p className="text-ink-soft/80">Q3. Write two fractions equivalent to <Frac n="3" d="5" />.</p>
+            <p className="text-ink-soft/80">
+              Q3. Write two fractions equivalent{" "}
+              <span className="whitespace-nowrap">
+                to <Frac n="3" d="5" />.
+              </span>
+            </p>
             <p className={`inline-block ${region(3)}`}>
               <Frac n="6" d="10" /> , <Frac n="9" d="15" />
             </p>

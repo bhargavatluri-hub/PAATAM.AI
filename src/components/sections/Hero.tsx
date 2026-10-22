@@ -93,10 +93,10 @@ function InsightCard() {
       aria-label="Illustrative teacher-reviewed assessment summary"
       className="relative rounded-xl border border-line bg-surface p-5 shadow-lift sm:ml-12 sm:p-6"
     >
-      <ol className="mb-5 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-medium text-muted">
+      <ol className="mb-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-medium text-muted sm:gap-x-2">
         {["Handwriting read", "Evaluated", "Teacher reviewed"].map((step, i) => (
           <li key={step} className="inline-flex items-center gap-1.5">
-            {i > 0 && <span aria-hidden="true" className="h-px w-3 bg-line-strong" />}
+            {i > 0 && <span aria-hidden="true" className="hidden h-px w-3 bg-line-strong sm:block" />}
             <Icon name="checkCircle" size={15} className="text-approved" />
             {step}
           </li>

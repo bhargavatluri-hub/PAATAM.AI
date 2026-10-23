@@ -21,7 +21,7 @@ type SubmitState =
   | { kind: "error"; message: string };
 
 type ContactFormProps = {
-  /** Whether a delivery destination (CONTACT_WEBHOOK_URL) is configured on the server. */
+  /** Whether a delivery destination (LEAD_EMAIL or CONTACT_WEBHOOK_URL) is configured on the server. */
   configured: boolean;
   contactEmail?: string;
 };

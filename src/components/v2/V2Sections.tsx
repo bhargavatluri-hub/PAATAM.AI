@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { revealDelay } from "@/lib/reveal";
 import { siteConfig } from "@/config/site";
+import { leadInbox } from "@/lib/leadEmail";
 import { ContactForm } from "../ContactForm";
 import { buttonClasses } from "../ui/Button";
 import { Icon, type IconName } from "../ui/Icon";
@@ -353,7 +354,7 @@ export function V2Schools() {
 /* --------------------------------- Contact ---------------------------------- */
 
 export function V2Contact() {
-  const configured = Boolean(process.env.CONTACT_WEBHOOK_URL?.trim());
+  const configured = Boolean(process.env.CONTACT_WEBHOOK_URL?.trim() || leadInbox());
   return (
     <section id="contact" aria-labelledby="v2-contact-title" className="relative overflow-hidden border-t border-white/[0.07] py-20 md:py-28">
       <div

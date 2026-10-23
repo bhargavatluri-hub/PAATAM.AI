@@ -35,14 +35,18 @@ All configuration is through environment variables. Nothing sensitive is hard-co
 | --------------------------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------- |
 | `NEXT_PUBLIC_SITE_URL`      | public | Canonical origin for canonical links, sitemap, robots and social previews. Defaults to `https://www.paatam.in`.                       |
 | `NEXT_PUBLIC_CONTACT_EMAIL` | public | Enquiry email shown in the contact section, footer and legal pages. Hidden when empty.                                              |
-| `CONTACT_WEBHOOK_URL`       | server | Where enquiries are delivered. Each submission is POSTed as JSON. **Required for the form to send anything.**                       |
+| `LEAD_EMAIL`                | server | Inbox that receives every enquiry-form submission and chatbot lead by email (see below).                                            |
+| `CONTACT_WEBHOOK_URL`       | server | Where enquiries are delivered. Each submission is POSTed as JSON.                                                                   |
 | `CONTACT_WEBHOOK_SECRET`    | server | Optional. Sent as `Authorization: Bearer <secret>` to the webhook.                                                                  |
 
-The home page is statically prerendered, so changes to these variables take effect on the next build or deploy.
+The form needs `LEAD_EMAIL` or `CONTACT_WEBHOOK_URL` (or both) to send anything. The home page is statically prerendered, so changes to these variables take effect on the next build or deploy.
 
 ### Contact form delivery
 
-`POST /api/contact` (`src/app/api/contact/route.ts`) validates each enquiry with the same rules as the browser (`src/lib/contact.ts`), then forwards it to `CONTACT_WEBHOOK_URL`:
+`POST /api/contact` (`src/app/api/contact/route.ts`) validates each enquiry with the same rules as the browser (`src/lib/contact.ts`), then delivers it to every destination that is configured. It counts as sent when at least one accepts it.
+
+- **`LEAD_EMAIL`:** emailed through [FormSubmit](https://formsubmit.co) by `src/lib/leadEmail.ts`, which needs no email account. The first submission sends a one-time "Activate form" email to that inbox; submissions are delivered once that link is clicked. Replace it with your own email provider once you have a business account.
+- **`CONTACT_WEBHOOK_URL`:** POSTed as JSON:
 
 ```json
 {
@@ -66,6 +70,21 @@ Any endpoint that accepts a JSON POST works, for example a CRM intake URL, an au
 
 The form collects only what's needed to follow up and asks visitors not to share student information.
 
+### Website chatbot
+
+A chat bubble on every page answers visitors' questions about Paatam and passes interested visitors' details to the team.
+
+- **Answers** come from Claude, using only the facts in `src/lib/chatbot/knowledge.ts`. Keep that file in line with the site copy and the content and claims policy below. When something isn't covered there (pricing, integrations, languages), the bot says the team will follow up instead of guessing.
+- **Leads:** when a visitor wants a demo, a pilot or pricing, the bot asks for their name and a phone number or email (plus school, role, city and interest where offered), confirms the contact detail, and calls its `save_lead` tool. `src/lib/chatbot/leads.ts` emails the lead to `LEAD_EMAIL` (the same inbox and FormSubmit path as the enquiry form), also POSTs it to `CONTACT_WEBHOOK_URL` when that is set, and writes it to the server log.
+- **Stateless:** the browser keeps the conversation (for that tab only) and sends it with each message, so the route works on serverless instances. Visitors are asked not to share student information.
+- **Limits:** 40 messages per IP per 10 minutes (best-effort, per instance), 1,500 characters per message, last 30 turns of history.
+
+| Variable            | Scope  | Purpose                                                                                   |
+| ------------------- | ------ | ----------------------------------------------------------------------------------------- |
+| `ANTHROPIC_API_KEY` | server | Claude API key. **The chat bubble is hidden until this is set** (it is read at build time). |
+| `LEAD_EMAIL`        | server | Inbox that receives chatbot leads (shared with the enquiry form).                         |
+| `CHAT_MODEL`        | server | Optional. Defaults to `claude-opus-5-5`.                                                  |
+
 ## Project structure
 
 ```
@@ -77,17 +96,20 @@ src/
     how-it-works/, for-schools/, for-teachers/, about/, contact/, demo/
                           One page each, built from the components in sections/
     api/contact/route.ts  Enquiry endpoint
+    api/chat/route.ts     Website chatbot endpoint
     privacy/, terms/      Placeholder legal pages (see below)
     opengraph-image.tsx   Generated 1200×630 social image
     icon.svg, robots.ts, sitemap.ts, not-found.tsx
   components/
     Header.tsx, Footer.tsx, SiteShell.tsx, ContactForm.tsx, LegalPage.tsx
+    ChatWidget.tsx        Website chat bubble
     PageHero.tsx, CtaBand.tsx, ExploreGrid.tsx, DemoVideo.tsx   Shared page building blocks
     sections/             One component per section, composed into pages
     ui/                   Button, Section, Icon, Logo, StatusChip, RevealObserver
     visuals/AnswerSheet.tsx  Illustrative handwritten answer sheet (HTML, no images)
   config/site.ts          Site name, copy constants, nav, env-driven contact details
   lib/contact.ts          Shared form schema + validation
+  lib/chatbot/            Chatbot knowledge and lead delivery
 ```
 
 ## Content and claims policy
@@ -99,7 +121,7 @@ src/
 ## Still to do before launch
 
 1. **Legal:** `/privacy` and `/terms` are placeholders that say the full policies are being prepared. Replace them with reviewed policy text. Both pages are `noindex` until then.
-2. **Contact:** set `CONTACT_WEBHOOK_URL`, and optionally `NEXT_PUBLIC_CONTACT_EMAIL`.
+2. **Contact:** set `LEAD_EMAIL` and/or `CONTACT_WEBHOOK_URL`, and optionally `NEXT_PUBLIC_CONTACT_EMAIL`.
 3. **Domain:** set `NEXT_PUBLIC_SITE_URL` so canonical and social URLs are correct.
 4. **Photography (optional):** the site uses no stock imagery. If you add real classroom photos, use images you have rights to and consent for, and never identifiable student work.
 

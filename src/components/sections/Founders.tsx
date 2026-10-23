@@ -7,7 +7,7 @@ const founders = [
   {
     name: "Bhargav Atluri",
     role: "Co-Founder & CEO",
-    photo: "/team/bhargav-atluri.jpg",
+    photo: "/team/bhargav-atluri-v2.jpg",
     lens: "The AI lens",
     bio: "10+ years scaling enterprise AI and customer experience solutions across Asia-Pacific, Japan and China at Cisco, Ericsson and Infobip.",
     tags: ["Enterprise AI", "Go-to-market"],

@@ -1,5 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { siteConfig } from "@/config/site";
+import { createClaudeClient } from "@/lib/chatbot/claude";
+import { chatConfigured } from "@/lib/chatbot/config";
 import { knowledge } from "@/lib/chatbot/knowledge";
 import { deliverLead, type Lead } from "@/lib/chatbot/leads";
 
@@ -8,7 +10,8 @@ import { deliverLead, type Lead } from "@/lib/chatbot/leads";
  * and hands interested visitors' details to the team (see `lib/chatbot/leads.ts`).
  *
  * Server-only environment variables:
- *   ANTHROPIC_API_KEY  Required. The widget is hidden when it is not set.
+ *   Claude access      Workload identity federation or ANTHROPIC_API_KEY (see lib/chatbot/config.ts).
+ *                      The widget is hidden when neither is set.
  *   LEAD_EMAIL         Inbox that receives leads (shared with the enquiry form).
  *   CHAT_MODEL         Optional. Defaults to claude-opus-5-5.
  *
@@ -119,7 +122,7 @@ function cleanLead(input: unknown): Lead | null {
 let client: Anthropic | undefined;
 
 export async function POST(request: Request) {
-  if (!process.env.ANTHROPIC_API_KEY?.trim()) return json({ error: "not_configured" }, 503);
+  if (!chatConfigured()) return json({ error: "not_configured" }, 503);
 
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
   if (rateLimited(ip)) return json({ error: "rate_limited" }, 429);
@@ -147,7 +150,7 @@ export async function POST(request: Request) {
     { role: "user", content: message },
   ];
 
-  client ??= new Anthropic();
+  client ??= createClaudeClient();
   try {
     for (let step = 0; step < 3; step++) {
       const response = await client.beta.messages.create({
@@ -186,7 +189,7 @@ export async function POST(request: Request) {
     return json({ reply: "Thank you! The Paatam team will be in touch shortly.", leadSaved });
   } catch (error) {
     if (error instanceof Anthropic.RateLimitError) console.error("[chat] Claude rate limit", error.message);
-    else if (error instanceof Anthropic.AuthenticationError) console.error("[chat] ANTHROPIC_API_KEY was rejected");
+    else if (error instanceof Anthropic.AuthenticationError) console.error("[chat] Claude rejected the credentials (API key or federated token)");
     else if (error instanceof Anthropic.APIError) console.error(`[chat] Claude API ${error.status}`, error.message);
     else console.error("[chat]", error);
     return json({ error: "unavailable" }, 502);

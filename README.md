@@ -81,9 +81,26 @@ A chat bubble on every page answers visitors' questions about Paatam and passes 
 
 | Variable            | Scope  | Purpose                                                                                   |
 | ------------------- | ------ | ----------------------------------------------------------------------------------------- |
-| `ANTHROPIC_API_KEY` | server | Claude API key. **The chat bubble is hidden until this is set** (it is read at build time). |
+| `ANTHROPIC_FEDERATION_RULE_ID`, `ANTHROPIC_ORGANIZATION_ID`, `ANTHROPIC_SERVICE_ACCOUNT_ID` | server | Workload identity federation (recommended): Claude access with no API key. See below. |
+| `ANTHROPIC_WORKSPACE_ID` | server | Optional. Only needed when the federation rule covers more than one workspace. |
+| `ANTHROPIC_API_KEY` | server | Alternative to federation. Takes precedence when set. |
 | `LEAD_EMAIL`        | server | Inbox that receives chatbot leads (shared with the enquiry form).                         |
 | `CHAT_MODEL`        | server | Optional. Defaults to `claude-opus-5-5`.                                                  |
+
+**The chat bubble is hidden until federation or an API key is configured.** This is checked at build time, so redeploy after changing these variables.
+
+#### Claude access with workload identity federation
+
+Vercel gives every function request a short-lived OIDC token. `src/lib/chatbot/claude.ts` reads it with `@vercel/oidc` and the Anthropic SDK exchanges it for a short-lived Claude token, so there is no API key to store, leak or rotate.
+
+1. **Vercel:** Project → Settings → Security → *Secure backend access with OIDC federation*: enable it with the **Team** issuer mode. The issuer is then `https://oidc.vercel.com/<team-slug>`.
+2. **Claude Console** ([Workload identity federation](https://platform.claude.com/settings/workload-identity-federation)):
+   - **Service account** (Settings → Service accounts): create one (e.g. `paatam-website`) with the developer role and add it to the workspace the chatbot should bill to.
+   - **Issuer**: issuer URL `https://oidc.vercel.com/<team-slug>`, JWKS mode *discovery*.
+   - **Rule**: that issuer and service account, scope `workspace:inference`, the workspace, and a match on the Vercel token: subject prefix `owner:<team-slug>:project:<project-name>:environment:*`, plus claims `owner_id` = the Vercel team ID and `project_id` = the Vercel project ID (IDs survive renames).
+3. **Vercel environment variables:** `ANTHROPIC_FEDERATION_RULE_ID` (`fdrl_…`), `ANTHROPIC_ORGANIZATION_ID` (Console → Settings → Organization), `ANTHROPIC_SERVICE_ACCOUNT_ID` (`svac_…`), and `ANTHROPIC_WORKSPACE_ID` if the rule covers several workspaces. Leave `ANTHROPIC_API_KEY` unset, since it takes precedence.
+
+If chats fail with a credentials error, the Console's authentication history shows why each exchange was rejected (for example a claim that didn't match the rule).
 
 ## Project structure
 
@@ -109,7 +126,7 @@ src/
     visuals/AnswerSheet.tsx  Illustrative handwritten answer sheet (HTML, no images)
   config/site.ts          Site name, copy constants, nav, env-driven contact details
   lib/contact.ts          Shared form schema + validation
-  lib/chatbot/            Chatbot knowledge and lead delivery
+  lib/chatbot/            Chatbot knowledge, Claude access (federation or key) and lead delivery
 ```
 
 ## Content and claims policy

@@ -1,11 +1,9 @@
-import { siteConfig } from "@/config/site";
+import { emailLead, leadInbox } from "@/lib/leadEmail";
 
 /**
  * Delivers a lead captured by the website chatbot.
  *
- *   CHAT_LEAD_EMAIL      Inbox that receives each lead, sent through FormSubmit (formsubmit.co).
- *                        No account is needed: the first lead triggers a one-time activation
- *                        email to this inbox, and leads arrive once that link is clicked.
+ *   LEAD_EMAIL           Inbox that receives each lead (see lib/leadEmail.ts).
  *   CONTACT_WEBHOOK_URL  Optional. If set (same endpoint as the contact form), each lead is
  *                        also POSTed there as JSON with source "paatam.ai chatbot".
  *
@@ -45,11 +43,10 @@ export async function deliverLead(lead: Lead, page: string) {
   console.log("[chat-lead]", JSON.stringify({ submittedAt, page, ...lead }));
 
   const jobs: Promise<string>[] = [];
-  const email = process.env.CHAT_LEAD_EMAIL?.trim();
-  if (email) jobs.push(sendEmail(email, lead, page));
+  if (leadInbox()) jobs.push(sendEmail(lead, page));
   const webhook = process.env.CONTACT_WEBHOOK_URL?.trim();
   if (webhook) jobs.push(sendWebhook(webhook, lead, page, submittedAt));
-  if (jobs.length === 0) throw new Error("No lead destination configured (set CHAT_LEAD_EMAIL)");
+  if (jobs.length === 0) throw new Error("No lead destination configured (set LEAD_EMAIL)");
 
   const results = await Promise.allSettled(jobs);
   const failures = results.filter((r): r is PromiseRejectedResult => r.status === "rejected");
@@ -57,32 +54,11 @@ export async function deliverLead(lead: Lead, page: string) {
   if (failures.length === results.length) throw new Error("Lead delivery failed");
 }
 
-async function sendEmail(to: string, lead: Lead, page: string) {
-  const fields: Record<string, string> = {};
-  for (const [key, label] of LABELS) if (lead[key]) fields[label] = lead[key]!;
-  const res = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(to)}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-      // FormSubmit ties activation to the sending site, so always present the canonical URL.
-      Origin: siteConfig.url,
-      Referer: `${siteConfig.url}/`,
-    },
-    body: JSON.stringify({
-      _subject: `New website chat lead: ${lead.name}${lead.school ? `, ${lead.school}` : ""}`,
-      _template: "table",
-      _captcha: "false",
-      ...(lead.email ? { _replyto: lead.email } : {}),
-      ...fields,
-      Page: page || "-",
-    }),
-    signal: AbortSignal.timeout(10_000),
-  });
-  const body = (await res.json().catch(() => ({}))) as { success?: string | boolean; message?: string };
-  if (!res.ok || String(body.success) !== "true") {
-    throw new Error(`FormSubmit ${res.status}: ${body.message ?? "unknown error"}`);
-  }
+async function sendEmail(lead: Lead, page: string) {
+  const fields: Record<string, string | undefined> = {};
+  for (const [key, label] of LABELS) fields[label] = lead[key];
+  fields.Page = page || "-";
+  await emailLead(`New website chat lead: ${lead.name}${lead.school ? `, ${lead.school}` : ""}`, fields, lead.email);
   return "email";
 }
 

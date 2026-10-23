@@ -1,14 +1,17 @@
-import { normalise, validate } from "@/lib/contact";
+import { interests, normalise, validate, type ContactPayload } from "@/lib/contact";
+import { emailLead, leadInbox } from "@/lib/leadEmail";
 
 /**
  * Receives demo / partnership enquiries from the website form.
  *
- * Delivery is configured with environment variables (server-only):
- *   CONTACT_WEBHOOK_URL     Required. HTTPS endpoint that receives a JSON POST for each enquiry
+ * Delivery is configured with environment variables (server-only). Set at least one:
+ *   LEAD_EMAIL              Inbox that receives each enquiry by email (see lib/leadEmail.ts).
+ *   CONTACT_WEBHOOK_URL     HTTPS endpoint that receives a JSON POST for each enquiry
  *                           (e.g. an automation tool, CRM intake, or your own backend).
  *   CONTACT_WEBHOOK_SECRET  Optional. Sent as `Authorization: Bearer <secret>`.
  *
- * If no destination is configured the route returns 503 and the form tells the
+ * The enquiry counts as sent when at least one destination accepts it. If no
+ * destination is configured the route returns 503 and the form tells the
  * visitor the enquiry was NOT sent — it never reports a false success.
  */
 
@@ -66,37 +69,63 @@ export async function POST(request: Request) {
   }
 
   const webhookUrl = process.env.CONTACT_WEBHOOK_URL?.trim();
-  if (!webhookUrl) {
+  const inbox = leadInbox();
+  if (!webhookUrl && !inbox) {
     return json({ ok: false, error: "not_configured" }, 503);
   }
 
   const { website: _honeypot, ...enquiry } = data;
   void _honeypot;
 
-  try {
-    const headers: Record<string, string> = { "Content-Type": "application/json" };
-    const secret = process.env.CONTACT_WEBHOOK_SECRET?.trim();
-    if (secret) headers.Authorization = `Bearer ${secret}`;
-
-    const res = await fetch(webhookUrl, {
-      method: "POST",
-      headers,
-      body: JSON.stringify({
-        source: "paatam.ai website",
-        submittedAt: new Date().toISOString(),
-        ...enquiry,
-      }),
-      signal: AbortSignal.timeout(10_000),
-    });
-
-    if (!res.ok) {
-      console.error(`[contact] Webhook responded with ${res.status}`);
-      return json({ ok: false, error: "delivery_failed" }, 502);
-    }
-  } catch (error) {
-    console.error("[contact] Webhook request failed", error);
+  const jobs: Promise<void>[] = [];
+  if (webhookUrl) jobs.push(sendWebhook(webhookUrl, enquiry));
+  if (inbox) jobs.push(sendEmail(enquiry));
+  const results = await Promise.allSettled(jobs);
+  for (const r of results) {
+    if (r.status === "rejected") console.error("[contact] Delivery failed", r.reason);
+  }
+  if (!results.some((r) => r.status === "fulfilled")) {
     return json({ ok: false, error: "delivery_failed" }, 502);
   }
 
   return json({ ok: true }, 200);
+}
+
+type Enquiry = Omit<ContactPayload, "website">;
+
+async function sendWebhook(url: string, enquiry: Enquiry) {
+  const headers: Record<string, string> = { "Content-Type": "application/json" };
+  const secret = process.env.CONTACT_WEBHOOK_SECRET?.trim();
+  if (secret) headers.Authorization = `Bearer ${secret}`;
+
+  const res = await fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify({
+      source: "paatam.ai website",
+      submittedAt: new Date().toISOString(),
+      ...enquiry,
+    }),
+    signal: AbortSignal.timeout(10_000),
+  });
+  if (!res.ok) throw new Error(`Webhook responded with ${res.status}`);
+}
+
+async function sendEmail(enquiry: Enquiry) {
+  const interest = interests.find((i) => i.value === enquiry.interest)?.label ?? enquiry.interest;
+  const isEmail = enquiry.contact.includes("@");
+  await emailLead(
+    `New website enquiry: ${enquiry.name}, ${enquiry.school}`,
+    {
+      Name: enquiry.name,
+      [isEmail ? "Email" : "Phone"]: enquiry.contact,
+      School: enquiry.school,
+      Role: enquiry.role,
+      City: enquiry.city,
+      "Interested in": interest,
+      Message: enquiry.message,
+      Source: "Website enquiry form",
+    },
+    isEmail ? enquiry.contact : undefined,
+  );
 }

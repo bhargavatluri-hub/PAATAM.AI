@@ -9,7 +9,7 @@ import { deliverLead, type Lead } from "@/lib/chatbot/leads";
  *
  * Server-only environment variables:
  *   ANTHROPIC_API_KEY  Required. The widget is hidden when it is not set.
- *   CHAT_LEAD_EMAIL    Inbox that receives leads.
+ *   LEAD_EMAIL         Inbox that receives leads (shared with the enquiry form).
  *   CHAT_MODEL         Optional. Defaults to claude-opus-5-5.
  *
  * The route is stateless: the browser sends the visible transcript with each

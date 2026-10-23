@@ -74,16 +74,20 @@ The form collects only what's needed to follow up and asks visitors not to share
 
 A chat bubble on every page lets visitors talk to **Radha**, the AI assistant for Paatam.ai. Radha answers questions about Paatam and passes interested visitors' details to the team.
 
-- **Answers** come from Claude, using only the facts in `src/lib/chatbot/knowledge.ts`. Keep that file in line with the site copy and the content and claims policy below. When something isn't covered there (pricing, integrations, languages), the bot says the team will follow up instead of guessing.
+- **Answers** come from Google Gemini or Claude (whichever key is set; Gemini wins if both are), using only the facts in `src/lib/chatbot/knowledge.ts`. Keep that file in line with the site copy and the content and claims policy below. When something isn't covered there (pricing, integrations, languages), the bot says the team will follow up instead of guessing.
 - **Leads:** when a visitor wants a demo, a pilot or pricing, the bot asks for their name and a phone number or email (plus school, role, city and interest where offered), confirms the contact detail, and calls its `save_lead` tool. `src/lib/chatbot/leads.ts` emails the lead to `LEAD_EMAIL` (the same inbox and FormSubmit path as the enquiry form), also POSTs it to `CONTACT_WEBHOOK_URL` when that is set, and writes it to the server log.
 - **Stateless:** the browser keeps the conversation (for that tab only) and sends it with each message, so the route works on serverless instances. Visitors are asked not to share student information.
 - **Limits:** 40 messages per IP per 10 minutes (best-effort, per instance), 1,500 characters per message, last 30 turns of history.
 
 | Variable            | Scope  | Purpose                                                                                   |
 | ------------------- | ------ | ----------------------------------------------------------------------------------------- |
-| `ANTHROPIC_API_KEY` | server | Claude API key. **The chat bubble is hidden until this is set** (it is read at build time). |
+| `GEMINI_API_KEY`    | server | Google Gemini API key (from Google AI Studio). Used whenever it is set.                     |
+| `GEMINI_MODEL`      | server | Optional. Defaults to `gemini-flash-latest`.                                              |
+| `ANTHROPIC_API_KEY` | server | Claude API key. Used only when `GEMINI_API_KEY` is not set.                               |
 | `LEAD_EMAIL`        | server | Inbox that receives chatbot leads (shared with the enquiry form).                         |
-| `CHAT_MODEL`        | server | Optional. Defaults to `claude-opus-5-5`.                                                  |
+| `CHAT_MODEL`        | server | Optional Claude model. Defaults to `claude-opus-5-5`.                                     |
+
+**The chat bubble is hidden until `GEMINI_API_KEY` or `ANTHROPIC_API_KEY` is set.** This is read at build time, so redeploy after changing it.
 
 ## Project structure
 
@@ -109,7 +113,7 @@ src/
     visuals/AnswerSheet.tsx  Illustrative handwritten answer sheet (HTML, no images)
   config/site.ts          Site name, copy constants, nav, env-driven contact details
   lib/contact.ts          Shared form schema + validation
-  lib/chatbot/            Chatbot knowledge and lead delivery
+  lib/chatbot/            Chatbot prompt and knowledge, Gemini and Claude providers, lead delivery
 ```
 
 ## Content and claims policy

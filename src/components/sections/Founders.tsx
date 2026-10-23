@@ -7,7 +7,7 @@ const founders = [
   {
     name: "Bhargav Atluri",
     role: "Co-Founder & CEO",
-    photo: "/team/bhargav-atluri.jpg",
+    photo: "/team/bhargav-atluri-v2.jpg",
     lens: "The AI lens",
     bio: "10+ years scaling enterprise AI and customer experience solutions across Asia-Pacific, Japan and China at Cisco, Ericsson and Infobip.",
     tags: ["Enterprise AI", "Go-to-market"],
@@ -15,7 +15,7 @@ const founders = [
   {
     name: "Nikitha Atluri",
     role: "Co-Founder & Head of Learning",
-    photo: "/team/nikitha-atluri.jpg",
+    photo: "/team/nikitha-atluri-v2.jpg",
     lens: "The learning lens",
     bio: "Psychologist, educator and counsellor: the learning-science lens behind the product, from how feedback is worded to how students are supported.",
     tags: ["Instructional Design", "Social Emotional Learning"],

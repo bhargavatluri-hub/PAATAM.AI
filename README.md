@@ -33,7 +33,7 @@ All configuration is through environment variables. Nothing sensitive is hard-co
 
 | Variable                    | Scope  | Purpose                                                                                                                             |
 | --------------------------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------- |
-| `NEXT_PUBLIC_SITE_URL`      | public | Canonical origin for canonical links, sitemap, robots and social previews. Defaults to `https://www.paatam.in`.                       |
+| `NEXT_PUBLIC_SITE_URL`      | public | Canonical origin for canonical links, sitemap, robots and social previews. Defaults to `https://paatam.ai`.                            |
 | `NEXT_PUBLIC_CONTACT_EMAIL` | public | Enquiry email shown in the contact section, footer and legal pages. Hidden when empty.                                              |
 | `LEAD_EMAIL`                | server | Inbox that receives every enquiry-form submission and chatbot lead by email (see below).                                            |
 | `CONTACT_WEBHOOK_URL`       | server | Where enquiries are delivered. Each submission is POSTed as JSON.                                                                   |

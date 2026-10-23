@@ -1,3 +1,4 @@
+import { siteConfig } from "@/config/site";
 import { describeClaudeError, replyWithClaude } from "@/lib/chatbot/claude";
 import { chatProvider } from "@/lib/chatbot/config";
 import { describeGeminiError, replyWithGemini } from "@/lib/chatbot/gemini";
@@ -100,7 +101,7 @@ export async function POST(request: Request) {
       console.error("[chat] lead delivery failed", error);
       return {
         ok: false,
-        message: "Saving failed on our side. Apologise, and ask the visitor to use the Contact page (/contact) so the team gets their details.",
+        message: `Saving failed on our side. Apologise, and ask the visitor to use the Contact page (${siteConfig.url}/contact) so the team gets their details.`,
       };
     }
   };

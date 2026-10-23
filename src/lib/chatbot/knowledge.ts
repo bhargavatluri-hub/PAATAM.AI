@@ -1,3 +1,5 @@
+import { siteConfig } from "@/config/site";
+
 /**
  * What the website chatbot knows about Paatam. It answers only from this text,
  * so keep it in line with the site copy and the content and claims policy in the
@@ -75,7 +77,7 @@ Nothing is final until a teacher approves it.
 1. A conversation about how the school runs assessments today.
 2. Agree together on a few classes and subjects to start with.
 3. The school's teachers try Paatam and give honest feedback on what works.
-Schools can book a demo on the website's Demo page (/demo) or send an enquiry on the Contact page (/contact).
+Schools can book a demo on the Demo page (${siteConfig.url}/demo) or send an enquiry on the Contact page (${siteConfig.url}/contact).
 
 ## Not published (do not guess)
 Pricing, contract terms, exact supported languages and subjects, integrations with other school software,

@@ -20,7 +20,7 @@ export const siteConfig = {
   description:
     "Paatam helps schools transform handwritten student assessments into actionable learning insights, with AI-assisted evaluation and teachers always in control.",
   /** Canonical origin. Override with NEXT_PUBLIC_SITE_URL (e.g. for staging). */
-  url: optional(process.env.NEXT_PUBLIC_SITE_URL) ?? "https://www.paatam.in",
+  url: optional(process.env.NEXT_PUBLIC_SITE_URL) ?? "https://paatam.ai",
   /** Public enquiry email. Omitted from the UI when unset. */
   contactEmail: optional(process.env.NEXT_PUBLIC_CONTACT_EMAIL),
   locale: "en_IN",

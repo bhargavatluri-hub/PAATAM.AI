@@ -46,7 +46,7 @@ export async function deliverLead(lead: Lead, page: string) {
   if (leadInbox()) jobs.push(sendEmail(lead, page));
   const webhook = process.env.CONTACT_WEBHOOK_URL?.trim();
   if (webhook) jobs.push(sendWebhook(webhook, lead, page, submittedAt));
-  if (jobs.length === 0) throw new Error("No lead destination configured (set LEAD_EMAIL)");
+  if (jobs.length === 0) throw new Error("No lead destination configured (set RESEND_API_KEY and LEAD_EMAIL)");
 
   const results = await Promise.allSettled(jobs);
   const failures = results.filter((r): r is PromiseRejectedResult => r.status === "rejected");

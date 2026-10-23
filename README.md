@@ -36,6 +36,8 @@ All configuration is through environment variables. Nothing sensitive is hard-co
 | `NEXT_PUBLIC_SITE_URL`      | public | Canonical origin for canonical links, sitemap, robots and social previews. Defaults to `https://paatam.ai`.                            |
 | `NEXT_PUBLIC_CONTACT_EMAIL` | public | Enquiry email shown in the contact section, footer and legal pages. Hidden when empty.                                              |
 | `LEAD_EMAIL`                | server | Inbox that receives every enquiry-form submission and chatbot lead by email (see below).                                            |
+| `RESEND_API_KEY`            | server | Resend API key used to send those emails. Email delivery is off until both this and `LEAD_EMAIL` are set.                          |
+| `LEAD_EMAIL_FROM`           | server | Optional sender address on a domain verified in Resend. Defaults to Resend's test sender.                                          |
 | `CONTACT_WEBHOOK_URL`       | server | Where enquiries are delivered. Each submission is POSTed as JSON.                                                                   |
 | `CONTACT_WEBHOOK_SECRET`    | server | Optional. Sent as `Authorization: Bearer <secret>` to the webhook.                                                                  |
 
@@ -45,7 +47,7 @@ The form needs `LEAD_EMAIL` or `CONTACT_WEBHOOK_URL` (or both) to send anything.
 
 `POST /api/contact` (`src/app/api/contact/route.ts`) validates each enquiry with the same rules as the browser (`src/lib/contact.ts`), then delivers it to every destination that is configured. It counts as sent when at least one accepts it.
 
-- **`LEAD_EMAIL`:** emailed through [FormSubmit](https://formsubmit.co) by `src/lib/leadEmail.ts`, which needs no email account. The first submission sends a one-time "Activate form" email to that inbox; submissions are delivered once that link is clicked. Replace it with your own email provider once you have a business account.
+- **`LEAD_EMAIL`:** emailed through [Resend](https://resend.com) by `src/lib/leadEmail.ts` (needs `RESEND_API_KEY`). Until a domain is verified in Resend, mail is sent from Resend's test address, which only delivers to the email address the Resend account was created with, so sign up with the lead inbox. After verifying a domain, set `LEAD_EMAIL_FROM` (for example `Paatam Website <leads@paatam.ai>`) to send to any inbox.
 - **`CONTACT_WEBHOOK_URL`:** POSTed as JSON:
 
 ```json
@@ -75,7 +77,7 @@ The form collects only what's needed to follow up and asks visitors not to share
 A chat bubble on every page lets visitors talk to **Radha**, the AI assistant for Paatam.ai. Radha answers questions about Paatam and passes interested visitors' details to the team.
 
 - **Answers** come from Google Gemini or Claude (whichever key is set; Gemini wins if both are), using only the facts in `src/lib/chatbot/knowledge.ts`. Keep that file in line with the site copy and the content and claims policy below. When something isn't covered there (pricing, integrations, languages), the bot says the team will follow up instead of guessing.
-- **Leads:** when a visitor wants a demo, a pilot or pricing, the bot asks for their name and a phone number or email (plus school, role, city and interest where offered), confirms the contact detail, and calls its `save_lead` tool. `src/lib/chatbot/leads.ts` emails the lead to `LEAD_EMAIL` (the same inbox and FormSubmit path as the enquiry form), also POSTs it to `CONTACT_WEBHOOK_URL` when that is set, and writes it to the server log.
+- **Leads:** when a visitor wants a demo, a pilot or pricing, the bot asks for their name and a phone number or email (plus school, role, city and interest where offered), confirms the contact detail, and calls its `save_lead` tool. `src/lib/chatbot/leads.ts` emails the lead to `LEAD_EMAIL` (the same inbox and Resend path as the enquiry form), also POSTs it to `CONTACT_WEBHOOK_URL` when that is set, and writes it to the server log.
 - **Stateless:** the browser keeps the conversation (for that tab only) and sends it with each message, so the route works on serverless instances. Visitors are asked not to share student information.
 - **Limits:** 40 messages per IP per 10 minutes (best-effort, per instance), 1,500 characters per message, last 30 turns of history.
 

@@ -70,8 +70,8 @@ export function Founders() {
       <p className="mt-8 flex items-start gap-3 text-muted" data-reveal>
         <Icon name="teacher" size={20} className="mt-0.5 shrink-0 text-primary" />
         <span>
-          The founders work with a small team of AI engineers, educators and psychologists, including a practising school
-          teacher who keeps the product grounded in real classrooms.
+          The founders work with a team of AI engineers, educators and psychologists, including practising school
+          teachers who keep the product grounded in real classrooms.
         </span>
       </p>
     </Section>

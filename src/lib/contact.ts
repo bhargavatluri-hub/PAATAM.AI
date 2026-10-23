@@ -25,7 +25,9 @@ export type Interest = (typeof interests)[number]["value"];
 
 export type ContactPayload = {
   name: string;
-  contact: string;
+  email: string;
+  /** Optional. */
+  phone: string;
   school: string;
   role: string;
   city: string;
@@ -37,7 +39,7 @@ export type ContactPayload = {
 
 export type ContactErrors = Partial<Record<keyof ContactPayload, string>>;
 
-const LIMITS = { name: 100, contact: 120, school: 150, city: 80, message: 1500 } as const;
+const LIMITS = { name: 100, email: 120, phone: 20, school: 150, city: 80, message: 1500 } as const;
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 /**
@@ -46,9 +48,12 @@ const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
  */
 const PHONE = /^(?:\+91|91|0)?[1-9]\d{9}$/;
 
-export function isEmailOrPhone(value: string) {
-  const v = value.trim();
-  return EMAIL.test(v) || PHONE.test(v.replace(/[\s\-()]/g, ""));
+export function isEmail(value: string) {
+  return EMAIL.test(value.trim());
+}
+
+export function isPhone(value: string) {
+  return PHONE.test(value.trim().replace(/[\s\-()]/g, ""));
 }
 
 export function normalise(input: Record<string, unknown>): ContactPayload {
@@ -56,7 +61,8 @@ export function normalise(input: Record<string, unknown>): ContactPayload {
   const interest = str("interest");
   return {
     name: str("name"),
-    contact: str("contact"),
+    email: str("email"),
+    phone: str("phone"),
     school: str("school"),
     role: str("role"),
     city: str("city"),
@@ -72,9 +78,11 @@ export function validate(data: ContactPayload): ContactErrors {
   if (!data.name) errors.name = "Please enter your name.";
   else if (data.name.length > LIMITS.name) errors.name = "Please keep your name under 100 characters.";
 
-  if (!data.contact) errors.contact = "Please enter a work email or phone number.";
-  else if (data.contact.length > LIMITS.contact || !isEmailOrPhone(data.contact))
-    errors.contact = "Enter a valid email address or a 10-digit phone number.";
+  if (!data.email) errors.email = "Please enter your email address.";
+  else if (data.email.length > LIMITS.email || !isEmail(data.email)) errors.email = "Enter a valid email address.";
+
+  if (data.phone && (data.phone.length > LIMITS.phone || !isPhone(data.phone)))
+    errors.phone = "Enter a 10-digit phone number, or leave this blank.";
 
   if (!data.school) errors.school = "Please enter your school’s name.";
   else if (data.school.length > LIMITS.school) errors.school = "Please keep this under 150 characters.";

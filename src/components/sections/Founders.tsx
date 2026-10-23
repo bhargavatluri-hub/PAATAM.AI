@@ -15,7 +15,7 @@ const founders = [
   {
     name: "Nikitha Atluri",
     role: "Co-Founder & Head of Learning",
-    photo: "/team/nikitha-atluri.jpg",
+    photo: "/team/nikitha-atluri-v2.jpg",
     lens: "The learning lens",
     bio: "Psychologist, educator and counsellor: the learning-science lens behind the product, from how feedback is worded to how students are supported.",
     tags: ["Instructional Design", "Social Emotional Learning"],

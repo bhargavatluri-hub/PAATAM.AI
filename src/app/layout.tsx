@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Figtree, Fraunces, Kalam, Noto_Sans_Telugu } from "next/font/google";
+import { ChatWidget } from "@/components/ChatWidget";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
@@ -91,6 +92,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </a>
         {children}
         <ScrollToTop />
+        {/* The website chatbot appears only once its API key is configured (see api/chat/route.ts). */}
+        {process.env.ANTHROPIC_API_KEY?.trim() ? <ChatWidget /> : null}
       </body>
     </html>
   );

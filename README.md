@@ -72,7 +72,7 @@ The form collects only what's needed to follow up and asks visitors not to share
 
 ### Website chatbot
 
-A chat bubble on every page answers visitors' questions about Paatam and passes interested visitors' details to the team.
+A chat bubble on every page lets visitors talk to **Radha**, the AI assistant for Paatam.ai. Radha answers questions about Paatam and passes interested visitors' details to the team.
 
 - **Answers** come from Claude, using only the facts in `src/lib/chatbot/knowledge.ts`. Keep that file in line with the site copy and the content and claims policy below. When something isn't covered there (pricing, integrations, languages), the bot says the team will follow up instead of guessing.
 - **Leads:** when a visitor wants a demo, a pilot or pricing, the bot asks for their name and a phone number or email (plus school, role, city and interest where offered), confirms the contact detail, and calls its `save_lead` tool. `src/lib/chatbot/leads.ts` emails the lead to `LEAD_EMAIL` (the same inbox and FormSubmit path as the enquiry form), also POSTs it to `CONTACT_WEBHOOK_URL` when that is set, and writes it to the server log.

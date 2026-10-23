@@ -7,13 +7,13 @@ type Turn = { role: "user" | "assistant"; text: string };
 
 const STORAGE_KEY = "paatam-chat";
 const GREETING =
-  "Hi! I'm Paatam's assistant. Ask me how Paatam helps your teachers evaluate answer sheets and understand each student's learning, or book a demo.";
+  "Hi, I'm Radha, the AI assistant for Paatam.ai. Ask me how Paatam helps your teachers evaluate answer sheets and understand each student's learning, or book a demo.";
 const SUGGESTIONS = ["What does Paatam do?", "Will it replace teachers?", "How do pilots work?", "Book a demo"];
 
 const ERRORS: Record<string, string> = {
   rate_limited: "You've sent a lot of messages. Please wait a few minutes and try again.",
   too_long: "That message is too long. Please keep it under 1,500 characters.",
-  not_configured: "The assistant isn't available right now. Please use the Contact page.",
+  not_configured: "Radha isn't available right now. Please use the Contact page.",
 };
 
 /** Escapes text, then renders **bold**, links and "- " bullets from the assistant's replies. */
@@ -101,7 +101,7 @@ export function ChatWidget() {
       if (!res.ok) {
         setTurns(history);
         setInput(message);
-        setError(ERRORS[data.error] ?? "The assistant couldn't answer just now. Please try again.");
+        setError(ERRORS[data.error] ?? "Radha couldn't answer just now. Please try again.");
         return;
       }
       setTurns([...history, { role: "user", text: message }, { role: "assistant", text: data.reply }]);
@@ -109,7 +109,7 @@ export function ChatWidget() {
     } catch {
       setTurns(history);
       setInput(message);
-      setError("Can't reach the assistant. Check your connection and try again.");
+      setError("Can't reach Radha. Check your connection and try again.");
     } finally {
       setBusy(false);
       inputRef.current?.focus();
@@ -142,7 +142,7 @@ export function ChatWidget() {
           </button>
           <button type="button" onClick={() => toggle(true)} className="text-left">
             <span className="block font-semibold">Questions about Paatam?</span>
-            <span className="text-muted">Ask our assistant, or book a demo.</span>
+            <span className="text-muted">Ask Radha, our AI assistant, or book a demo.</span>
           </button>
         </div>
       )}
@@ -152,7 +152,7 @@ export function ChatWidget() {
         onClick={() => toggle()}
         aria-expanded={open}
         aria-controls="paatam-chat"
-        aria-label={open ? "Close chat" : "Chat with Paatam"}
+        aria-label={open ? "Close chat" : "Chat with Radha, Paatam's AI assistant"}
         className="fixed bottom-4 right-4 z-[60] grid h-14 w-14 place-items-center rounded-full bg-primary text-white shadow-lift transition-transform hover:scale-105 hover:bg-primary-strong sm:bottom-6 sm:right-6"
       >
         <Icon name={open ? "close" : "message"} size={24} />
@@ -165,14 +165,14 @@ export function ChatWidget() {
         <section
           id="paatam-chat"
           role="dialog"
-          aria-label="Chat with Paatam"
+          aria-label="Chat with Radha, Paatam's AI assistant"
           className="fixed inset-0 z-[60] flex flex-col overflow-hidden bg-paper sm:inset-auto sm:bottom-24 sm:right-6 sm:h-[min(38rem,calc(100dvh-8rem))] sm:w-[23.5rem] sm:rounded-xl sm:border sm:border-line sm:shadow-lift"
         >
           <header className="flex items-center gap-3 bg-primary px-4 py-3 text-white">
-            <span className="grid h-9 w-9 place-items-center rounded-full bg-white/15 font-display text-lg font-semibold">P</span>
+            <span className="grid h-9 w-9 place-items-center rounded-full bg-white/15 font-display text-lg font-semibold">R</span>
             <div className="min-w-0">
-              <p className="font-semibold leading-tight">Paatam assistant</p>
-              <p className="text-xs text-white/75">AI answers · the team follows up personally</p>
+              <p className="font-semibold leading-tight">Radha</p>
+              <p className="text-xs text-white/75">AI assistant for Paatam.ai</p>
             </div>
             <button
               type="button"
@@ -195,7 +195,7 @@ export function ChatWidget() {
               </p>
             )}
             {busy && (
-              <div className="flex gap-1 self-start rounded-lg rounded-bl-sm border border-line bg-surface px-3.5 py-3" aria-label="Assistant is typing">
+              <div className="flex gap-1 self-start rounded-lg rounded-bl-sm border border-line bg-surface px-3.5 py-3" aria-label="Radha is typing">
                 {[0, 150, 300].map((d) => (
                   <span key={d} className="h-1.5 w-1.5 animate-bounce rounded-full bg-muted motion-reduce:animate-none" style={{ animationDelay: `${d}ms` }} />
                 ))}
@@ -244,7 +244,7 @@ export function ChatWidget() {
             </button>
           </form>
           <p className="bg-surface px-4 pb-3 text-[0.7rem] text-muted">
-            AI assistant. Please don&rsquo;t share student information.
+            Radha is an AI assistant. Please don&rsquo;t share student information.
           </p>
         </section>
       )}

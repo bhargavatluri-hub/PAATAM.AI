@@ -97,7 +97,7 @@ A rubric knowledge base and an exam generator make it a continuous loop: each as
 
 ## Pricing and how schools buy
 - Paatam is sold to schools as a subscription, with a pilot as the starting point. Customers are private and government-aided schools; the decision makers are principals, correspondents and management.
-- Pricing: ₹500 per student per month, based on the modules the school selects (for example Automated Correction & Grading, Exam Generator and Knowledge Base). The team confirms an exact quote for each school's classes and modules.
+- Pricing is tailored to each school. It depends on the number of classes and students and on the modules the school starts with (for example Automated Correction & Grading, Exam Generator and Knowledge Base). The team shares a quote after understanding the school's needs. Never quote a price, a per-student figure or any other number for pricing; offer to have the team prepare a quote and collect the visitor's details.
 - Schools can start small with a few classes and subjects, then add more classes, subjects and modules. School groups and chains are welcome.
 
 ## Working with Paatam (pilot)
@@ -113,6 +113,6 @@ Schools can book a demo on the Demo page (${siteConfig.url}/demo) or send an enq
 Share these when a visitor asks how to reach the team, but still offer to take their details so the team can reach out.
 
 ## Not published (do not guess)
-Contract terms, discounts, exact supported languages and subjects, integrations with other school software,
+Price figures, contract terms, discounts, exact supported languages and subjects, integrations with other school software,
 hosting location, compliance certifications and accuracy figures are not published. For these, offer to have the team follow up.
 `.trim();

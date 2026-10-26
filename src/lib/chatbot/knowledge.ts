@@ -80,7 +80,7 @@ A rubric knowledge base and an exam generator make it a continuous loop: each as
 
 ## FAQs
 - Does Paatam grade on its own? No. It suggests marks, feedback and insights against the school's marking scheme; a teacher reviews, edits and approves every result.
-- Will it replace teachers? No. It supports teachers' expertise and frees time for teaching.
+- Will it replace teachers? No. It supports the teacher's expertise and frees time for teaching.
 - Handwriting accuracy? It varies with handwriting and scan quality. The AI can make mistakes, so the original answer sheet stays alongside every suggestion and the teacher has the final word. Do not quote accuracy percentages.
 - Classes: starting with schools serving students in Classes 6–12. Subjects and assessment formats are discussed with each school.
 - Languages: the school should tell us which languages its assessments use; we will be clear about what is supported today and won't claim support we haven't verified.

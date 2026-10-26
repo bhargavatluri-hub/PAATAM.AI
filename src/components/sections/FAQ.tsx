@@ -7,7 +7,7 @@ export const faqs = [
   },
   {
     q: "Will Paatam replace teachers?",
-    a: "No. Paatam is built to support teachers’ expertise, not to replace it. It helps with the repetitive parts of evaluation so teachers can spend more of their time on teaching and on the students who need them.",
+    a: "No. Paatam is built to support the teacher’s expertise, not to replace it. It helps with the repetitive parts of evaluation so teachers can spend more of their time on teaching and on the students who need them.",
   },
   {
     q: "How accurately can it read handwriting?",

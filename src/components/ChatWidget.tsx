@@ -6,6 +6,8 @@ import { Icon } from "./ui/Icon";
 type Turn = { role: "user" | "assistant"; text: string };
 
 const STORAGE_KEY = "paatam-chat";
+/** Matches the `sm` breakpoint, where the chat is a floating panel instead of full screen. */
+const DESKTOP = "(min-width: 640px)";
 const GREETING =
   "Hi, I'm Radha, the AI assistant for Paatam.ai. Ask me how Paatam helps your teachers evaluate answer sheets and understand each student's learning, or book a demo.";
 const SUGGESTIONS = ["What does Paatam do?", "Will it replace teachers?", "How do pilots work?", "Book a demo"];
@@ -35,6 +37,7 @@ export function ChatWidget() {
   const [input, setInput] = useState("");
   const [nudge, setNudge] = useState(false);
   const logRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const restored = useRef(false);
 
@@ -77,10 +80,45 @@ export function ChatWidget() {
 
   useEffect(() => {
     if (!open) return;
-    inputRef.current?.focus();
+    // On phones, wait for a tap before opening the keyboard so the greeting and suggestions stay visible.
+    if (window.matchMedia(DESKTOP).matches) inputRef.current?.focus();
     const onKey = (e: globalThis.KeyboardEvent) => e.key === "Escape" && setOpen(false);
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  // Phones: fit the full-screen chat to the visible area so the on-screen keyboard never covers
+  // the message box, and stop the page behind it from scrolling.
+  useEffect(() => {
+    if (!open) return;
+    const desktop = window.matchMedia(DESKTOP);
+    const viewport = window.visualViewport;
+    const root = document.documentElement;
+    const previousOverflow = root.style.overflow;
+    const fit = () => {
+      const panel = panelRef.current;
+      if (!panel) return;
+      if (desktop.matches || !viewport) {
+        panel.style.height = "";
+        panel.style.top = "";
+        root.style.overflow = previousOverflow;
+        return;
+      }
+      panel.style.height = `${viewport.height}px`;
+      panel.style.top = `${viewport.offsetTop}px`;
+      root.style.overflow = "hidden";
+      logRef.current?.scrollTo({ top: logRef.current.scrollHeight });
+    };
+    fit();
+    viewport?.addEventListener("resize", fit);
+    viewport?.addEventListener("scroll", fit);
+    desktop.addEventListener("change", fit);
+    return () => {
+      viewport?.removeEventListener("resize", fit);
+      viewport?.removeEventListener("scroll", fit);
+      desktop.removeEventListener("change", fit);
+      root.style.overflow = previousOverflow;
+    };
   }, [open]);
 
   async function send(text: string) {
@@ -131,7 +169,7 @@ export function ChatWidget() {
   return (
     <>
       {nudge && !open && turns.length === 0 && (
-        <div className="fixed bottom-24 right-4 z-[60] max-w-[16rem] rounded-lg border border-line bg-surface p-4 pr-9 text-sm text-ink shadow-lift sm:right-6">
+        <div className="fixed bottom-20 right-4 z-[60] max-w-[16rem] sm:bottom-24 rounded-lg border border-line bg-surface p-4 pr-9 text-sm text-ink shadow-lift sm:right-6">
           <button
             type="button"
             onClick={() => setNudge(false)}
@@ -153,7 +191,7 @@ export function ChatWidget() {
         aria-expanded={open}
         aria-controls="paatam-chat"
         aria-label={open ? "Close chat" : "Chat with Radha, Paatam's AI assistant"}
-        className="fixed bottom-4 right-4 z-[60] grid h-14 w-14 place-items-center rounded-full bg-primary text-white shadow-lift transition-transform hover:scale-105 hover:bg-primary-strong sm:bottom-6 sm:right-6"
+        className={`fixed bottom-4 right-4 z-[60] h-12 w-12 place-items-center rounded-full bg-primary text-white shadow-lift transition-transform hover:scale-105 hover:bg-primary-strong sm:bottom-6 sm:right-6 sm:grid sm:h-14 sm:w-14 ${open ? "hidden" : "grid"}`}
       >
         <Icon name={open ? "close" : "message"} size={24} />
         {nudge && !open && turns.length === 0 && (
@@ -166,9 +204,10 @@ export function ChatWidget() {
           id="paatam-chat"
           role="dialog"
           aria-label="Chat with Radha, Paatam's AI assistant"
-          className="fixed inset-0 z-[60] flex flex-col overflow-hidden bg-paper sm:inset-auto sm:bottom-24 sm:right-6 sm:h-[min(38rem,calc(100dvh-8rem))] sm:w-[23.5rem] sm:rounded-xl sm:border sm:border-line sm:shadow-lift"
+          ref={panelRef}
+          className="fixed inset-x-0 top-0 z-[60] flex h-dvh flex-col overflow-hidden bg-paper sm:inset-auto sm:bottom-24 sm:right-6 sm:h-[min(38rem,calc(100dvh-8rem))] sm:w-[23.5rem] sm:rounded-xl sm:border sm:border-line sm:shadow-lift"
         >
-          <header className="flex items-center gap-3 bg-primary px-4 py-3 text-white">
+          <header className="flex shrink-0 items-center gap-3 bg-primary px-4 pb-3 pt-[max(0.75rem,env(safe-area-inset-top))] text-white">
             <span className="grid h-9 w-9 place-items-center rounded-full bg-white/15 font-display text-lg font-semibold">R</span>
             <div className="min-w-0">
               <p className="font-semibold leading-tight">Radha</p>
@@ -184,7 +223,7 @@ export function ChatWidget() {
             </button>
           </header>
 
-          <div ref={logRef} className="flex flex-1 flex-col gap-2.5 overflow-y-auto px-4 py-4" aria-live="polite">
+          <div ref={logRef} className="flex min-h-0 flex-1 flex-col gap-2.5 overflow-y-auto overscroll-contain px-4 py-4" aria-live="polite">
             <Bubble role="assistant" text={GREETING} />
             {turns.map((t, i) => (
               <Bubble key={i} role={t.role} text={t.text} />
@@ -205,7 +244,7 @@ export function ChatWidget() {
           </div>
 
           {turns.length === 0 && (
-            <div className="flex flex-wrap gap-1.5 px-4 pb-3">
+            <div className="flex shrink-0 flex-wrap gap-1.5 px-4 pb-3">
               {SUGGESTIONS.map((s) => (
                 <button
                   key={s}
@@ -219,7 +258,7 @@ export function ChatWidget() {
             </div>
           )}
 
-          <form onSubmit={onSubmit} className="flex items-end gap-2 border-t border-line bg-surface p-3">
+          <form onSubmit={onSubmit} className="flex shrink-0 items-end gap-2 border-t border-line bg-surface p-3">
             <label htmlFor="paatam-chat-input" className="sr-only">
               Your message
             </label>
@@ -232,7 +271,9 @@ export function ChatWidget() {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={onKeyDown}
               placeholder="Ask about Paatam…"
-              className="max-h-28 min-h-10 flex-1 resize-none rounded-md border border-line bg-paper px-3 py-2 text-[0.95rem] text-ink placeholder:text-muted focus:border-primary focus:outline-none"
+              enterKeyHint="send"
+              // 16px on phones: iOS zooms the whole page into any text box smaller than that.
+              className="max-h-28 min-h-10 flex-1 resize-none rounded-md border border-line bg-paper px-3 py-2 text-base text-ink sm:text-[0.95rem] placeholder:text-muted focus:border-primary focus:outline-none"
             />
             <button
               type="submit"
@@ -243,7 +284,7 @@ export function ChatWidget() {
               <Icon name="arrowRight" size={18} />
             </button>
           </form>
-          <p className="bg-surface px-4 pb-3 text-[0.7rem] text-muted">
+          <p className="shrink-0 bg-surface px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] text-[0.7rem] text-muted">
             Radha is an AI assistant. Please don&rsquo;t share student information.
           </p>
         </section>
